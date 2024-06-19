@@ -1,6 +1,3 @@
 <template>
-  <div>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
-  </div>
+  <h1 class="p-3xl text-center">Fearless Wallet</h1>
 </template>

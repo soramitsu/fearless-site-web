@@ -1,0 +1,29 @@
+.w {
+  max-width: 120rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.color-secondary {
+  color: var(--color-text-secondary);
+}
+.color-accent {
+  color: var(--color-accent);
+}
+.color-primary {
+  color: var(--color-text-primary);
+}
+.bg-block {
+  background-color: var(--color-bg-block);
+}
+
+.rounded-s {
+  border-radius: var(--space-s);
+}
+.rounded-xs {
+  border-radius: var(--space-xs);
+}
+
+.o-hidden {
+  overflow: hidden;
+}
