@@ -21,7 +21,7 @@
   --color-accent: #ee0077;
   --color-text-primary: #ffffff;
   --color-text-secondary: rgba(255, 255, 255, 0.7);
-  --color-bg-block: rgba(255, 255, 255, 0.05);
+  --color-bg-block: rgba(255, 255, 255, 0.07);
 }
 
 @media (min-width: 640px) {

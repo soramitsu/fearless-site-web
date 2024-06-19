@@ -3,6 +3,7 @@
 @import 'paddings.css';
 @import 'margins.css';
 @import 'typography.css';
+@import 'common.css';
 
 html {
   scroll-behavior: smooth;
@@ -22,9 +23,6 @@ a {
 
 hr {
   border: 0;
-  background-color: var(--color-low);
-  box-shadow: var(--shadow-slot);
-  margin: 0 var(--size-4xs);
-  height: 0.8rem;
-  border-radius: 1rem;
+  background-color: #000;
+  height: 1px;
 }
