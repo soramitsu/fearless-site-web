@@ -29,7 +29,7 @@ const benefits = [
 </script>
 
 <template>
-  <section class="w px-3xs pt-xxl pb-3xl">
+  <section class="w px-3xs">
     <h2 class="text-center px-m w-narrow mb-s">
       <span class="color-accent">Security</span> You Can Trust, <span class="color-accent">Privacy</span> You Control
     </h2>
