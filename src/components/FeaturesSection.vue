@@ -27,7 +27,7 @@ const features = [{
       <div v-for="feature in features" :key="feature.image" class="rounded-s o-hidden bg-block feature">
         <h3 class="text-center px-m">{{ feature.title }}</h3>
         <div class="image px-m" :class="{ 'on-top': feature.imageOnTop }">
-          <NuxtImg :src="feature.image" :alt="feature.title" />
+          <NuxtImg :src="feature.image" :alt="feature.title" loading="lazy" />
         </div>
       </div>
     </div>

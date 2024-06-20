@@ -10,7 +10,7 @@
         </p>
       </div>
       <div class="image pt-xl px-xl">
-        <NuxtImg src="/features/stake.png" alt="Staking" />
+        <NuxtImg src="/features/stake.png" alt="Staking" loading="lazy" />
       </div>
     </div>
   </section>
