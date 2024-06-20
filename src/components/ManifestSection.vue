@@ -20,9 +20,7 @@
         wallet</span> that empowers individuals in the evolving Web3 landscape. Join us and Stay Fearless!
     </p>
     <div class="w-narrow px-m buttons">
-      <Button href="https://chrome.google.com/webstore/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc"
-        title="Get Extension" icon="desktop" />
-      <Button href="#" title="Get mobile app" icon="mobile" />
+      <Button href="/download" title="Download wallet" icon="download" />
     </div>
   </section>
 </template>

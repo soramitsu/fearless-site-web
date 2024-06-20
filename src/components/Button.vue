@@ -5,16 +5,17 @@ defineProps<{
   icon?: string
   small?: boolean
   accent?: boolean
+  target?: '_blank' | '_self'
 }>()
 </script>
 
 <template>
-  <a :href="href" class="button" :class="accent && 'accent', small ? 'text-xxs px-s py-xs' : 'text-s bold px-m py-s'"
-    target="_blank">
+  <NuxtLink :href="href" class="button"
+    :class="accent && 'accent', small ? 'text-xxs px-s py-xs' : 'text-s bold px-m py-s'" :target="target">
     <div class="shape"></div>
     <img v-if="icon" :src="`/icons/${icon}.svg`" :alt="`${icon} icon`" class="icon">
-    {{ title }}
-  </a>
+    <span>{{ title }}</span>
+  </NuxtLink>
 </template>
 
 <style scoped>
@@ -23,6 +24,11 @@ defineProps<{
   align-items: center;
   justify-content: center;
   gap: var(--space-xs);
+  position: relative;
+  color: var(--color-text-primary);
+}
+
+.button>* {
   position: relative;
 }
 
@@ -39,7 +45,6 @@ defineProps<{
   width: 100%;
   pointer-events: none;
   opacity: 0.1;
-  z-index: -1;
 }
 
 .shape::before,

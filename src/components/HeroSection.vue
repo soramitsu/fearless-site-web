@@ -19,9 +19,8 @@ const benefits = [
           True crypto ownership with Fearless DeFi Wallet. 80+ networks, one unified experience.
         </p>
         <div class="buttons mb-l">
-          <Button href="https://chrome.google.com/webstore/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc"
-            title="Get Extension" icon="desktop" />
-          <Button href="#" title="Get mobile app" icon="mobile" />
+          <Button href="https://qrcodes.pro/5FVEPa" title="Get Extension" icon="desktop" target="_blank" />
+          <Button href="https://qrcodes.pro/9cSnKW " title="Get mobile app" icon="mobile" target="_blank" />
         </div>
         <div class="benefits">
           <div v-for="benefit in benefits" class="benefit text-s px-xs py-xxs">
