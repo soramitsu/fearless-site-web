@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   srcDir: 'src/',
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
-  modules: ['@nuxt/image'],
+  modules: ['@nuxt/image', "@nuxt/content"],
   app: {
     head: {
       charset: 'utf-8',

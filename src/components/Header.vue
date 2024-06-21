@@ -54,6 +54,7 @@ const menu = [{
 <style scoped>
 .header {
   position: fixed;
+  top: 0;
   width: 100%;
   z-index: 10;
   background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.58) 22.5%, rgba(0, 0, 0, 0.40) 43.5%, rgba(0, 0, 0, 0.25) 62%, rgba(0, 0, 0, 0.12) 77%, rgba(0, 0, 0, 0.06) 87.5%, rgba(0, 0, 0, 0.00) 100%);

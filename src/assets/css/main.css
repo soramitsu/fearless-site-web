@@ -4,6 +4,7 @@
 @import 'margins.css';
 @import 'typography.css';
 @import 'common.css';
+@import 'rich.css';
 
 html {
   scroll-behavior: smooth;
@@ -25,4 +26,5 @@ hr {
   border: 0;
   background-color: #000;
   height: 1px;
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
 }
