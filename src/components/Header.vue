@@ -24,7 +24,7 @@ const menu = [{
 </script>
 
 <template>
-  <header class="header pt-xs pb-l">
+  <header class="header pt-xs pb-l" v-on-click-outside="() => { open = false }">
     <div class="w px-xs inner text-xxs">
       <NuxtLink to="/" class="home text-xxs" active-class="active">
         <img src="/logo.svg" alt="Fearless Wallet logo">
