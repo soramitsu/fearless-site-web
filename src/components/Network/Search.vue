@@ -37,6 +37,7 @@ const filteredNetworks = computed(() => {
   width: 100%;
   color: var(--color-text-primary);
   background-color: rgba(0, 0, 0, .75);
+  backdrop-filter: blur(10px);
   background-image: url('/icons/search.svg');
   background-size: 1.2em;
   background-repeat: no-repeat;
