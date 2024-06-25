@@ -27,7 +27,7 @@ const menu = [{
   <header class="header pt-xs pb-l" v-on-click-outside="() => { open = false }">
     <div class="w px-xs inner text-xxs">
       <NuxtLink to="/" class="home text-xxs" active-class="active">
-        <img src="/logo.svg" alt="Fearless Wallet logo">
+        <img src="/logo.svg" alt="Fearless Wallet logo" width="74" height="32">
         <span class="nav-item">Fearless wallet</span>
       </NuxtLink>
       <nav class="nav" :class="{ open }">
@@ -76,6 +76,7 @@ const menu = [{
 
 .home img {
   width: 7.4rem;
+  height: 3.2rem;
 }
 
 .burger {

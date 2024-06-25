@@ -120,7 +120,7 @@ const resourcesLinks = [
       </div>
     </div>
     <div class="logo py-m px-xl">
-      <img src="/elements/fearless-logo.svg" alt="Fearless Wallet logo" />
+      <img src="/elements/fearless-logo.svg" alt="Fearless Wallet logo" loading="lazy" />
     </div>
     <div class="legal p-m text-xs">
       © {{ new Date().getFullYear() }} soramitsu
