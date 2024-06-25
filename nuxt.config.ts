@@ -7,9 +7,12 @@ export default defineNuxtConfig({
   srcDir: 'src/',
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
-  modules: ['@nuxt/image', "@nuxt/content"],
+  modules: ['@nuxt/image', '@nuxt/content'],
   app: {
     head: {
+      htmlAttrs: {
+        lang: 'en',
+      },
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
       title: title,
