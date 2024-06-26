@@ -88,6 +88,11 @@ onMounted(async () => {
     }
   })
 
+  // keep scroll of the page
+
+  // @ts-ignore
+  mouse.element.removeEventListener('wheel', mouse.mousewheel)
+
   Composite.add(world, [top, floor, leftWall, rightWall, chains, mouseConstraint])
 
   // keep the mouse in sync with rendering
