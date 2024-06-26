@@ -65,6 +65,14 @@ h6,
   text-transform: uppercase;
 }
 
+.text-l,
+.text-m,
+.text-s,
+.text-xs,
+.text-xxs {
+  font-family: 'Sora', sans-serif;
+}
+
 .text-center {
   text-align: center;
 }

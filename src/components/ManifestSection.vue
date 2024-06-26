@@ -11,13 +11,16 @@
       </div>
     </h2>
     <p class="text-l bold w-narrow px-m mb-l">
-      At Fearless Wallet, <span class="color-accent">we envision a decentra&shy;lized financial future</span> where
+      At Fearless Wallet, <span class="color-accent">we envision a decentralized financial future</span> where
       users
       fully control their digital assets and interact with any blockchain they choose.
     </p>
-    <p class="text-l bold w-narrow px-m mb-xxl">
+    <p class="text-l bold w-narrow px-m mb-l">
       Our mission is to lead DeFi by offering a <span class="color-accent">secure, user-friendly, multi-chain
-        wallet</span> that empowers individuals in the evolving Web3 landscape. Join us and Stay Fearless!
+        wallet</span> that empowers individuals in the evolving Web3 landscape.
+    </p>
+    <p class="text-l bold w-narrow px-m mb-xxl">
+      Join us and Stay Fearless!
     </p>
     <div class="w-narrow px-m buttons">
       <Button href="/download" title="Download wallet" icon="download" />

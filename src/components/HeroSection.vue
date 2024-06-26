@@ -13,7 +13,7 @@ const benefits = [
     <div class="w hero">
       <div class="text">
         <h1 class="mb-s">
-          Explore <span class="color-accent">Multi-chain Future</span>
+          Multichain <span class="color-accent">Crypto Wallet</span>
         </h1>
         <p class="color-secondary text-s mb-m">
           True crypto ownership with Fearless DeFi Wallet. 80+ networks, one unified experience.
@@ -34,7 +34,8 @@ const benefits = [
         </div>
       </div>
       <div class="image">
-        <NuxtImg src="/hero.png" alt="Fearless Wallet mobile app" />
+        <NuxtImg src="/hero.png" alt="Fearless Wallet mobile app" sizes="100vw md:60vw" quality="80" width="1521"
+          height="1853" />
       </div>
     </div>
   </section>
@@ -65,6 +66,12 @@ const benefits = [
   margin-right: -10%;
   pointer-events: none;
   aspect-ratio: 1521/1853;
+}
+
+.image img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
 }
 
 .text {

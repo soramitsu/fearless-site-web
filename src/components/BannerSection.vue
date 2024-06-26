@@ -3,14 +3,14 @@
     <div class="banner bg-block rounded-s">
       <div class="text">
         <h2 class="text-xxl mb-s">
-          <span class="color-accent">Staking</span> made simple
+          <span class="color-accent">Earn</span> with Staking
         </h2>
         <p class="color-secondary text-s">
           Stake across 7+ networks, earn rewards, and contribute to network security.
         </p>
       </div>
       <div class="image pt-xl px-xl">
-        <NuxtImg src="/features/stake.png" alt="Staking" loading="lazy" />
+        <NuxtImg src="/features/stake.png" alt="Staking" loading="lazy" sizes="75vw md:40vw" quality="80" />
       </div>
     </div>
   </section>

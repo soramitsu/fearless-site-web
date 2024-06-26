@@ -24,10 +24,10 @@ const menu = [{
 </script>
 
 <template>
-  <header class="header pt-xs pb-l">
+  <header class="header pt-xs pb-l" v-on-click-outside="() => { open = false }">
     <div class="w px-xs inner text-xxs">
       <NuxtLink to="/" class="home text-xxs" active-class="active">
-        <img src="/logo.svg" alt="Fearless Wallet logo">
+        <img src="/logo.svg" alt="Fearless Wallet logo" width="74" height="32">
         <span class="nav-item">Fearless wallet</span>
       </NuxtLink>
       <nav class="nav" :class="{ open }">
@@ -54,6 +54,7 @@ const menu = [{
 <style scoped>
 .header {
   position: fixed;
+  top: 0;
   width: 100%;
   z-index: 10;
   background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.58) 22.5%, rgba(0, 0, 0, 0.40) 43.5%, rgba(0, 0, 0, 0.25) 62%, rgba(0, 0, 0, 0.12) 77%, rgba(0, 0, 0, 0.06) 87.5%, rgba(0, 0, 0, 0.00) 100%);
@@ -75,6 +76,7 @@ const menu = [{
 
 .home img {
   width: 7.4rem;
+  height: 3.2rem;
 }
 
 .burger {
