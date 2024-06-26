@@ -15,6 +15,7 @@
     "@nuxt/image": "^1.7.0",
     "matter-js": "^0.20.0",
     "nuxt": "^3.12.2",
+    "nuxt-schema-org": "^3.3.8",
     "ogl": "^1.0.7",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
