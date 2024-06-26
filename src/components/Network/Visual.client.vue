@@ -22,7 +22,17 @@ const networks = [
   '/networks/tcgverse.svg',
   '/networks/chainverse.svg',
   '/networks/saakuruverse.svg',
-  '/networks/yooldoverse.svg'
+  '/networks/yooldoverse.svg',
+  '/networks/acala.svg',
+  '/networks/Karura.svg',
+  '/networks/Bifrost.svg',
+  '/networks/Basilisk.svg',
+  '/networks/phala.svg',
+  '/networks/clover.svg',
+  '/networks/Amplitude.svg',
+  '/networks/Bitgreen.svg',
+  '/networks/Pendulum.svg',
+  '/networks/quartz.svg',
 ]
 
 const parent = shallowRef()
@@ -79,7 +89,7 @@ onMounted(async () => {
 
   // create chain icons
 
-  const elementSize = 32
+  const elementSize = 18
 
   const chains = Composites.stack(0, 0, networks.length, 1, 0, 0, function (x: number, y: number, i: number) {
     const size = elementSize + networks.length - i
