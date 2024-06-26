@@ -10,7 +10,7 @@ console.log(
         (network) => `
   {
     name: '${network.name}',
-    icon: '${network.icon}',
+    icon: '/networks/${network.icon.replace(/.*\/(.*)\.svg/g, '$1')}.svg',
   },`,
       )
       .join('') +
