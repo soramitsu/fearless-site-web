@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Engine, Render, Runner, Bodies, Composite, Composites, MouseConstraint, Mouse } from 'matter-js'
+import { Engine, Render, Runner, Bodies, Body, Composite, Composites, MouseConstraint, Mouse } from 'matter-js'
 import { networks } from './networks'
 
 const parent = shallowRef()
@@ -38,29 +38,38 @@ onMounted(async () => {
   const wallOptions = {
     isStatic: true,
     render: {
-      visible: false
+      visible: false,
+      lineWidth: 20
     }
   }
-  const wallWidth = 100
+  const wallWidth = 1000
+  const wallHeight = 1600
+  const ethalonArea = 600000
+  const multiplayer = Math.sqrt(ethalonArea / (parent.value.clientWidth * parent.value.clientHeight))
+  const width = parent.value.clientWidth * multiplayer
+  const height = parent.value.clientHeight * multiplayer
 
-  const top = Bodies.rectangle(parent.value.clientWidth / 2, - wallWidth / 2, parent.value.clientWidth, wallWidth, wallOptions)
-  const floor = Bodies.rectangle(parent.value.clientWidth / 2, parent.value.clientHeight + wallWidth / 2, parent.value.clientWidth, wallWidth, wallOptions)
-  const leftWall = Bodies.rectangle(parent.value.clientWidth + wallWidth / 2, parent.value.clientHeight / 2, wallWidth, parent.value.clientHeight, wallOptions)
-  const rightWall = Bodies.rectangle(-wallWidth / 2, parent.value.clientHeight / 2, wallWidth, parent.value.clientHeight, wallOptions)
+  const top = Bodies.rectangle(wallHeight / 2, -wallWidth / 2, wallHeight, wallWidth, wallOptions)
+  const floor = Bodies.rectangle(wallHeight / 2, height + wallWidth / 2, wallHeight, wallWidth, wallOptions)
+  const leftWall = Bodies.rectangle(-wallWidth / 2, wallHeight / 2, wallWidth, wallHeight, wallOptions)
+  const rightWall = Bodies.rectangle(width + wallWidth / 2, wallHeight / 2, wallWidth, wallHeight, wallOptions)
 
-  // create chains
+  // create chain icons
 
-  const chains = Composites.stack(0, 0, 13, 3, 30, 0, function (x: number, y: number, i: number, j: number) {
-    return Bodies.circle(x + Math.random() * 200 - 100, y + Math.random() * 100, 36, {
+  const elementSize = 24
+
+  const chains = Composites.stack(0, 0, 36, 1, 0, 0, function (x: number, y: number, i: number) {
+    const size = elementSize + Math.random() * elementSize
+    return Bodies.circle(Math.random() * width, Math.random() * height / 1.5, size, {
       density: 0.0006,
       frictionAir: 0.01,
       restitution: 0.03,
       friction: 0.01,
       render: {
         sprite: {
-          texture: networks[j * 13 + i].icon,
-          xScale: 1.5,
-          yScale: 1.5,
+          texture: networks[i].icon,
+          xScale: size / 24,
+          yScale: size / 24,
         }
       }
     })
@@ -89,8 +98,10 @@ onMounted(async () => {
 
   Render.lookAt(render, {
     min: { x: 0, y: 0 },
-    max: { x: parent.value.clientWidth, y: parent.value.clientHeight }
+    max: { x: width, y: height }
   })
+
+  // create intersection observer
 
   const observer = new IntersectionObserver(function (entries) {
     entries.forEach(entry => {
@@ -105,6 +116,30 @@ onMounted(async () => {
   })
 
   observer.observe(canvas.value)
+
+  // resize canvas
+
+  const resizeHandler = () => {
+    const multiplayer = Math.sqrt(ethalonArea / (parent.value.clientWidth * parent.value.clientHeight))
+    const width = parent.value.clientWidth * multiplayer
+    const height = parent.value.clientHeight * multiplayer
+
+    const dx = width + wallWidth / 2 - rightWall.position.x
+    const dy = height + wallWidth / 2 - floor.position.y
+
+    // @ts-ignore
+    Render.setSize(render, parent.value.clientWidth, parent.value.clientHeight)
+
+    Body.translate(rightWall, { x: dx, y: 0 })
+    Body.translate(floor, { x: 0, y: dy })
+
+    Render.lookAt(render, {
+      min: { x: 0, y: 0 },
+      max: { x: width, y: height }
+    })
+  }
+
+  window.addEventListener('resize', resizeHandler)
 })
 </script>
 
