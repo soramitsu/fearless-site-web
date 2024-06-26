@@ -17,7 +17,7 @@
 <style scoped>
 .networks {
   position: relative;
-  padding-bottom: 18rem;
+  padding-bottom: 16rem;
   z-index: 0;
 }
 

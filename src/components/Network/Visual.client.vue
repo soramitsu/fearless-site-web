@@ -1,6 +1,29 @@
 <script setup lang="ts">
 import { Engine, Render, Runner, Bodies, Body, Composite, Composites, MouseConstraint, Mouse } from 'matter-js'
-import { networks } from './networks'
+
+const networks = [
+  '/networks/SORA.svg',
+  '/networks/Polkadot.svg',
+  '/networks/Kusama.svg',
+  '/networks/Pendulum.svg',
+  '/networks/Moonriver.svg',
+  '/networks/Moonbeam.svg',
+  '/networks/xlayerchain.svg',
+  '/networks/homeverse.svg',
+  '/networks/Ethereum.svg',
+  '/networks/bnbchain.svg',
+  '/networks/Polygon.svg',
+  '/networks/Arbitrum.svg',
+  '/networks/Optimism.svg',
+  '/networks/Avalanche.svg',
+  '/networks/Zetachain.svg',
+  '/networks/oasys.svg',
+  '/networks/mchverse.svg',
+  '/networks/tcgverse.svg',
+  '/networks/chainverse.svg',
+  '/networks/saakuruverse.svg',
+  '/networks/yooldoverse.svg'
+]
 
 const parent = shallowRef()
 const canvas = shallowRef()
@@ -56,10 +79,10 @@ onMounted(async () => {
 
   // create chain icons
 
-  const elementSize = 24
+  const elementSize = 32
 
-  const chains = Composites.stack(0, 0, 36, 1, 0, 0, function (x: number, y: number, i: number) {
-    const size = elementSize + Math.random() * elementSize
+  const chains = Composites.stack(0, 0, networks.length, 1, 0, 0, function (x: number, y: number, i: number) {
+    const size = elementSize + networks.length - i
     return Bodies.circle(Math.random() * width, Math.random() * height / 1.5, size, {
       density: 0.0006,
       frictionAir: 0.01,
@@ -67,7 +90,7 @@ onMounted(async () => {
       friction: 0.01,
       render: {
         sprite: {
-          texture: networks[i].icon,
+          texture: networks[i],
           xScale: size / 24,
           yScale: size / 24,
         }
