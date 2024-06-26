@@ -21,6 +21,17 @@ a {
   color: inherit;
   text-decoration: none;
 }
+a:not([class]) {
+  color: #b7f;
+}
+@media (hover: hover) {
+  a:not([class]) {
+    transition: color 0.3s ease;
+  }
+  a:not([class]):hover {
+    color: var(--color-accent);
+  }
+}
 
 hr {
   border: 0;
