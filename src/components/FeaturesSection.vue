@@ -1,20 +1,20 @@
 <script setup lang="ts">
 const features = [{
   title: 'Create or import account(s)',
-  image: '/features/account.png',
+  image: '/features/account.svg',
   imageOnTop: true
 }, {
   title: 'Manage multiple networks',
-  image: '/features/networks.png',
+  image: '/features/networks.svg',
 }, {
   title: 'Hold, send and receive',
-  image: '/features/send.png',
+  image: '/features/send.svg',
 }, {
   title: 'Stake',
-  image: '/features/stake.png',
+  image: '/features/stake.svg',
 }, {
   title: 'Swap',
-  image: '/features/swap.png',
+  image: '/features/swap.svg',
 }]
 </script>
 
@@ -27,7 +27,7 @@ const features = [{
       <div v-for="feature in features" :key="feature.image" class="rounded-s o-hidden bg-block feature">
         <h3 class="text-center px-m">{{ feature.title }}</h3>
         <div class="image px-m" :class="{ 'on-top': feature.imageOnTop }">
-          <NuxtImg :src="feature.image" :alt="feature.title" loading="lazy" sizes="75vw md:40vw" quality="80" />
+          <img :src="feature.image" :alt="feature.title" loading="lazy" />
         </div>
       </div>
     </div>
