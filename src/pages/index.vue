@@ -17,7 +17,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <HeroSection class="pt-3xl" />
+  <HeroSection />
   <hr>
   <BenefitsSection class="mt-xxl mb-3xl" />
   <NetworkSection class="my-xxl" />

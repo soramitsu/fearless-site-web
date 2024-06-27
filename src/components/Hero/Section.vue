@@ -34,14 +34,17 @@ const benefits = [
         </div>
       </div>
       <div class="image">
-        <NuxtImg src="/hero.png" alt="Fearless Wallet mobile app" sizes="100vw md:60vw" quality="80" width="1521"
-          height="1853" />
+        <HeroVisual class="inner" />
       </div>
     </div>
   </section>
 </template>
 
 <style scoped>
+.hero {
+  padding-top: var(--space-3xl);
+}
+
 .buttons,
 .benefits {
   display: flex;
@@ -63,26 +66,28 @@ const benefits = [
 }
 
 .image {
-  margin-right: -10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
   pointer-events: none;
-  aspect-ratio: 1521/1853;
+  margin: 0 -10% 0 0;
 }
 
-.image img {
-  object-fit: contain;
-  width: 100%;
-  height: 100%;
+.image .inner {
+  height: 110vw;
 }
 
 .text {
-  padding: 0 var(--space-l);
+  padding: 0 var(--space-l) var(--space-l) var(--space-l);
 }
 
 @media (min-width: 800px) {
   .hero {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    padding-bottom: var(--space-3xl);
+    padding-top: var(--space-xxl);
+    padding-bottom: var(--space-l);
   }
 
   .text {
@@ -90,8 +95,14 @@ const benefits = [
   }
 
   .image {
-    margin: -8% -10% -24% -10%;
     align-self: center;
+    aspect-ratio: unset;
+    margin: 0;
+  }
+
+  .image .inner {
+    height: 100%;
+    min-height: 80rem;
   }
 }
 </style>
