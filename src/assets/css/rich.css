@@ -91,10 +91,6 @@
   content: '•';
 }
 
-.rich a {
-  color: var(--color-accent);
-}
-
 .rich table {
   width: 100%;
   display: block;
