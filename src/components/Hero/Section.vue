@@ -80,6 +80,7 @@ const benefits = [
 
 .text {
   padding: 0 var(--space-l) var(--space-l) var(--space-l);
+  min-height: 56rem;
 }
 
 @media (min-width: 800px) {

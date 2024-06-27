@@ -1,6 +1,6 @@
 <template>
   <figure class="visual" width="375" height="812">
-    <img src="/hero/back.svg" alt="mobile app screen" width="375" height="812" class="back">
+    <NuxtImg preload src="/hero/back.svg" alt="Fearless Wallet mobile app screen" class="back" />
 
     <div class="second" style="top: 28%; background-image: url('/hero/second1.svg'); aspect-ratio: 343/32" />
     <div class="second" style="top: 34%; background-image: url('/hero/second2.svg')" />
@@ -30,6 +30,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 
 .visual svg {
