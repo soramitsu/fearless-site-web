@@ -92,17 +92,18 @@ const resourcesLinks = [
     <div class="navigation px-s py-l">
       <div class="about">
         <h3 class="py-xs text-xs color-secondary">About</h3>
-        <a v-for="item in aboutLinks" :key="item.title" :href="item.href" class="link text-xs">
+        <NuxtLink v-for="item in aboutLinks" :key="item.title" :href="item.href" class="link text-xs">
           {{ item.title }}
-        </a>
+        </NuxtLink>
       </div>
 
       <div class="resources">
         <h3 class="py-xs text-xs color-secondary">Resources</h3>
-        <a v-for="item in resourcesLinks" :key="item.title" :href="item.href" target="_blank" class="link text-xs">
+        <NuxtLink v-for="item in resourcesLinks" :key="item.title" :href="item.href" target="_blank"
+          class="link text-xs">
           {{ item.title }}
           <img :src="`/icons/arrow.svg`" :alt="`arrow icon`" class="s" />
-        </a>
+        </NuxtLink>
       </div>
 
       <div class="chainlink">
