@@ -13,7 +13,7 @@ const benefits = [
     <div class="w hero">
       <div class="text">
         <h1 class="mb-s">
-          Multichain <span class="color-accent">Crypto Wallet</span>
+          Multi-chain <span class="color-accent">Crypto Wallet</span>
         </h1>
         <p class="color-secondary text-s mb-m">
           True crypto ownership with Fearless DeFi Wallet. 80+ networks, one unified experience.

@@ -12,7 +12,7 @@ const benefits = [
   },
   {
     title: 'Encryption',
-    description: 'xxx',
+    description: 'We offer encrypted cloud backup for increased wallet security.',
     icon: 'lock'
   },
   {
