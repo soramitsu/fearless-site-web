@@ -43,6 +43,7 @@ const benefits = [
 <style scoped>
 .hero {
   padding-top: var(--space-3xl);
+  padding-bottom: var(--space-l);
 }
 
 .buttons,
@@ -88,7 +89,6 @@ const benefits = [
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     padding-top: var(--space-xxl);
-    padding-bottom: var(--space-l);
   }
 
   .text {
