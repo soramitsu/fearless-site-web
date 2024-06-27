@@ -17,8 +17,8 @@
     "nuxt": "^3.12.2",
     "nuxt-schema-org": "^3.3.8",
     "ogl": "^1.0.7",
-    "vue": "^3.4.29",
-    "vue-router": "^4.3.3"
+    "vue": "^3.4.30",
+    "vue-router": "^4.4.0"
   },
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447",
   "devDependencies": {
