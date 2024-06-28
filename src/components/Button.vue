@@ -1,21 +1,26 @@
 <script setup lang="ts">
-defineProps<{
-  href: string
+const { href } = defineProps<{
+  href?: string
   title: string
   icon?: string
   small?: boolean
   accent?: boolean
   target?: '_blank' | '_self'
 }>()
+
+const component = computed(() => {
+  if (href) return resolveComponent('NuxtLink')
+  return 'button'
+})
 </script>
 
 <template>
-  <NuxtLink :href="href" class="button"
+  <component :href="href" class="button" :is="component"
     :class="accent && 'accent', small ? 'text-xxs px-s py-xs' : 'text-s bold px-m py-s'" :target="target">
     <span class="shape" />
     <img v-if="icon" :src="`/icons/${icon}.svg`" :alt="`${icon} icon`" class="icon">
     <span>{{ title }}</span>
-  </NuxtLink>
+  </component>
 </template>
 
 <style scoped>
