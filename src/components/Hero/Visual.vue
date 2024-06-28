@@ -1,6 +1,7 @@
 <template>
   <figure class="visual" width="375" height="812">
     <NuxtImg preload src="/hero/back.svg" alt="Fearless Wallet mobile app screen" class="back" />
+    <NuxtImg preload src="/hero/screen.svg" alt="Fearless Wallet mobile app screen" class="screen" />
 
     <div class="second" style="top: 28%; background-image: url('/hero/second1.svg'); aspect-ratio: 343/32" />
     <div class="second" style="top: 34%; background-image: url('/hero/second2.svg')" />
@@ -24,13 +25,18 @@
   animation: rotate 2s ease-in-out infinite alternate;
 }
 
-.back {
+.back,
+.screen {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.screen {
+  transform: translateZ(3vw);
 }
 
 .visual svg {
@@ -70,6 +76,10 @@
 }
 
 @media (min-width: 800px) {
+  .screen {
+    transform: translateZ(2rem);
+  }
+
   .second {
     transform: translateZ(10rem);
   }
