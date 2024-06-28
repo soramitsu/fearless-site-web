@@ -37,9 +37,12 @@
 .rich p:not(:first-child),
 .rich blockquote:not(:first-child),
 .rich ul,
-.rich ol,
-.rich li:not(:first-child) {
+.rich ol {
   margin-top: var(--space-s);
+}
+
+.rich li:not(:first-child) {
+  margin-top: 0.66em;
 }
 
 .rich h1:not(:last-child):not([class]) {
