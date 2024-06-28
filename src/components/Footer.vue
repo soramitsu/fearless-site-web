@@ -135,7 +135,8 @@ const resourcesLinks = [{
 
       <div class="chainlink">
         <a href="https://chain.link/badge" target="_blank" class="badge">
-          <img src="https://chain.link/badge-market-data-black" alt="market data secured with chainlink" loading="lazy">
+          <img src="https://chain.link/badge-market-data-black" alt="market data secured with chainlink" loading="lazy"
+            width="180" height="50">
         </a>
       </div>
 
@@ -212,10 +213,12 @@ const resourcesLinks = [{
   align-items: stretch;
 }
 
-.chainlink .badge {
+.chainlink .badge img {
   display: flex;
   width: 18rem;
+  height: 5rem;
   object-fit: contain;
+  aspect-ratio: 18/5;
 }
 
 .logo {
