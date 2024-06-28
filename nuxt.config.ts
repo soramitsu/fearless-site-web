@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   srcDir: 'src/',
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
-  modules: ['@nuxt/image', '@nuxt/content', 'nuxt-schema-org'],
+  modules: ['@nuxt/image', '@nuxt/content', 'nuxt-schema-org', '@nuxtjs/sitemap'],
   site: {
     url: 'https://fearlesswallet.io',
     name: 'Fearless Wallet',
