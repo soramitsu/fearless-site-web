@@ -12,7 +12,7 @@ defineProps<{
 <template>
   <NuxtLink :href="href" class="button"
     :class="accent && 'accent', small ? 'text-xxs px-s py-xs' : 'text-s bold px-m py-s'" :target="target">
-    <div class="shape"></div>
+    <span class="shape" />
     <img v-if="icon" :src="`/icons/${icon}.svg`" :alt="`${icon} icon`" class="icon">
     <span>{{ title }}</span>
   </NuxtLink>
