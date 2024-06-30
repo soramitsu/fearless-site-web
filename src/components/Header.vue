@@ -207,8 +207,8 @@ const menu = [{
 
 @media (hover: hover) and (min-width: 800px) {
 
-  .home:not(.active):hover .nav-item,
-  .nav-item:not(.active):hover {
+  .home:not(.active):hover>.nav-item,
+  *:not(.active)>.nav-item:not(.active):hover {
     opacity: 0.7;
   }
 }
