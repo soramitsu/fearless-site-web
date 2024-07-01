@@ -52,6 +52,26 @@ export default defineNuxtConfig({
           href: '/apple-touch-icon.png',
         },
       ],
+      script: [
+        {
+          key: 'gtag script',
+          async: true,
+          defer: true,
+          src: 'https://www.googletagmanager.com/gtag/js?id=G-SBBH53BXP4',
+        },
+        {
+          key: 'gtag config',
+          innerHTML: `
+          window.addEventListener("load", function () {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', 'G-SBBH53BXP4');
+          });`,
+        },
+      ],
       meta: [
         {
           name: 'description',
