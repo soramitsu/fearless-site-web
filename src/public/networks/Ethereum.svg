@@ -1,9 +1,1 @@
-<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="48" height="48" rx="24" fill="#F2F2F2"/>
-<path d="M23.5012 44.7701V34.3486L10.6094 26.8096L23.5012 44.7701Z" fill="#F0CDC2" stroke="#1616B4" stroke-width="0.230769" stroke-linejoin="round"/>
-<path d="M23.5442 44.7701V34.3486L36.436 26.8096L23.5442 44.7701Z" fill="#C9B3F5" stroke="#1616B4" stroke-width="0.230769" stroke-linejoin="round"/>
-<path d="M23.5014 31.7577V18.457L10.4617 24.2961L23.5014 31.7577Z" fill="#88AAF1" stroke="#1616B4" stroke-width="0.230769" stroke-linejoin="round"/>
-<path d="M23.5441 31.7577V18.457L36.5838 24.2961L23.5441 31.7577Z" fill="#C9B3F5" stroke="#1616B4" stroke-width="0.230769" stroke-linejoin="round"/>
-<path d="M10.4617 24.2953L23.5014 3.23047V18.4563L10.4617 24.2953Z" fill="#F0CDC2" stroke="#1616B4" stroke-width="0.230769" stroke-linejoin="round"/>
-<path d="M36.5839 24.2953L23.5442 3.23047V18.4563L36.5839 24.2953Z" fill="#B8FAF6" stroke="#1616B4" stroke-width="0.230769" stroke-linejoin="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none"><rect width="48" height="48" fill="#F2F2F2" rx="24"/><path fill="#F0CDC2" stroke="#1616B4" stroke-linejoin="round" stroke-width=".231" d="M23.501 44.77V34.35l-12.892-7.54z"/><path fill="#C9B3F5" stroke="#1616B4" stroke-linejoin="round" stroke-width=".231" d="M23.544 44.77V34.35l12.892-7.54z"/><path fill="#88AAF1" stroke="#1616B4" stroke-linejoin="round" stroke-width=".231" d="M23.501 31.758V18.457l-13.04 5.84z"/><path fill="#C9B3F5" stroke="#1616B4" stroke-linejoin="round" stroke-width=".231" d="M23.544 31.758V18.457l13.04 5.84z"/><path fill="#F0CDC2" stroke="#1616B4" stroke-linejoin="round" stroke-width=".231" d="M10.462 24.295 23.502 3.23v15.226z"/><path fill="#B8FAF6" stroke="#1616B4" stroke-linejoin="round" stroke-width=".231" d="M36.584 24.295 23.544 3.23v15.226z"/></svg>

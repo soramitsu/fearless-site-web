@@ -1,6 +1,6 @@
 const title = 'Fearless Wallet The Mobile Crypto Wallet for Multi-Chain Future',
   description =
-    'Fearless Wallet is a Multichain Web3 Wallet. Web and mobile app versions. Securely buy, sell, trade, store, stake and send Crypto across 80+ blockchains.',
+    'Fearless Wallet is a Multi-chain Web3 Wallet. Web and mobile app versions. Securely buy, sell, trade, store, stake and send Crypto across 80+ blockchains.',
   keywords =
     'crypto wallet apps, wallet app, wallet web, krypto wallet, browser wallet, crypto wallet, blockchain wallet app',
   ogImage = `${process.env.NUXT_PUBLIC_BASE_URL || ''}/og.jpg`
@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   srcDir: 'src/',
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
-  modules: ['@nuxt/image', '@nuxt/content', 'nuxt-schema-org'],
+  modules: ['@nuxt/image', '@nuxt/content', 'nuxt-schema-org', '@nuxtjs/sitemap'],
   site: {
     url: 'https://fearlesswallet.io',
     name: 'Fearless Wallet',
@@ -50,6 +50,26 @@ export default defineNuxtConfig({
         {
           rel: 'apple-touch-icon',
           href: '/apple-touch-icon.png',
+        },
+      ],
+      script: [
+        {
+          key: 'gtag script',
+          async: true,
+          defer: true,
+          src: 'https://www.googletagmanager.com/gtag/js?id=G-SBBH53BXP4',
+        },
+        {
+          key: 'gtag config',
+          innerHTML: `
+          window.addEventListener("load", function () {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', 'G-SBBH53BXP4');
+          });`,
         },
       ],
       meta: [

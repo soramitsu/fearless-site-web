@@ -24,5 +24,6 @@ useSchemaOrg([
   <Header />
   <NuxtPage />
   <Footer />
+  <CookieBumper />
   <DynamicBackground />
 </template>

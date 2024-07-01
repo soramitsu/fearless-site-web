@@ -27,7 +27,7 @@ const fragment = /* glsl */ `
     varying vec2 vUv;
 
     vec4 mod289(vec4 x) {
-      return x - floor(x * (1.0 / 289.0)) * 289.0;
+      return x - floor(x * (1.0 / 13.0)) * 13.0;
     }
 
     vec4 permute(vec4 x) {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const title = 'Fearless Wallet The Mobile Crypto Wallet for Multi-Chain Future',
   description =
-    'Fearless Wallet is a Multichain Web3 Wallet. Web and mobile app versions. Securely buy, sell, trade, store, stake and send Crypto across 80+ blockchains.',
+    'Fearless Wallet is a Multi-chain Web3 Wallet. Web and mobile app versions. Securely buy, sell, trade, store, stake and send Crypto across 80+ blockchains.',
   keywords =
     'crypto wallet apps, wallet app, wallet web, krypto wallet, browser wallet, crypto wallet, blockchain wallet app'
 
@@ -17,7 +17,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <HeroSection class="pt-3xl" />
+  <HeroSection />
   <hr>
   <BenefitsSection class="mt-xxl mb-3xl" />
   <NetworkSection class="my-xxl" />

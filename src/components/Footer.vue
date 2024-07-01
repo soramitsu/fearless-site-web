@@ -1,68 +1,93 @@
 <script setup lang="ts">
-const community = [
-  {
-    title: 'Telegram',
-    link: 'https://t.me/fearlesswallet',
-    icon: 'telegram'
-  }, {
-    title: 'Announcements',
-    link: 'https://t.me/fearless_announcements',
-    icon: 'telegram'
-  }, {
-    title: 'X',
-    link: 'https://twitter.com/fearlesswallet',
-    icon: 'x'
-  }, {
-    title: 'GitHub',
-    link: 'https://github.com/soramitsu',
-    icon: 'github'
-  }, {
-    title: 'YouTube',
-    link: 'https://www.youtube.com/fearlesswallet',
-    icon: 'youtube'
-  }, {
-    title: 'Medium',
-    link: 'https://medium.com/fearlesswallet',
-    icon: 'medium'
-  }
-]
+const community = [{
+  title: 'Telegram',
+  link: 'https://t.me/fearlesswallet',
+  icon: 'telegram'
+}, {
+  title: 'Announcements',
+  link: 'https://t.me/fearless_announcements',
+  icon: 'telegram'
+}, {
+  title: 'X',
+  link: 'https://twitter.com/fearlesswallet',
+  icon: 'x'
+}, {
+  title: 'GitHub',
+  link: 'https://github.com/soramitsu',
+  icon: 'github'
+}, {
+  title: 'YouTube',
+  link: 'https://www.youtube.com/fearlesswallet',
+  icon: 'youtube'
+}, {
+  title: 'Medium',
+  link: 'https://medium.com/fearlesswallet',
+  icon: 'medium'
+}]
 
-const downloadLinks = [
-  {
-    title: 'Chrome extension',
-    href: 'https://chrome.google.com/webstore/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc',
-    icon: 'chrome'
-  },
-  {
-    title: 'iOS (App Store)',
-    href: 'https://apps.apple.com/us/app/fearless-wallet/id1537251089',
-    icon: 'appstore'
-  },
-  {
-    title: 'Android (Play Market)',
-    href: 'https://play.google.com/store/apps/details?id=jp.co.soramitsu.fearless',
-    icon: 'playmarket'
-  },
-  {
-    title: 'Android (APK)',
-    href: 'https://github.com/soramitsu/fearless-Android/releases',
-    icon: 'github'
-  }
-]
-const aboutLinks = [
-  { title: 'Fearless Wallet', href: '/' },
-  { title: 'Roadmap', href: '/roadmap' },
-  { title: 'FAQ', href: '/faq' },
-  { title: 'Blog', href: '/blog' },
-]
-const resourcesLinks = [
-  { title: "Wiki", href: 'https://wiki.fearlesswallet.io/' },
-  { title: "GitHub iOS", href: 'https://github.com/soramitsu/fearless-iOS' },
-  { title: "GitHub iOS Utils", href: 'https://github.com/soramitsu/fearless-utils-iOS' },
-  { title: "Github Android", href: 'https://github.com/soramitsu/fearless-Android' },
-  { title: "Github Android Utils", href: 'https://github.com/soramitsu/fearless-utils-Android' },
-  { title: "Brand Assets", href: 'https://github.com/sora-xor/sora-branding/tree/master/Fearless-Wallet-brand' },
-]
+const downloadLinks = [{
+  title: 'Chrome extension',
+  href: 'https://chrome.google.com/webstore/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc',
+  icon: 'chrome'
+}, {
+  title: 'iOS (App Store)',
+  href: 'https://apps.apple.com/us/app/fearless-wallet/id1537251089',
+  icon: 'appstore'
+}, {
+  title: 'Android (Play Market)',
+  href: 'https://play.google.com/store/apps/details?id=jp.co.soramitsu.fearless',
+  icon: 'playmarket'
+}, {
+  title: 'Android (APK)',
+  href: 'https://github.com/soramitsu/fearless-Android/releases',
+  icon: 'github'
+}]
+
+const aboutLinks = [{
+  title: 'Fearless Wallet',
+  href: '/'
+}, {
+  title: 'Roadmap',
+  href: '/roadmap'
+}, {
+  title: 'FAQ',
+  href: '/faq'
+}, {
+  title: 'Blog',
+  href: 'https://medium.com/fearlesswallet',
+  external: true
+}]
+
+const resourcesLinks = [{
+  title: "Wiki",
+  href: 'https://wiki.fearlesswallet.io/',
+  external: true
+},
+{
+  title: "GitHub iOS",
+  href: 'https://github.com/soramitsu/fearless-iOS',
+  external: true
+},
+{
+  title: "GitHub iOS Utils",
+  href: 'https://github.com/soramitsu/fearless-utils-iOS',
+  external: true
+},
+{
+  title: "Github Android",
+  href: 'https://github.com/soramitsu/fearless-Android',
+  external: true
+},
+{
+  title: "Github Android Utils",
+  href: 'https://github.com/soramitsu/fearless-utils-Android',
+  external: true
+},
+{
+  title: "Brand Assets",
+  href: 'https://github.com/sora-xor/sora-branding/tree/master/Fearless-Wallet-brand',
+  external: true
+},]
 </script>
 
 <template>
@@ -92,22 +117,26 @@ const resourcesLinks = [
     <div class="navigation px-s py-l">
       <div class="about">
         <h3 class="py-xs text-xs color-secondary">About</h3>
-        <a v-for="item in aboutLinks" :key="item.title" :href="item.href" class="link text-xs">
+        <NuxtLink v-for="item in aboutLinks" :key="item.title" :href="item.href"
+          :target="item.external ? '_blank' : undefined" class="link text-xs">
           {{ item.title }}
-        </a>
+          <img v-if="item.external" :src="`/icons/arrow.svg`" :alt="`arrow icon`" class="s" />
+        </NuxtLink>
       </div>
 
       <div class="resources">
         <h3 class="py-xs text-xs color-secondary">Resources</h3>
-        <a v-for="item in resourcesLinks" :key="item.title" :href="item.href" target="_blank" class="link text-xs">
+        <NuxtLink v-for="item in resourcesLinks" :key="item.title" :href="item.href"
+          :target="item.external ? '_blank' : undefined" class="link text-xs">
           {{ item.title }}
-          <img :src="`/icons/arrow.svg`" :alt="`arrow icon`" class="s" />
-        </a>
+          <img v-if="item.external" :src="`/icons/arrow.svg`" :alt="`arrow icon`" class="s" />
+        </NuxtLink>
       </div>
 
       <div class="chainlink">
         <a href="https://chain.link/badge" target="_blank" class="badge">
-          <img src="https://chain.link/badge-market-data-black" alt="market data secured with chainlink" loading="lazy">
+          <img src="https://chain.link/badge-market-data-black" alt="market data secured with chainlink" loading="lazy"
+            width="180" height="50">
         </a>
       </div>
 
@@ -184,10 +213,12 @@ const resourcesLinks = [
   align-items: stretch;
 }
 
-.chainlink .badge {
+.chainlink .badge img {
   display: flex;
   width: 18rem;
+  height: 5rem;
   object-fit: contain;
+  aspect-ratio: 18/5;
 }
 
 .logo {
