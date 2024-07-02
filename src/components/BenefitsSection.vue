@@ -12,7 +12,7 @@ const benefits = [
   },
   {
     title: 'Encryption',
-    description: 'We offer encrypted cloud backup for increased wallet security.',
+    description: 'Fearless Wallet ensures top-tier security with up-to-date crypto protocols for Ethereum and Polkadot, providing robust encryption to safeguard your assets.',
     icon: 'lock'
   },
   {
