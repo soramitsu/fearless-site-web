@@ -17,11 +17,10 @@ useSeoMeta({
 </script>
 
 <template>
-  <HeroSection />
-  <hr>
-  <BenefitsSection class="mt-xxl mb-3xl" />
-  <NetworkSection class="my-xxl" />
-  <FeaturesSection class="mt-xxl mb-3xl" />
-  <BannerSection class="my-3xl" />
-  <ManifestSection class="my-3xl" />
+  <HeroSection class="pb-xl" />
+  <NetworkSection class="mb-xxl" />
+  <FeaturesSection class="mb-3xl" />
+  <BannerSection class="mb-3xl" />
+  <BenefitsSection class="mb-3xl" />
+  <ManifestSection class="mb-3xl" />
 </template>

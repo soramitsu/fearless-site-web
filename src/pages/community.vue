@@ -5,11 +5,6 @@ const links = [{
   icon: 'telegram',
   description: 'Join our Telegram community for real-time discussions, support, and updates about Fearless Wallet.'
 }, {
-  title: 'Announcements',
-  href: 'https://t.me/fearless_announcements',
-  icon: 'telegram',
-  description: 'Stay up-to-date with the latest news and announcements from the Fearless Wallet team on Telegram.'
-}, {
   title: 'X',
   href: 'https://twitter.com/fearlesswallet',
   icon: 'x',

@@ -1,9 +1,5 @@
 <script setup lang="ts">
 const features = [{
-  title: 'Create or import account(s)',
-  image: '/features/account.svg',
-  imageOnTop: true
-}, {
   title: 'Manage multiple networks',
   image: '/features/networks.svg',
 }, {
@@ -15,7 +11,11 @@ const features = [{
 }, {
   title: 'Swap',
   image: '/features/swap.svg',
-}]
+}, {
+  title: 'Scam warning ',
+  image: '/features/account.svg',
+  imageOnTop: true
+},]
 </script>
 
 <template>

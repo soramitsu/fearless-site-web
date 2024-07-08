@@ -15,15 +15,11 @@
       users
       fully control their digital assets and interact with any blockchain they choose.
     </p>
-    <p class="text-l bold w-narrow px-m mb-l">
-      Our mission is to lead DeFi by offering a <span class="color-accent">secure, user-friendly, multi-chain
-        wallet</span> that empowers individuals in the evolving Web3 landscape.
-    </p>
     <p class="text-l bold w-narrow px-m mb-xxl">
       Join us and Stay Fearless!
     </p>
     <div class="w-narrow px-m buttons">
-      <Button href="/download" title="Download wallet" icon="download" />
+      <Button href="/download" title="Try now" icon="download" />
     </div>
   </section>
 </template>

@@ -4,10 +4,6 @@ const community = [{
   link: 'https://t.me/fearlesswallet',
   icon: 'telegram'
 }, {
-  title: 'Announcements',
-  link: 'https://t.me/fearless_announcements',
-  icon: 'telegram'
-}, {
   title: 'X',
   link: 'https://twitter.com/fearlesswallet',
   icon: 'x'
@@ -110,8 +106,7 @@ const resourcesLinks = [{
     <div class="community outline-block rounded-s p-s text-xs">
       Join our community
       <div class="buttons">
-        <Button v-for="item in community" :key="item.title" :title="item.title" :href="item.link" :icon="item.icon"
-          small />
+        <Button v-for="item in community" :key="item.title" :href="item.link" :icon="item.icon" small />
       </div>
     </div>
     <div class="navigation px-s py-l">
@@ -141,7 +136,7 @@ const resourcesLinks = [{
       </div>
 
       <div class="downloads">
-        <Button title="Downloads" href="/download" icon="download" accent class="mb-s" style="display: flex;" />
+        <h3 class="py-xs text-xs color-secondary">Downloads</h3>
         <a v-for="item in downloadLinks" :key="item.title" :href="item.href" target="_blank" class="link text-xs">
           <img :src="`/icons/${item.icon}.svg`" :alt="`${item.icon} icon`" />
           {{ item.title }}
@@ -171,6 +166,7 @@ const resourcesLinks = [{
 
 .community {
   text-wrap: nowrap;
+  justify-content: center;
 }
 
 .soramitsu svg {
@@ -263,7 +259,7 @@ const resourcesLinks = [{
 
 @media (min-width: 800px) {
   .navigation {
-    grid-template-columns: repeat(2, minmax(15rem, auto)) 1fr 30rem;
+    grid-template-columns: repeat(2, minmax(15rem, auto)) 1fr minmax(24rem, auto);
     align-items: start;
   }
 

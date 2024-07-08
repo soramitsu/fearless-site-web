@@ -1,10 +1,9 @@
 <script setup lang="ts">
 const benefits = [
-  [{ accent: '80+' }, ' networks'],
-  [{ accent: '250k' }, ' users'],
-  ['Cross-chain'],
-  ['Founded in ', { accent: '2021' }],
-  ['Self-custodial']
+  { icon: 'networks', accent: '80+', subline: ' networks' },
+  { icon: 'user', accent: '250k', subline: ' users' },
+  { icon: 'calendar', accent: '2021', subline: 'founded' },
+  { icon: 'star', accent: '4/5+', subline: 'rating' },
 ]
 </script>
 
@@ -13,23 +12,20 @@ const benefits = [
     <div class="w hero">
       <div class="text">
         <h1 class="mb-s">
-          Multi-chain <span class="color-accent">Crypto Wallet</span>
+          Multi-chain Crypto Wallet
         </h1>
         <p class="color-secondary text-s mb-m">
           True crypto ownership with Fearless DeFi Wallet. 80+ networks, one unified experience.
         </p>
         <div class="buttons mb-l">
-          <Button href="https://qrcodes.pro/5FVEPa" title="Get Extension" icon="desktop" target="_blank" />
-          <Button href="https://qrcodes.pro/9cSnKW " title="Get mobile app" icon="mobile" target="_blank" />
+          <Button href="https://qrcodes.pro/5FVEPa" title="Get Extension" icon="desktop" target="_blank" accent />
+          <Button href="https://qrcodes.pro/9cSnKW " title="Get mobile app" icon="mobile" target="_blank" accent />
         </div>
         <div class="benefits">
-          <div v-for="benefit in benefits" class="benefit text-s px-xs py-xxs">
-            <template v-for="piece in benefit">
-              <template v-if="typeof piece === 'object'">
-                <span class="color-accent bold">{{ piece.accent }}</span>
-              </template>
-              <template v-else>{{ piece }}</template>
-            </template>
+          <div v-for="benefit in benefits" class="text-s px-xs py-xs outline-block rounded-xs">
+            <img :src="`/icons/${benefit.icon}.svg`" :alt="`${benefit.icon} icon`" class="icon mb-xxs" />
+            <span class="bold color-accent">{{ benefit.accent }}</span><br>
+            {{ benefit.subline }}
           </div>
         </div>
       </div>
@@ -46,24 +42,23 @@ const benefits = [
   padding-bottom: var(--space-l);
 }
 
-.buttons,
-.benefits {
+.buttons {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-}
-
-.buttons {
   gap: var(--space-3xs);
 }
 
 .benefits {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(10rem, 1fr));
   gap: var(--space-4xs);
+  overflow-x: auto;
 }
 
-.benefit {
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: var(--space-xxs);
+.icon {
+  width: 2.4rem;
+  height: 2.4rem;
 }
 
 .image {
@@ -73,6 +68,7 @@ const benefits = [
   aspect-ratio: 1 / 1;
   pointer-events: none;
   margin: 0 -10% 0 0;
+  position: relative;
 }
 
 .image .inner {
@@ -80,8 +76,13 @@ const benefits = [
 }
 
 .text {
-  padding: 0 var(--space-l) var(--space-l) var(--space-l);
+  padding: 0 0 var(--space-l) 0;
   min-height: 56rem;
+}
+
+.text>* {
+  padding-left: var(--space-l);
+  padding-right: var(--space-l);
 }
 
 @media (min-width: 800px) {
@@ -93,6 +94,16 @@ const benefits = [
 
   .text {
     padding: var(--space-xl) var(--space-xs);
+  }
+
+  .text>* {
+    padding-left: unset;
+    padding-right: unset;
+  }
+
+  .benefits {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 49rem;
   }
 
   .image {
