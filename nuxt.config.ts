@@ -10,10 +10,12 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
   modules: ['@nuxt/image', '@nuxt/content', 'nuxt-schema-org', '@nuxtjs/sitemap'],
+
   site: {
     url: 'https://fearlesswallet.io',
     name: 'Fearless Wallet',
   },
+
   schemaOrg: {
     identity: {
       type: 'Organization',
@@ -28,6 +30,7 @@ export default defineNuxtConfig({
       email: 'hello@fearlesswallet.io',
     },
   },
+
   app: {
     head: {
       htmlAttrs: {
@@ -140,4 +143,6 @@ export default defineNuxtConfig({
       ],
     },
   },
+
+  compatibilityDate: '2024-07-08',
 })

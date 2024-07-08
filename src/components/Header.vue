@@ -14,8 +14,7 @@ const menu = [{
 },
 {
   title: 'Blog',
-  href: 'https://medium.com/fearlesswallet',
-  external: true
+  href: '/blog',
 },
 {
   title: 'wiki',

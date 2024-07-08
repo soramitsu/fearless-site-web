@@ -54,7 +54,7 @@ const aboutLinks = [{
   href: '/faq'
 }, {
   title: 'Blog',
-  href: 'https://medium.com/fearlesswallet',
+  href: '/blog',
   external: true
 }]
 

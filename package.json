@@ -11,11 +11,11 @@
     "parseNetworks": "node ./parseNetworks.js > ./src/components/Network/networks.ts"
   },
   "dependencies": {
-    "@nuxt/content": "^2.13.0",
+    "@nuxt/content": "^2.13.1",
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/sitemap": "^5.3.2",
     "matter-js": "^0.20.0",
-    "nuxt": "^3.12.2",
+    "nuxt": "^3.12.3",
     "nuxt-schema-org": "^3.3.8",
     "ogl": "^1.0.7",
     "vue": "^3.4.31",
