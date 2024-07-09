@@ -5,6 +5,8 @@ const benefits = [
   { icon: 'calendar', accent: '2021', subline: 'founded' },
   { icon: 'star', accent: '4/5+', subline: 'rating' },
 ]
+
+const isTrailerOpen = ref(false)
 </script>
 
 <template>
@@ -32,7 +34,18 @@ const benefits = [
       <div class="image">
         <HeroVisual class="inner" />
       </div>
+      <button class="trailer-button px-s py-xs text-s" @click="isTrailerOpen = true">Trailer</button>
     </div>
+    <Modal :open="isTrailerOpen" @close="isTrailerOpen = false">
+      <div class="w video">
+        <iframe v-if="isTrailerOpen" width="560" height="315"
+          src="https://www.youtube-nocookie.com/embed/b-VOoaYSPE0?autoplay=1" title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="rounded-s outline-block"
+          loading="lazy"></iframe>
+      </div>
+    </Modal>
   </section>
 </template>
 
@@ -40,6 +53,7 @@ const benefits = [
 .hero {
   padding-top: var(--space-3xl);
   padding-bottom: var(--space-l);
+  position: relative;
 }
 
 .buttons {
@@ -83,6 +97,50 @@ const benefits = [
 .text>* {
   padding-left: var(--space-l);
   padding-right: var(--space-l);
+}
+
+.trailer-button {
+  position: absolute;
+  bottom: var(--space-m);
+  right: var(--space-xs);
+  background-color: rgba(40, 40, 40, .96);
+  display: flex;
+  gap: var(--space-xs);
+  border-radius: var(--space-xl);
+  align-items: center;
+}
+
+.trailer-button::before {
+  content: '';
+  background-image: url('/icons/play.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 1em;
+  height: 1em;
+}
+
+.trailer-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.trailer-button:active {
+  transform: scale(0.95);
+}
+
+.video {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+
+.video>iframe {
+  width: 100%;
+  height: 100%;
+}
+
+@media (hover:hover) {
+  .trailer-button:hover {
+    background-color: rgba(50, 50, 50, 1);
+  }
 }
 
 @media (min-width: 800px) {
