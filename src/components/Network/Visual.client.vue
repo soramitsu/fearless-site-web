@@ -38,6 +38,8 @@ const networks = [
 const parent = shallowRef()
 const canvas = shallowRef()
 
+let resizeHandler: () => void
+
 onMounted(async () => {
   await nextTick()
   if (!canvas.value || !parent.value) return
@@ -91,7 +93,7 @@ onMounted(async () => {
 
   const elementSize = 18
 
-  const chains = Composites.stack(0, 0, networks.length, 1, 0, 0, function (x: number, y: number, i: number) {
+  const chains = networks.map((network, i) => {
     const size = elementSize + networks.length - i
     return Bodies.circle(Math.random() * width, Math.random() * height / 1.5, size, {
       density: 0.0006,
@@ -100,7 +102,7 @@ onMounted(async () => {
       friction: 0.01,
       render: {
         sprite: {
-          texture: networks[i],
+          texture: network,
           xScale: size / 24,
           yScale: size / 24,
         }
@@ -126,7 +128,7 @@ onMounted(async () => {
   // @ts-ignore
   mouse.element.removeEventListener('wheel', mouse.mousewheel)
 
-  Composite.add(world, [top, floor, leftWall, rightWall, chains, mouseConstraint])
+  Composite.add(world, [top, floor, leftWall, rightWall, ...chains, mouseConstraint])
 
   // keep the mouse in sync with rendering
 
@@ -146,6 +148,16 @@ onMounted(async () => {
       if (entry.isIntersecting) {
         Runner.run(runner, engine)
         Render.run(render)
+
+        // pull the coins up
+        chains.forEach(body => {
+          const forceMagnitude = 0.02 * body.mass
+
+          Body.applyForce(body, body.position, {
+            x: 0,
+            y: -forceMagnitude - Math.random() * forceMagnitude
+          })
+        })
       } else {
         Runner.stop(runner)
         Render.stop(render)
@@ -157,7 +169,7 @@ onMounted(async () => {
 
   // resize canvas
 
-  const resizeHandler = () => {
+  resizeHandler = () => {
     const multiplayer = Math.sqrt(ethalonArea / (parent.value.clientWidth * parent.value.clientHeight))
     const width = parent.value.clientWidth * multiplayer
     const height = parent.value.clientHeight * multiplayer
@@ -178,6 +190,10 @@ onMounted(async () => {
   }
 
   window.addEventListener('resize', resizeHandler)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', resizeHandler)
 })
 </script>
 
