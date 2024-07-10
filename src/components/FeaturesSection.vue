@@ -6,15 +6,12 @@ const features = [{
   title: 'Hold, send and receive',
   image: '/features/send.svg',
 }, {
-  title: 'Stake',
-  image: '/features/stake.svg',
-}, {
-  title: 'Swap',
-  image: '/features/swap.svg',
-}, {
   title: 'Scam warning ',
   image: '/features/scam-warning.svg',
   imageOnTop: true
+}, {
+  title: 'Swap',
+  image: '/features/swap.svg',
 },]
 </script>
 

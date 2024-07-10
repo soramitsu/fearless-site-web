@@ -21,9 +21,9 @@ const benefits = [
     icon: 'fingerprint'
   },
   {
-    title: 'Scam warning',
-    description: "The app alerts you if you're about to transfer to potential scammers or risky CEX withdrawal addresses, ensuring your money stays safe and secure.",
-    icon: 'attention'
+    title: 'Wallet management',
+    description: "Besides classic seedphrase importing, Fearless Wallet supports connecting your Google Drive or mobile device (with your existing wallet).",
+    icon: 'wallet'
   },
 ]
 </script>

@@ -1,9 +1,8 @@
 <script setup lang="ts">
 const benefits = [
   { icon: 'networks', accent: '80+', subline: ' networks' },
-  { icon: 'user', accent: '250k', subline: ' users' },
-  { icon: 'calendar', accent: '2021', subline: 'founded' },
-  { icon: 'star', accent: '4/5+', subline: 'rating' },
+  { icon: 'user', accent: '250k+', subline: ' users' },
+  { icon: 'star', accent: '4+', subline: 'rating' },
 ]
 
 const isTrailerOpen = ref(false)
@@ -20,7 +19,7 @@ const isTrailerOpen = ref(false)
           True crypto ownership with Fearless DeFi Wallet. 80+ networks, one unified experience.
         </p>
         <div class="buttons mb-l">
-          <Button href="https://qrcodes.pro/5FVEPa" title="Get Extension" icon="desktop" target="_blank" accent />
+          <Button href="https://qrcodes.pro/5FVEPa" title="Get extension" icon="desktop" target="_blank" accent />
           <Button href="https://qrcodes.pro/9cSnKW " title="Get mobile app" icon="mobile" target="_blank" accent />
         </div>
         <div class="benefits">
@@ -65,9 +64,8 @@ const isTrailerOpen = ref(false)
 
 .benefits {
   display: grid;
-  grid-template-columns: repeat(4, minmax(10rem, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-4xs);
-  overflow-x: auto;
 }
 
 .icon {
@@ -160,7 +158,6 @@ const isTrailerOpen = ref(false)
   }
 
   .benefits {
-    grid-template-columns: repeat(3, 1fr);
     max-width: 49rem;
   }
 

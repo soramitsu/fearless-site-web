@@ -263,20 +263,18 @@ const resourcesLinks = [{
     align-items: start;
   }
 
+  .community {
+    flex-direction: row;
+    align-items: center;
+  }
+
   .soramitsu {
     flex-direction: row;
     align-items: center;
   }
 
   .logo {
-    margin-top: -16rem;
-  }
-}
-
-@media (min-width: 960px) {
-  .community {
-    flex-direction: row;
-    align-items: center;
+    margin-top: -18rem;
   }
 }
 </style>
