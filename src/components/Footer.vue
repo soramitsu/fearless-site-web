@@ -88,6 +88,12 @@ const resourcesLinks = [{
 
 <template>
   <footer class="w px-3xs pt-xxl">
+    <div class="community outline-block rounded-s p-s text-xs">
+      Join our community
+      <div class="buttons">
+        <Button v-for="item in community" :key="item.title" :href="item.link" :icon="item.icon" small />
+      </div>
+    </div>
     <div class="soramitsu color-secondary text-xs p-s">
       <svg width="153" height="29" viewBox="0 0 153 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_230_26931)">
@@ -102,12 +108,6 @@ const resourcesLinks = [{
         </defs>
       </svg>
       Made with ♥ by Soramitsu for the multi-chain future
-    </div>
-    <div class="community outline-block rounded-s p-s text-xs">
-      Join our community
-      <div class="buttons">
-        <Button v-for="item in community" :key="item.title" :href="item.link" :icon="item.icon" small />
-      </div>
     </div>
     <div class="navigation px-s py-l">
       <div class="about">
@@ -136,7 +136,7 @@ const resourcesLinks = [{
       </div>
 
       <div class="downloads">
-        <h3 class="py-xs text-xs color-secondary">Downloads</h3>
+        <h3 class="py-xs text-xs color-secondary">Get our Apps</h3>
         <a v-for="item in downloadLinks" :key="item.title" :href="item.href" target="_blank" class="link text-xs">
           <img :src="`/icons/${item.icon}.svg`" :alt="`${item.icon} icon`" />
           {{ item.title }}
