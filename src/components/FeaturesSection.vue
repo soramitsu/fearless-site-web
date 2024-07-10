@@ -13,7 +13,7 @@ const features = [{
   image: '/features/swap.svg',
 }, {
   title: 'Scam warning ',
-  image: '/features/account.svg',
+  image: '/features/scam-warning.svg',
   imageOnTop: true
 },]
 </script>
