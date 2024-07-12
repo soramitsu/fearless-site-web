@@ -21,6 +21,7 @@ useSchemaOrg([
 </script>
 
 <template>
+  <NuxtLoadingIndicator color="var(--color-text-secondary)" />
   <Header />
   <NuxtPage />
   <Footer />
