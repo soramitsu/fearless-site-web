@@ -4,7 +4,7 @@ import type { Link } from '~/lib/constants/types'
 const { items } = defineProps<{
   items: {
     title: string,
-    content: (string | Link)[]
+    content: (string | Link)[][]
   }[]
 }>()
 const activeItem = ref<number>()
@@ -30,8 +30,10 @@ const toggleAccordion = (i: number) => {
       </h3>
       <div class="content">
         <div>
-          <div class="pb-m inner text-s color-secondary">
-            <TextWithLinks :content="item.content" />
+          <div class="pb-m inner text-s color-secondary rich">
+            <p v-for="p in item.content">
+              <TextWithLinks :content="p" />
+            </p>
           </div>
         </div>
       </div>

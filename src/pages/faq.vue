@@ -25,83 +25,119 @@ useSchemaOrg([
 
 const items = [
   {
-    title: 'Who is developing the Fearless Wallet?',
+    title: 'How safe is a Fearless Wallet?',
     content: [
-      'Fearless Wallet is developed by ',
-      {
-        title: 'Soramitsu',
-        href: 'https://soramitsu.co.jp/',
-      },
-      " and has been supported by the Kusama Treasury and the SORA community. SORAMITSU is a Japanese technology company delivering blockchain-based solutions for enterprises, universities, and governments. From the creation of domestic and cross-border payment systems, to the development of a completely decentralized autonomous economy, SORAMITSU's projects and use case studies represent the next-generation of fintech."
+      [
+        "Fearless Wallet is open-sourced, non-custodial, and decentralized."
+      ], [
+        "No other application on your mobile has access to Fearless Wallet during the creation of an account. If your device was compromised, your mnemonic will not be liable to be lost."
+      ], [
+        "If your device were to be lost, misplaced, or stolen, the pin acts as a safety net for you to immediately recover your account and open it on a different device to change your credentials and avoid a possible compromise. As your funds are stored on the blockchain, you don’t need to worry about their integrity if your mobile phone is compromised."
+      ], [
+        "You can read more about security ",
+        { href: 'https://fearlesswallet.medium.com/security-in-fearless-wallet-773151bf64cb', title: 'here' },
+        "."
+      ]
     ]
   }, {
-    title: 'Where is the source code for the Fearless Wallet?',
+    title: 'Is Fearless wallet non-custodial?',
+    content: [[
+      "Yes, Fearless Wallet is a non-custodial wallet, meaning you have complete control over your accounts and funds. All your data is securely stored within a private app space on your device, eliminating the need to trust a third party. To ensure the safety of your funds, it's essential to securely store your seed phrase or JSON file along with its password. If you lose access to your wallet, these are the only ways to recover your funds."
+    ]]
+  }, {
+    title: 'How to Buy Crypto with Fearless Wallet?',
     content: [
-      'Fearless iOS repos: ',
-      {
-        title: '.../fearless-iOS',
-        href: 'https://github.com/soramitsu/fearless-iOS'
-      },
-      ', ',
-      {
-        title: '.../fearless-utils-iOS',
-        href: 'https://github.com/soramitsu/fearless-utils-iOS'
-      },
-      '. Fearless Android repos: ',
-      {
-        title: '.../fearless-Android',
-        href: 'https://github.com/soramitsu/fearless-Android'
-      },
-      ', ',
-      {
-        title: '.../fearless-utils-Android',
-        href: 'https://github.com/soramitsu/fearless-utils-Android'
-      },
-      '.'
+      [
+        "How to buy $DOT and $KSM with fiat?"
+      ], [
+        "Follow these simple steps:"
+      ], [
+        '1. Go to the "Wallet" tab in the app.'
+      ], [
+        "2. Select the crypto you wish to buy."
+      ], [
+        '3. Click "Buy" and pick Ramp or MoonPay.'
+      ], [
+        '4. Follow the steps to finish your purchase.'
+      ], [
+        'Note: MoonPay only supports $DOT purchases.'
+      ], [
+        'Here you are! Your new crypto is now available in your account!'
+      ]
     ]
   }, {
-    title: 'How do I contact the Soramitsu team?',
+    title: 'How do you stake on the Fearless Wallet?',
     content: [
-      'You can email us at ',
-      {
-        title: 'fearless@soramitsu.co.jp',
-        href: 'mailto:fearless@soramitsu.co.jp'
-      },
-      ' or join the Fearless Wallet Telegram group to ask any questions and stay updated with the latest news: ',
-      {
-        title: 't.me/fearlesswallet',
-        href: 'https://t.me/fearlesswallet'
-      },
-      '.'
+      [
+        "Staking on the Fearless Wallet is a straightforward process that allows you to earn passive income from the blocks generated across various networks. To get started, simply open your Fearless Wallet mobile app and tap on the Staking section. Once you've set up your staking, the Staking section will serve as your information hub for all your validators. You can easily access and review notifications from them in the Alerts view, along with graphical summaries of your staked assets. It's that simple to stake fearlessly!"
+      ], [
+        "For more detailed instructions, please refer to our ",
+        { title: "comprehensive guide.", href: 'https://wiki.fearlesswallet.io/getting-started/how-do-i-stake-my-crypto' },
+        "."
+      ]
     ]
   }, {
-    title: 'What features of Fearless Wallet are currently available?',
+    title: 'How do I unstake on the Fearless Wallet?',
     content: [
-      'The latest version including Staking, Analytics, Crowdloans, Account Management, Wallet, App Settings, Extrinsic Support, Multi-network and Multi-asset support is available now. Polkaswap and governance will come in 2023.'
+      ['1. Go to the Staking tab'],
+      ['2. Click on the "three dots" (top right corner of "Your Pool Staking" menu)'],
+      ['3. Click Unstake'],
+      ["4. Enter the value you'd like to unstake (either the whole amount or part of it)"],
+      ['5. Make sure everything is correct and Confirm the transaction'],
     ]
   }, {
     title: 'What is the minimum amount I can contribute to a Crowdloan?',
     content: [
-      'The minimum amounts are set at 5 DOT for the Polkadot crowdloans and 0.1 KSM for Kusama crowdloans. Some teams may also choose to set their own minimum contribution required for receiving rewards. Setting a maximum contribution amount allows teams to place a cap on the rewards that they are willing to offer crowdloan contributors, and may differ from the hard cap set by either Polkadot or Kusama on the blockchain.'
+      [
+        "The minimum amounts are set at 5 DOT for the Polkadot crowdloans and 0.1 KSM for Kusama crowdloans. Some teams may also choose to set their own minimum contribution required for receiving rewards. Setting a maximum contribution amount allows teams to place a cap on the rewards that they are willing to offer crowdloan contributors, and may differ from the hard cap set by either Polkadot or Kusama on the blockchain."
+      ]
     ]
   }, {
     title: 'When will I get the contributed $DOT/$KSM back from the Crowdloan?',
     content: [
-      'If the project you contributed to wins, your DOT/KSM will be locked for up to 24 months/48 weeks respectively (please confirm the slot duration with the project specifically, as they will be the ones to define the duration). If the contributed project loses, your DOT / KSM will be returned at the end of the next era after the auction batch has ended.'
+      [
+        "If the project you support wins, your DOT (Polkadot) or KSM (Kusama) tokens will be locked for a duration of up to 24 months or 48 weeks, respectively. It's essential to confirm the specific lock duration with the project team, as they will determine the exact timeframe."
+      ], [
+        "In the event that the contributed project does not win, rest assured that your DOT/KSM tokens will be returned to you at the end of the next era, following the conclusion of the auction batch."
+      ]
     ]
   }, {
-    title: 'What is staking?',
+    title: 'How do I import my Fearless Wallet?',
     content: [
-      'Staking is locking your tokens in the network in order to generate new blocks. Using Fearless Wallet makes the process much simpler, with all the required information presented in a clear and intuitive manner for you to begin staking fearlessly.'
+      [
+        "Read the article: ",
+        {
+          title: "Exporting and Importing a Wallet Using a Passphrase",
+          href: 'https://wiki.fearlesswallet.io/accounts/walkthrough/exporting-and-importing-a-wallet-using-a-passphrase'
+        }
+      ]
     ]
   }, {
-    title: 'How do I import/export a wallet?',
+    title: 'How do I fix connection issues?',
     content: [
-      'Read the article: ',
-      {
-        title: 'Exporting and Importing a Wallet Using a Passphrase',
-        href: 'https://wiki.fearlesswallet.io/accounts/walkthrough/exporting-and-importing-a-wallet-using-a-passphrase'
-      },
+      [
+        "Sometimes you may encounter network issues when using Fearless Wallet. This is a common situation that happens when a network is experiencing instability. But don't worry, there's a simple solution!"
+      ], [
+        "To fix this, you'll need to switch network nodes. Here's a step-by-step guide on how to do it: ",
+        {
+          title: "How do I switch network nodes?",
+          href: "https://wiki.fearlesswallet.io/accounts/walkthrough/switching-network-nodes"
+        }
+      ], [
+        "This guide will provide you with a comprehensive explanation of how to switch nodes and fix connection issues. Usually, simply switching to a different node can resolve the issue and get you back up and running!"
+      ]
+    ]
+  }, {
+    title: 'Where can I go if I have more questions?',
+    content: [
+      [
+        "If you have more questions, feel free to reach out to our support team. You can join our ",
+        {
+          title: "support chat",
+          href: "https://t.me/fearlesshappiness"
+        },
+        ", and we’ll be happy to assist you!"
+      ]
     ]
   }
 ]
