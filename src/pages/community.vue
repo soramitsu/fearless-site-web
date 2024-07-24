@@ -3,7 +3,12 @@ const links = [{
   title: 'Telegram',
   href: 'https://t.me/fearlesswallet',
   icon: 'telegram',
-  description: 'Join our Telegram community for real-time discussions, support, and updates about Fearless Wallet.'
+  description: 'Join our Telegram community for real-time discussions, support, and updates about Fearless Wallet.',
+  interactionStatistic: {
+    "@type": "InteractionCounter",
+    interactionType: "https://schema.org/JoinAction",
+    userInteractionCount: 1000
+  }
 }, {
   title: 'X',
   href: 'https://twitter.com/fearlesswallet',
@@ -25,6 +30,42 @@ const links = [{
   icon: 'medium',
   description: 'Read our in-depth articles, updates, and stories about Fearless Wallet on Medium.'
 }]
+
+const title = 'Fearless Wallet - Crypto Community Hub',
+  description =
+    'Join the vibrant Fearless Wallet community to connect with crypto enthusiasts, stay updated on the latest news, and access support across multiple platforms. Enhancing your crypto experience with Fearless Wallet!',
+  keywords =
+    'Fearless Wallet, cryptocurrency community, crypto wallet support, blockchain enthusiasts, Fearless Wallet Telegram, crypto discussions, digital wallet news, Fearless Wallet updates, crypto education, Fearless Wallet GitHub, crypto tutorials, Fearless Wallet YouTube, crypto community, secure crypto transactions, multi-chain wallet, DeFi, wallet security tips, crypto investment strategies, Fearless Wallet features, peer-to-peer crypto support'
+
+useSeoMeta({
+  title,
+  ogTitle: title,
+  twitterTitle: title,
+  description,
+  ogDescription: description,
+  twitterDescription: description,
+  keywords
+})
+
+useSchemaOrg([
+  defineWebPage({
+    inLanguage: "en-US",
+    name: 'Fearless Wallet Community',
+    description: 'Join the Fearless Wallet community for real-time discussions, support, and updates.',
+    mainEntity: {
+      '@type': 'WebPageElement',
+      name: "Community Platforms",
+      description: "Connect with us across various platforms to stay informed, get support, and engage with other users.",
+      hasPart: links.map(({ title, href, description, interactionStatistic }) => ({
+        "@type": "SocialMediaPosting",
+        name: title,
+        url: href,
+        description,
+        interactionStatistic
+      })),
+    }
+  })
+])
 </script>
 
 <template>
@@ -35,11 +76,16 @@ const links = [{
   <LinkTilesWithIconsSection :links="links" :columns="3" class="my-xxl" />
 
   <p class="w-narrow px-l mb-m">
-    Welcome to the Fearless Wallet community hub! Connect with us across various platforms to stay informed, get
-    support, and engage with other users. Whether you prefer real-time chats, following the latest updates, exploring
-    our codebase, or watching informative videos, we've got a place for you.
+    Welcome to the Fearless Wallet Community Hub!
+  </p>
+  <p class="w-narrow px-l mb-m">
+    Join the thriving Fearless Wallet community and connect with fellow users across multiple platforms. Stay updated on
+    the latest Fearless Wallet news, receive support, and engage in meaningful discussions. Whether you enjoy real-time
+    chats on Telegram, following updates on X (formerly Twitter), exploring our GitHub codebase, or watching informative
+    videos on YouTube, we have a space tailored just for you.
   </p>
   <p class="w-narrow px-l mb-xxl">
-    Join us and be a part of the Fearless Wallet community today!
+    Become a valued member of the Fearless Wallet community today and unlock the full potential of your crypto
+    experience!
   </p>
 </template>

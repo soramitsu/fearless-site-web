@@ -20,14 +20,14 @@ export default defineNuxtConfig({
     identity: {
       type: 'Organization',
       name: 'Fearless Wallet',
-      url: 'https://www.fearlesswallet.io',
-      logo: 'https://www.fearlesswallet.io/logo.svg',
+      url: 'https://fearlesswallet.io',
+      logo: 'https://fearlesswallet.io/logo.svg',
       sameAs: [
         'https://x.com/FearlessWallet',
         'https://t.me/fearlesswallet',
         'https://www.youtube.com/c/FearlessWallet',
       ],
-      email: 'hello@fearlesswallet.io',
+      email: 'fearless@soramitsu.co.jp',
     },
   },
 
