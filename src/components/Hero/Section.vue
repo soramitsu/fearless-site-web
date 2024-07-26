@@ -13,10 +13,10 @@ const isTrailerOpen = ref(false)
     <div class="w hero">
       <div class="text">
         <h1 class="mb-s">
-          Multi-chain Crypto Wallet
+          Effortless Multi-Chain Management
         </h1>
         <p class="color-secondary text-s mb-m">
-          True crypto ownership with Fearless DeFi Wallet. 80+ networks, one unified experience.
+          Fearless Wallet makes DeFi simple for beginners and unlocks advanced features for pros.
         </p>
         <div class="buttons mb-l">
           <Button href="https://qrcodes.pro/5FVEPa" title="Get extension" icon="desktop" target="_blank" accent />
