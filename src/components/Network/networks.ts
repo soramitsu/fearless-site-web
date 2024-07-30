@@ -296,30 +296,6 @@ export const networks = [
     icon: '/networks/oasys.svg',
   },
   {
-    name: 'MCH Verse Mainnet',
-    icon: '/networks/mchverse.svg',
-  },
-  {
-    name: 'TCG Verse Mainnet',
-    icon: '/networks/tcgverse.svg',
-  },
-  {
-    name: 'HOME Verse Mainnet',
-    icon: '/networks/homeverse.svg',
-  },
-  {
-    name: 'Chain Verse Mainnet',
-    icon: '/networks/chainverse.svg',
-  },
-  {
-    name: 'Saakuru Verse Mainnet',
-    icon: '/networks/saakuruverse.svg',
-  },
-  {
-    name: 'Yooldo Verse Mainnet',
-    icon: '/networks/yooldoverse.svg',
-  },
-  {
     name: 'CAGA Ankara Testnet',
     icon: '/networks/cagachain.svg',
   },
@@ -342,5 +318,9 @@ export const networks = [
   {
     name: 'Kusama People',
     icon: '/networks/People.svg',
+  },
+  {
+    name: 'Avail DA Mainnet',
+    icon: '/networks/Avail.svg',
   },
 ]
