@@ -5,7 +5,7 @@ const community = [{
   icon: 'telegram'
 }, {
   title: 'X',
-  link: 'https://twitter.com/fearlesswallet',
+  link: 'https://x.com/fearlesswallet',
   icon: 'x'
 }, {
   title: 'GitHub',

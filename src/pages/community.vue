@@ -11,7 +11,7 @@ const links = [{
   }
 }, {
   title: 'X',
-  href: 'https://twitter.com/fearlesswallet',
+  href: 'https://x.com/fearlesswallet',
   icon: 'x',
   description: 'Follow us on X (formerly Twitter) for the latest updates, tips, and news about Fearless Wallet.'
 }, {
