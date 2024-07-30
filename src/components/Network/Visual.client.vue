@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Engine, Render, Runner, Bodies, Body, Composite, Composites, MouseConstraint, Mouse } from 'matter-js'
+import { Engine, Render, Runner, Bodies, Body, Composite, MouseConstraint, Mouse } from 'matter-js'
 
 const networks = [
   '/networks/SORA.svg',
