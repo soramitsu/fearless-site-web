@@ -37,8 +37,8 @@
 .rich h6:not(:first-child):not([class]),
 .rich p:not(:first-child),
 .rich blockquote:not(:first-child),
-.rich ul,
-.rich ol {
+.rich ul:not(:first-child),
+.rich ol:not(:first-child) {
   margin-top: var(--space-s);
 }
 
@@ -60,8 +60,8 @@
 .rich h6:not(:last-child):not([class]),
 .rich p:not(:last-child),
 .rich blockquote:not(:last-child),
-.rich ul,
-.rich ol {
+.rich ul:not(:last-child),
+.rich ol:not(:last-child) {
   margin-bottom: var(--space-s);
 }
 

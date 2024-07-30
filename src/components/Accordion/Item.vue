@@ -1,40 +1,23 @@
 <script setup lang="ts">
-import type { Link } from '~/lib/constants/types'
-
-const { items } = defineProps<{
-  items: {
-    title: string,
-    content: (string | Link)[][]
-  }[]
+defineProps<{ title: string, id: number, open?: boolean }>()
+defineEmits<{
+  (e: 'toggle', id: number): void
 }>()
-const activeItem = ref<number>()
-
-const toggleAccordion = (i: number) => {
-  if (activeItem.value === i) {
-    activeItem.value = undefined
-  } else {
-    activeItem.value = i
-  }
-}
 </script>
 
 <template>
-  <div class="accordion">
-    <div v-for="(item, i) in items" :key="i" class="item bg-block rounded-s px-m" :class="{ open: i === activeItem }">
-      <h3 @click="toggleAccordion(i)" class="text-m py-m hover-trigger">
-        {{ item.title }}
-        <div class="icon">
-          <span class="line"></span>
-          <span class="line"></span>
-        </div>
-      </h3>
-      <div class="content">
-        <div>
-          <div class="pb-m inner text-s color-secondary rich">
-            <p v-for="p in item.content">
-              <TextWithLinks :content="p" />
-            </p>
-          </div>
+  <div class="item bg-block rounded-s px-m" :class="{ open }">
+    <h3 @click="$emit('toggle', id)" class="text-m py-m hover-trigger">
+      {{ title }}
+      <div class="icon">
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </h3>
+    <div class="content">
+      <div>
+        <div class="pb-m inner text-s color-secondary rich">
+          <slot />
         </div>
       </div>
     </div>
@@ -42,11 +25,6 @@ const toggleAccordion = (i: number) => {
 </template>
 
 <style scoped>
-.accordion {
-  display: grid;
-  gap: var(--space-xs);
-}
-
 .item {
   transition: background-color 0.3s ease;
 }
