@@ -112,7 +112,7 @@ export default defineNuxtConfig({
         },
         {
           name: 'twitter:site',
-          content: '@polkaswap',
+          content: '@fearlesswallet',
         },
         {
           property: 'og:title',
@@ -140,7 +140,7 @@ export default defineNuxtConfig({
         },
         {
           property: 'og:url',
-          content: 'https://polkaswap.io',
+          content: 'https://fearlesswallet.io',
         },
         {
           property: 'og:type',
