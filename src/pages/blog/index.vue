@@ -1,3 +1,21 @@
+<script setup lang="ts">
+const title = 'Fearless Wallet Crypto and Web3 Blog',
+  description =
+    'Explore the Fearless Wallet blog for expert insights, tips, and the latest news on cryptocurrency management, security, and digital finance. Stay informed and empowered in your crypto journey.',
+  keywords =
+    'Fearless Wallet, cryptocurrency, crypto management, blockchain, digital finance, wallet security, crypto tips, financial insights, crypto news'
+
+useSeoMeta({
+  title,
+  ogTitle: title,
+  twitterTitle: title,
+  description,
+  ogDescription: description,
+  twitterDescription: description,
+  keywords
+})
+</script>
+
 <template>
   <h1 class="w px-l pt-3xl pb-xxl text-center">
     Fearless <span class="color-accent">Blog</span>
