@@ -4,11 +4,6 @@ const links = [{
   href: 'https://t.me/fearlesswallet',
   icon: 'telegram',
   description: 'Join our Telegram community for real-time discussions, support, and updates about Fearless Wallet.',
-  interactionStatistic: {
-    "@type": "InteractionCounter",
-    interactionType: "https://schema.org/JoinAction",
-    userInteractionCount: 1000
-  }
 }, {
   title: 'X',
   href: 'https://x.com/fearlesswallet',
@@ -53,17 +48,83 @@ useSchemaOrg([
     name: 'Fearless Wallet Community',
     description: 'Join the Fearless Wallet community for real-time discussions, support, and updates.',
     mainEntity: {
-      '@type': 'WebPageElement',
-      name: "Community Platforms",
-      description: "Connect with us across various platforms to stay informed, get support, and engage with other users.",
-      hasPart: links.map(({ title, href, description, interactionStatistic }) => ({
-        "@type": "SocialMediaPosting",
-        name: title,
-        url: href,
-        description,
-        interactionStatistic
-      })),
-    }
+      "@type": "WebPageElement",
+      "name": "Community Platforms",
+      "description": "Connect with us across various platforms to stay informed, get support, and engage with other users.",
+      "hasPart": [
+        {
+          "@type": "SocialMediaPosting",
+          "name": "Telegram Community",
+          "url": "https://t.me/fearlesswallet",
+          "description": "Join our Telegram community for real-time discussions, support, and updates about Fearless Wallet.",
+          "interactionStatistic": {
+            "@type": "InteractionCounter",
+            "interactionType": "https://schema.org/JoinAction",
+            "userInteractionCount": 1000
+          },
+          "datePublished": "2024-07-31",
+          "author": {
+            "@type": "Person",
+            "name": "Fearless Wallet Team"
+          }
+        },
+        {
+          "@type": "SocialMediaPosting",
+          "name": "Telegram Announcements",
+          "url": "https://t.me/fearless_announcements",
+          "description": "Stay up-to-date with the latest news and announcements from the Fearless Wallet team on Telegram.",
+          "datePublished": "2024-07-31",
+          "author": {
+            "@type": "Person",
+            "name": "Fearless Wallet Team"
+          }
+        },
+        {
+          "@type": "SocialMediaPosting",
+          "name": "Follow us on X",
+          "url": "https://x.com/fearlesswallet",
+          "description": "Follow us on X (formerly Twitter) for the latest updates, tips, and news about Fearless Wallet.",
+          "datePublished": "2024-07-31",
+          "author": {
+            "@type": "Person",
+            "name": "Fearless Wallet Team"
+          }
+        },
+        {
+          "@type": "SocialMediaPosting",
+          "name": "GitHub Repository",
+          "url": "https://github.com/soramitsu",
+          "description": "Explore our GitHub repository for the latest code, updates, and contributions to the Fearless Wallet project.",
+          "datePublished": "2024-07-31",
+          "author": {
+            "@type": "Person",
+            "name": "Fearless Wallet Team"
+          }
+        },
+        {
+          "@type": "SocialMediaPosting",
+          "name": "YouTube Channel",
+          "url": "https://www.youtube.com/fearlesswallet",
+          "description": "Subscribe to our YouTube channel for tutorials, updates, and insights about Fearless Wallet.",
+          "datePublished": "2024-07-31",
+          "author": {
+            "@type": "Person",
+            "name": "Fearless Wallet Team"
+          }
+        },
+        {
+          "@type": "SocialMediaPosting",
+          "name": "Medium Articles",
+          "url": "https://medium.com/fearlesswallet",
+          "description": "Read our in-depth articles, updates, and stories about Fearless Wallet on Medium.",
+          "datePublished": "2024-07-31",
+          "author": {
+            "@type": "Person",
+            "name": "Fearless Wallet Team"
+          }
+        }
+      ]
+    },
   })
 ])
 </script>
