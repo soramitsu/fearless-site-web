@@ -54,6 +54,7 @@ useSchemaOrg([
       "hasPart": [
         {
           "@type": "SocialMediaPosting",
+          "headline": "Telegram Community",
           "name": "Telegram Community",
           "url": "https://t.me/fearlesswallet",
           "description": "Join our Telegram community for real-time discussions, support, and updates about Fearless Wallet.",
@@ -62,7 +63,7 @@ useSchemaOrg([
             "interactionType": "https://schema.org/JoinAction",
             "userInteractionCount": 1000
           },
-          "datePublished": "2024-07-31",
+          "datePublished": new Date('2024-07-31').toISOString(),
           "author": {
             "@type": "Person",
             "name": "Fearless Wallet Team"
@@ -70,10 +71,11 @@ useSchemaOrg([
         },
         {
           "@type": "SocialMediaPosting",
+          "headline": "Telegram Announcements",
           "name": "Telegram Announcements",
           "url": "https://t.me/fearless_announcements",
           "description": "Stay up-to-date with the latest news and announcements from the Fearless Wallet team on Telegram.",
-          "datePublished": "2024-07-31",
+          "datePublished": new Date('2024-07-31').toISOString(),
           "author": {
             "@type": "Person",
             "name": "Fearless Wallet Team"
@@ -81,10 +83,11 @@ useSchemaOrg([
         },
         {
           "@type": "SocialMediaPosting",
+          "headline": "Follow us on X",
           "name": "Follow us on X",
           "url": "https://x.com/fearlesswallet",
           "description": "Follow us on X (formerly Twitter) for the latest updates, tips, and news about Fearless Wallet.",
-          "datePublished": "2024-07-31",
+          "datePublished": new Date('2024-07-31').toISOString(),
           "author": {
             "@type": "Person",
             "name": "Fearless Wallet Team"
@@ -92,10 +95,11 @@ useSchemaOrg([
         },
         {
           "@type": "SocialMediaPosting",
+          "headline": "GitHub Repository",
           "name": "GitHub Repository",
           "url": "https://github.com/soramitsu",
           "description": "Explore our GitHub repository for the latest code, updates, and contributions to the Fearless Wallet project.",
-          "datePublished": "2024-07-31",
+          "datePublished": new Date('2024-07-31').toISOString(),
           "author": {
             "@type": "Person",
             "name": "Fearless Wallet Team"
@@ -103,10 +107,11 @@ useSchemaOrg([
         },
         {
           "@type": "SocialMediaPosting",
+          "headline": "YouTube Channel",
           "name": "YouTube Channel",
           "url": "https://www.youtube.com/fearlesswallet",
           "description": "Subscribe to our YouTube channel for tutorials, updates, and insights about Fearless Wallet.",
-          "datePublished": "2024-07-31",
+          "datePublished": new Date('2024-07-31').toISOString(),
           "author": {
             "@type": "Person",
             "name": "Fearless Wallet Team"
@@ -114,10 +119,11 @@ useSchemaOrg([
         },
         {
           "@type": "SocialMediaPosting",
+          "headline": "Medium Articles",
           "name": "Medium Articles",
           "url": "https://medium.com/fearlesswallet",
           "description": "Read our in-depth articles, updates, and stories about Fearless Wallet on Medium.",
-          "datePublished": "2024-07-31",
+          "datePublished": new Date('2024-07-31').toISOString(),
           "author": {
             "@type": "Person",
             "name": "Fearless Wallet Team"

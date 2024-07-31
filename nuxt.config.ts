@@ -31,6 +31,12 @@ export default defineNuxtConfig({
     },
   },
 
+  runtimeConfig: {
+    public: {
+      baseUrl: '',
+    },
+  },
+
   app: {
     head: {
       htmlAttrs: {
