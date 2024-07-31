@@ -11,12 +11,6 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   modules: ['@nuxt/image', '@nuxt/content', 'nuxt-schema-org', '@nuxtjs/sitemap'],
 
-  content: {
-    markdown: {
-      anchorLinks: false,
-    },
-  },
-
   site: {
     url: 'https://fearlesswallet.io',
     name: 'Fearless Wallet',

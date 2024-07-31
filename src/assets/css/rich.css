@@ -1,5 +1,5 @@
 .rich {
-  overflow: hidden;
+  word-break: break-word;
 }
 
 .rich * {
