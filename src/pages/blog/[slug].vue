@@ -83,5 +83,7 @@ useSchemaOrg(schema)
 <style scoped>
 .cover {
   width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
 }
 </style>

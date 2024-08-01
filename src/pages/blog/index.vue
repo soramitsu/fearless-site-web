@@ -45,6 +45,7 @@ useSeoMeta({
 
 .cover {
   aspect-ratio: 16/9;
+  object-fit: cover;
 }
 
 @media (min-width: 800px) {
