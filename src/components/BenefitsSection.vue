@@ -22,7 +22,7 @@ const benefits = [
   },
   {
     title: 'Wallet management',
-    description: "Besides classic seedphrase importing, Fearless Wallet supports connecting your Google Drive or mobile device (with your existing wallet).",
+    description: "You can select any wallet controlled by Fearless, and import or create new ones.",
     icon: 'wallet'
   },
 ]
