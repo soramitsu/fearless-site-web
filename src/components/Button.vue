@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { href } = defineProps<{
   href?: string
-  title: string
+  title?: string
   icon?: string
   small?: boolean
   accent?: boolean
@@ -19,7 +19,7 @@ const component = computed(() => {
     :class="accent && 'accent', small ? 'text-xxs px-s py-xs' : 'text-s bold px-m py-s'" :target="target">
     <span class="shape" />
     <img v-if="icon" :src="`/icons/${icon}.svg`" :alt="`${icon} icon`" class="icon">
-    <span>{{ title }}</span>
+    <span v-if="title">{{ title }}</span>
   </component>
 </template>
 

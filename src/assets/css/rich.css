@@ -1,5 +1,5 @@
 .rich {
-  overflow: hidden;
+  word-break: break-word;
 }
 
 .rich * {
@@ -10,6 +10,7 @@
   margin-left: auto;
   margin-right: auto;
   border-radius: var(--space-xs);
+  width: 100%;
 }
 .rich img,
 .rich hr:not(:first-child) {
@@ -36,8 +37,8 @@
 .rich h6:not(:first-child):not([class]),
 .rich p:not(:first-child),
 .rich blockquote:not(:first-child),
-.rich ul,
-.rich ol {
+.rich ul:not(:first-child),
+.rich ol:not(:first-child) {
   margin-top: var(--space-s);
 }
 
@@ -59,8 +60,8 @@
 .rich h6:not(:last-child):not([class]),
 .rich p:not(:last-child),
 .rich blockquote:not(:last-child),
-.rich ul,
-.rich ol {
+.rich ul:not(:last-child),
+.rich ol:not(:last-child) {
   margin-bottom: var(--space-s);
 }
 
@@ -77,7 +78,7 @@
   box-sizing: border-box;
   padding-left: 2.2em;
 }
-.rich ul li:before,
+.rich ul > li:before,
 .rich ol > li:before {
   position: absolute;
   top: 0;
@@ -85,6 +86,8 @@
   color: currentColor;
   font-size: inherit;
   line-height: inherit;
+  text-align: center;
+  width: 2em;
 }
 .rich ol li:before {
   content: counters(ol, '.') '.';

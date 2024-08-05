@@ -10,24 +10,33 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
   modules: ['@nuxt/image', '@nuxt/content', 'nuxt-schema-org', '@nuxtjs/sitemap'],
+
   site: {
     url: 'https://fearlesswallet.io',
     name: 'Fearless Wallet',
   },
+
   schemaOrg: {
     identity: {
       type: 'Organization',
       name: 'Fearless Wallet',
-      url: 'https://www.fearlesswallet.io',
-      logo: 'https://www.fearlesswallet.io/logo.svg',
+      url: 'https://fearlesswallet.io',
+      logo: 'https://fearlesswallet.io/logo.svg',
       sameAs: [
         'https://x.com/FearlessWallet',
         'https://t.me/fearlesswallet',
         'https://www.youtube.com/c/FearlessWallet',
       ],
-      email: 'hello@fearlesswallet.io',
+      email: 'fearless@soramitsu.co.jp',
     },
   },
+
+  runtimeConfig: {
+    public: {
+      baseUrl: '',
+    },
+  },
+
   app: {
     head: {
       htmlAttrs: {
@@ -103,7 +112,7 @@ export default defineNuxtConfig({
         },
         {
           name: 'twitter:site',
-          content: '@polkaswap',
+          content: '@fearlesswallet',
         },
         {
           property: 'og:title',
@@ -131,7 +140,7 @@ export default defineNuxtConfig({
         },
         {
           property: 'og:url',
-          content: 'https://polkaswap.io',
+          content: 'https://fearlesswallet.io',
         },
         {
           property: 'og:type',
@@ -140,4 +149,6 @@ export default defineNuxtConfig({
       ],
     },
   },
+
+  compatibilityDate: '2024-07-08',
 })

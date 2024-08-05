@@ -12,7 +12,7 @@ const benefits = [
   },
   {
     title: 'Encryption',
-    description: 'We offer encrypted cloud backup for increased wallet security.',
+    description: 'Fearless Wallet ensures top-tier security with up-to-date crypto protocols for Ethereum and Polkadot, providing robust encryption to safeguard your assets.',
     icon: 'lock'
   },
   {
@@ -21,9 +21,9 @@ const benefits = [
     icon: 'fingerprint'
   },
   {
-    title: 'Scam warning',
-    description: "The app alerts you if you're about to transfer to potential scammers or risky CEX withdrawal addresses, ensuring your money stays safe and secure.",
-    icon: 'attention'
+    title: 'Wallet management',
+    description: "You can select any wallet controlled by Fearless, and import or create new ones.",
+    icon: 'wallet'
   },
 ]
 </script>

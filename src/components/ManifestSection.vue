@@ -11,19 +11,16 @@
       </div>
     </h2>
     <p class="text-l bold w-narrow px-m mb-l">
-      At Fearless Wallet, <span class="color-accent">we envision a decentralized financial future</span> where
-      users
-      fully control their digital assets and interact with any blockchain they choose.
-    </p>
-    <p class="text-l bold w-narrow px-m mb-l">
-      Our mission is to lead DeFi by offering a <span class="color-accent">secure, user-friendly, multi-chain
-        wallet</span> that empowers individuals in the evolving Web3 landscape.
+      At Fearless Wallet, our goal is to empower you to take <span class="color-accent">charge of your financial
+        destiny</span>. With <span class="color-accent">our easy-to-use tools</span> and blockchain flexibility,
+      managing and growing your wealth has never been easier or more exciting.
     </p>
     <p class="text-l bold w-narrow px-m mb-xxl">
       Join us and Stay Fearless!
     </p>
     <div class="w-narrow px-m buttons">
-      <Button href="/download" title="Download wallet" icon="download" />
+      <Button href="https://qrcodes.pro/5FVEPa" title="Try extension" icon="desktop" target="_blank" />
+      <Button href="https://qrcodes.pro/9cSnKW " title="Try mobile app" icon="mobile" target="_blank" />
     </div>
   </section>
 </template>

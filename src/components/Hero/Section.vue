@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const benefits = [
-  [{ accent: '80+' }, ' networks'],
-  [{ accent: '250k' }, ' users'],
-  ['Cross-chain'],
-  ['Founded in ', { accent: '2021' }],
-  ['Self-custodial']
+  { icon: 'networks', accent: '80+', subline: ' networks' },
+  { icon: 'user', accent: '250k+', subline: ' users' },
+  { icon: 'star', accent: '4+', subline: 'rating' },
 ]
+
+const isTrailerOpen = ref(false)
 </script>
 
 <template>
@@ -13,30 +13,38 @@ const benefits = [
     <div class="w hero">
       <div class="text">
         <h1 class="mb-s">
-          Multi-chain <span class="color-accent">Crypto Wallet</span>
+          Effortless Multi-Chain Management
         </h1>
         <p class="color-secondary text-s mb-m">
-          True crypto ownership with Fearless DeFi Wallet. 80+ networks, one unified experience.
+          Fearless Wallet makes DeFi simple for beginners and unlocks advanced features for pros.
         </p>
         <div class="buttons mb-l">
-          <Button href="https://qrcodes.pro/5FVEPa" title="Get Extension" icon="desktop" target="_blank" />
-          <Button href="https://qrcodes.pro/9cSnKW " title="Get mobile app" icon="mobile" target="_blank" />
+          <Button href="https://qrcodes.pro/5FVEPa" title="Get extension" icon="desktop" target="_blank" accent />
+          <Button href="https://qrcodes.pro/9cSnKW " title="Get mobile app" icon="mobile" target="_blank" accent />
         </div>
         <div class="benefits">
-          <div v-for="benefit in benefits" class="benefit text-s px-xs py-xxs">
-            <template v-for="piece in benefit">
-              <template v-if="typeof piece === 'object'">
-                <span class="color-accent bold">{{ piece.accent }}</span>
-              </template>
-              <template v-else>{{ piece }}</template>
-            </template>
+          <div v-for="benefit in benefits" class="text-s px-xs py-xs outline-block rounded-xs">
+            <img :src="`/icons/${benefit.icon}.svg`" :alt="`${benefit.icon} icon`" class="icon mb-xxs" />
+            <span class="bold color-accent">{{ benefit.accent }}</span><br>
+            {{ benefit.subline }}
           </div>
         </div>
       </div>
       <div class="image">
         <HeroVisual class="inner" />
       </div>
+      <button class="trailer-button px-s py-xs text-s" @click="isTrailerOpen = true">Trailer</button>
     </div>
+    <Modal :open="isTrailerOpen" @close="isTrailerOpen = false">
+      <div class="w video">
+        <iframe v-if="isTrailerOpen" width="560" height="315"
+          src="https://www.youtube-nocookie.com/embed/J0rAxcni6cs?autoplay=1" title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="rounded-s outline-block"
+          loading="lazy"></iframe>
+      </div>
+    </Modal>
   </section>
 </template>
 
@@ -44,26 +52,25 @@ const benefits = [
 .hero {
   padding-top: var(--space-3xl);
   padding-bottom: var(--space-l);
-}
-
-.buttons,
-.benefits {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  position: relative;
 }
 
 .buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: var(--space-3xs);
 }
 
 .benefits {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-4xs);
 }
 
-.benefit {
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: var(--space-xxs);
+.icon {
+  width: 2.4rem;
+  height: 2.4rem;
 }
 
 .image {
@@ -73,6 +80,7 @@ const benefits = [
   aspect-ratio: 1 / 1;
   pointer-events: none;
   margin: 0 -10% 0 0;
+  position: relative;
 }
 
 .image .inner {
@@ -80,8 +88,57 @@ const benefits = [
 }
 
 .text {
-  padding: 0 var(--space-l) var(--space-l) var(--space-l);
+  padding: 0 0 var(--space-l) 0;
   min-height: 56rem;
+}
+
+.text>* {
+  padding-left: var(--space-l);
+  padding-right: var(--space-l);
+}
+
+.trailer-button {
+  position: absolute;
+  bottom: var(--space-m);
+  right: var(--space-xs);
+  background-color: rgba(40, 40, 40, .96);
+  display: flex;
+  gap: var(--space-xs);
+  border-radius: var(--space-xl);
+  align-items: center;
+}
+
+.trailer-button::before {
+  content: '';
+  background-image: url('/icons/play.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 1em;
+  height: 1em;
+}
+
+.trailer-button {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.trailer-button:active {
+  transform: scale(0.95);
+}
+
+.video {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+
+.video>iframe {
+  width: 100%;
+  height: 100%;
+}
+
+@media (hover:hover) {
+  .trailer-button:hover {
+    background-color: rgba(50, 50, 50, 1);
+  }
 }
 
 @media (min-width: 800px) {
@@ -93,6 +150,15 @@ const benefits = [
 
   .text {
     padding: var(--space-xl) var(--space-xs);
+  }
+
+  .text>* {
+    padding-left: unset;
+    padding-right: unset;
+  }
+
+  .benefits {
+    max-width: 49rem;
   }
 
   .image {

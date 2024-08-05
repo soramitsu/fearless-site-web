@@ -4,12 +4,8 @@ const community = [{
   link: 'https://t.me/fearlesswallet',
   icon: 'telegram'
 }, {
-  title: 'Announcements',
-  link: 'https://t.me/fearless_announcements',
-  icon: 'telegram'
-}, {
   title: 'X',
-  link: 'https://twitter.com/fearlesswallet',
+  link: 'https://x.com/fearlesswallet',
   icon: 'x'
 }, {
   title: 'GitHub',
@@ -54,7 +50,7 @@ const aboutLinks = [{
   href: '/faq'
 }, {
   title: 'Blog',
-  href: 'https://medium.com/fearlesswallet',
+  href: '/blog',
   external: true
 }]
 
@@ -92,6 +88,12 @@ const resourcesLinks = [{
 
 <template>
   <footer class="w px-3xs pt-xxl">
+    <div class="community outline-block rounded-s p-s text-xs">
+      Join our community
+      <div class="buttons">
+        <Button v-for="item in community" :key="item.title" :href="item.link" :icon="item.icon" small />
+      </div>
+    </div>
     <div class="soramitsu color-secondary text-xs p-s">
       <svg width="153" height="29" viewBox="0 0 153 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_230_26931)">
@@ -106,13 +108,6 @@ const resourcesLinks = [{
         </defs>
       </svg>
       Made with ♥ by Soramitsu for the multi-chain future
-    </div>
-    <div class="community outline-block rounded-s p-s text-xs">
-      Join our community
-      <div class="buttons">
-        <Button v-for="item in community" :key="item.title" :title="item.title" :href="item.link" :icon="item.icon"
-          small />
-      </div>
     </div>
     <div class="navigation px-s py-l">
       <div class="about">
@@ -141,7 +136,7 @@ const resourcesLinks = [{
       </div>
 
       <div class="downloads">
-        <Button title="Downloads" href="/download" icon="download" accent class="mb-s" style="display: flex;" />
+        <h3 class="py-xs text-xs color-secondary">Get our Apps</h3>
         <a v-for="item in downloadLinks" :key="item.title" :href="item.href" target="_blank" class="link text-xs">
           <img :src="`/icons/${item.icon}.svg`" :alt="`${item.icon} icon`" />
           {{ item.title }}
@@ -171,6 +166,7 @@ const resourcesLinks = [{
 
 .community {
   text-wrap: nowrap;
+  justify-content: center;
 }
 
 .soramitsu svg {
@@ -263,8 +259,13 @@ const resourcesLinks = [{
 
 @media (min-width: 800px) {
   .navigation {
-    grid-template-columns: repeat(2, minmax(15rem, auto)) 1fr 30rem;
+    grid-template-columns: repeat(2, minmax(15rem, auto)) 1fr minmax(24rem, auto);
     align-items: start;
+  }
+
+  .community {
+    flex-direction: row;
+    align-items: center;
   }
 
   .soramitsu {
@@ -273,14 +274,7 @@ const resourcesLinks = [{
   }
 
   .logo {
-    margin-top: -16rem;
-  }
-}
-
-@media (min-width: 960px) {
-  .community {
-    flex-direction: row;
-    align-items: center;
+    margin-top: -18rem;
   }
 }
 </style>

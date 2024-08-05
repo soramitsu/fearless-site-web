@@ -3,7 +3,7 @@
     <div class="banner bg-block rounded-s">
       <div class="text">
         <h2 class="text-xxl mb-s">
-          <span class="color-accent">Earn</span> with Staking
+          Earn with Staking
         </h2>
         <p class="color-secondary text-s">
           Stake across 7+ networks, earn rewards, and contribute to network security.

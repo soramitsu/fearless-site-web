@@ -23,6 +23,59 @@ const links = [{
   description: "Download the Fearless Wallet APK directly from GitHub for your Android device.",
   href: 'https://github.com/soramitsu/fearless-Android/releases',
 }]
+
+const title = 'Download Fearless Wallet - Custodial Multichain Wallet',
+  description =
+    'Download the latest version of Fearless Wallet. The Fearless Wallet is available as a mobile app and desktop browser extension. Download the app now!',
+  keywords =
+    'crypto wallet apps, wallet app, wallet web, download, browser wallet, cryptowallet, crypto, multichain wallet, cryptowallet, crypto wallet, wallet, blockchain, buy, sell, bitcoin, btc, ethereum, eth, shiba inu, doge, self custody, web3 ,digital art, nft, exchange, swap, bridge'
+
+useSeoMeta({
+  title,
+  ogTitle: title,
+  twitterTitle: title,
+  description,
+  ogDescription: description,
+  twitterDescription: description,
+  keywords
+})
+
+useSchemaOrg([
+  defineWebPage({
+    inLanguage: "en-US",
+    name: 'Download Fearless Wallet',
+    description: 'Download the Fearless Wallet app to securely manage your cryptocurrencies and digital assets.',
+    mainEntity: {
+      "@type": "SoftwareApplication",
+      name: "Fearless Wallet",
+      operatingSystem: "iOS, Android",
+      applicationCategory: "Wallet",
+      description: "Fearless Wallet is a secure and user-friendly wallet for managing your cryptocurrencies.",
+      downloadUrl: "https://www.fearlesswallet.io/download",
+      softwareVersion: "1.0.0",
+      releaseNotes: "Initial release of Fearless Wallet with support for multiple cryptocurrencies.",
+      offers: {
+        "@type": "Offer",
+        url: "https://www.fearlesswallet.io/download",
+        priceCurrency: "USD",
+        price: "0.00",
+        itemCondition: "https://schema.org/NewCondition",
+        availability: "https://schema.org/InStock"
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.8",
+        ratingCount: "1200"
+      },
+      image: {
+        "@type": "ImageObject",
+        url: "https://fearlesswallet.io/og.jpg",
+        width: 1200,
+        height: 630
+      }
+    }
+  })
+])
 </script>
 
 <template>
@@ -30,13 +83,55 @@ const links = [{
     <span class="color-accent">Download</span> Fearless Wallet
   </h1>
   <LinkTilesWithIconsSection :links="links" class="my-xxl" />
-  <p class="w-narrow px-l mb-m">
-    Welcome to the official download page for Fearless Wallet, your gateway to secure and efficient cryptocurrency
-    management. Whether you're using a browser, iOS, or Android, we have you covered with seamless integration and
-    top-notch security features. Choose your preferred platform and start your fearless journey today.
-  </p>
-  <p class="w-narrow px-l mb-xxl">
-    Download Fearless Wallet now and take control of your cryptocurrency with confidence. Join a growing community of
-    users who trust Fearless Wallet for secure and efficient digital asset management.
-  </p>
+  <section class="w-narrow px-l mb-xxl rich">
+    <h2 class="text-l mb-m">
+      Download Fearless Wallet: Your Secure Cryptocurrency Management Solution
+    </h2>
+
+    <p>
+      Welcome to the official download page for Fearless Wallet, the ultimate solution for secure and efficient
+      cryptocurrency management. Whether you’re accessing it via a web browser, iOS, or Android device, Fearless Wallet
+      offers seamless integration and robust security features tailored to meet your needs.
+    </p>
+
+    <hr>
+
+    <h2 class="text-l mb-m">
+      Why Choose Fearless Wallet?
+    </h2>
+
+    <ul>
+      <li>
+        <b class="color-accent">Cross-Platform Compatibility:</b> Easily manage your digital assets on any
+        device—desktop, iPhone, or Android
+        smartphone.
+      </li>
+      <li>
+        <b class="color-accent">Top-Notch Security:</b> Protect your cryptocurrencies with advanced security protocols
+        that ensure your funds
+        are safe.
+      </li>
+      <li>
+        <b class="color-accent">User-Friendly Interface:</b> Navigate effortlessly through our intuitive design, making
+        cryptocurrency
+        management simple for everyone.
+      </li>
+    </ul>
+
+    <hr>
+
+    <h2 class="text-l mb-m">
+      Join the Fearless Community
+    </h2>
+
+    <p>
+      Download Fearless Wallet today and take control of your cryptocurrency investments with confidence. Join a rapidly
+      growing community of users who trust Fearless Wallet for their digital asset management needs.
+    </p>
+    <p>
+      Start Your Fearless Journey Now!<br />
+      Choose your preferred platform to get started.<br />
+      Take charge of your cryptocurrency with Fearless Wallet—where security meets efficiency!
+    </p>
+  </section>
 </template>

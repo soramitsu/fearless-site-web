@@ -19,6 +19,107 @@ const roadmap = [{
     'DeFi tool integrations',
   ]
 }]
+
+const title = 'Fearless Wallet 2024 Roadmap',
+  description =
+    'The Fearless Wallet roadmap summarizes objectives and future direction, including ongoing ideas and concepts for blockchain development.',
+  keywords =
+    'Fearless Wallet roadmap, crypto wallet apps, wallet app, wallet web, krypto wallet, browser wallet, crypto wallet, blockchain wallet app'
+
+useSeoMeta({
+  title,
+  ogTitle: title,
+  twitterTitle: title,
+  description,
+  ogDescription: description,
+  twitterDescription: description,
+  keywords
+})
+
+useSchemaOrg([
+  defineWebPage({
+    inLanguage: "en-US",
+    name: 'Fearless Wallet Roadmap',
+    description: 'Roadmap for Q2 2024 outlining key developments and strategic initiatives within the SORA Ecosystem.',
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          item: {
+            "@type": "Thing",
+            name: "Polkaswap liquidity pools",
+            description: "Enhancements and updates to liquidity pools within the Polkaswap platform."
+          }
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          item: {
+            "@type": "Thing",
+            name: "Demeter Farming",
+            description: "Introduction of new farming strategies and opportunities."
+          }
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          item: {
+            "@type": "Thing",
+            name: "SORA Card",
+            description: "Launch of the SORA Card for seamless transactions."
+          }
+        },
+        {
+          "@type": "ListItem",
+          position: 4,
+          item: {
+            "@type": "Thing",
+            name: "UI/UX Updates",
+            description: "Improvements to user interface and experience."
+          }
+        },
+        {
+          "@type": "ListItem",
+          position: 5,
+          item: {
+            "@type": "Thing",
+            name: "New Asset Management Flow",
+            description: "Streamlined processes for managing assets."
+          }
+        },
+        {
+          "@type": "ListItem",
+          position: 6,
+          item: {
+            "@type": "Thing",
+            name: "EVM Support",
+            description: "Adding support for new chains and Ethereum Virtual Machine compatibility."
+          }
+        },
+        {
+          "@type": "ListItem",
+          position: 7,
+          item: {
+            "@type": "Thing",
+            name: "Transaction Gas Management",
+            description: "Optimizations to manage transaction gas and speed up processing."
+          }
+        },
+        {
+          "@type": "ListItem",
+          position: 8,
+          item: {
+            "@type": "Thing",
+            name: "DeFi Tool Integrations",
+            description: "Integrating various DeFi tools to enhance functionality."
+          }
+        }
+      ]
+    },
+  })
+])
 </script>
 
 <template>
@@ -36,12 +137,18 @@ const roadmap = [{
   </div>
 
   <p class="w-narrow px-l mb-m">
-    Welcome to our Roadmap page. Here, you can find a simplified overview of our upcoming developments and strategic
-    initiatives. This overview provides a glimpse into our key focus areas as we continue to drive innovation and
-    growth.
+    Welcome to the Fearless Wallet Roadmap
+  </p>
+  <p class="w-narrow px-l mb-m">
+    Explore our comprehensive Roadmap page, where you’ll find a clear and concise overview of our upcoming developments
+    and strategic initiatives within the Fearless Wallet ecosystem. This roadmap highlights our key focus areas,
+    showcasing how we are committed to driving innovation, enhancing user experience, and fostering growth in the
+    decentralized finance (DeFi) landscape.
   </p>
   <p class="w-narrow px-l mb-xxl">
-    Stay tuned for more detailed updates.
+    Stay tuned for detailed updates as we unveil exciting new features, improvements, and partnerships that will elevate
+    your Fearless Wallet experience. Join us on this journey towards a more secure and user-friendly digital wallet
+    solution!
   </p>
 </template>
 
