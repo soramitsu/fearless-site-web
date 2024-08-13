@@ -323,4 +323,12 @@ export const networks = [
     name: 'Avail DA Mainnet',
     icon: '/networks/Avail.svg',
   },
+  {
+    name: 'Atleta Olympia',
+    icon: '/networks/Atleta.svg',
+  },
+  {
+    name: 'ZChains',
+    icon: '/networks/zchain.svg',
+  },
 ]
