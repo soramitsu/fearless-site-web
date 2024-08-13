@@ -1,6 +1,6 @@
 ---
 title: 'Welcome to Fearless Wallet: Your Gateway to the Decentralized Future'
-date: July 31, 2024
+date: 2024-07-31
 description: 'Fearless Wallet is a user-friendly, multi-chain wallet that empowers you to manage your crypto assets with ease and security. Explore seamless user experience, support for multiple chains and advanced security features.'
 keywords: 'Fearless Wallet, Decentralized Finance (DeFi), Multi-chain Wallet, Crypto Wallet, Web3, Blockchain, Polkadot, Ethereum, Security, Staking, DEX, Polkaswap, Google Account, Crypto Assets, Digital Assets'
 cover: /blog/welcome/cover.jpg
