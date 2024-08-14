@@ -7,11 +7,13 @@ cover: /blog/zchains/cover.jpg
 og: /blog/zchains/og.jpg
 ---
 
-We’re excited to announce a new partnership between Fearless Wallet and ZChains, bringing you direct access to the ZChains network—an EVM-compatible Layer 1 (L1) powerhouse—right from your Fearless Wallet. This collaboration aims to further enhance your multi-chain experience by providing seamless, secure access to the ZChains ecosystem, where fast and affordable transactions are the norm.
+We’re excited to announce a new partnership between Fearless Wallet and [ZChains](https://www.zchains.com/). This collaboration will bring you direct access to the ZChains network—an EVM-compatible Layer 1 (L1) powerhouse—right from your Fearless Wallet.
+
+This collaboration aims to enhance your multi-chain experience by providing seamless, secure access to the ZChains ecosystem, where fast and affordable transactions are the norm.
 
 ### What This Means for You
 
-With this partnership, Fearless Wallet users can now manage their assets on the ZChains network just as easily as they do with over 80 other supported networks. Whether you’re viewing your balances, sending tokens, or receiving funds, the integration ensures a smooth and intuitive experience. ZChains offers high-speed transactions with low fees, making it a compelling option for both new and experienced crypto users.
+With this partnership, Fearless Wallet users can manage their assets on the ZChains network just as easily as with over 80 other supported networks. Whether you’re viewing your balances, sending tokens, or receiving funds, the integration ensures a smooth and intuitive experience. ZChains offers high-speed transactions with low fees, making it a compelling option for new and experienced crypto users.
 
 ### Seamless Transactions on ZChains
 
@@ -19,25 +21,32 @@ Enjoy fast, affordable transactions within the ZChains ecosystem, all from the s
 
 ### Celebrate with Us: Join the TaskOn Campaign!
 
-To celebrate this exciting integration, we’re launching a special campaign on TaskOn, offering you the chance to win big while engaging with the Fearless Wallet and ZChains communities.
+We’re launching a special campaign on [TaskOn](https://taskon.xyz/campaign/detail/19039909) to celebrate this exciting integration.
 
-### TaskOn Campaign Phase 1: Social Media Engagement
+### TaskOn Campaign Phase 1
 
 - **Duration:** 2 weeks
-- **Budget for Prizes:** 500 USDT
-- **Number of Winners:** 20-50 winners
+- **Prize Pool:** 500 USDT
+- **Number of Winners:** 25 winners
+- **Timeline:** 14.08.24 - 28.08.24
 
 ### How to Participate:
 
-1. Follow Fearless Wallet on X (formerly Twitter).
-2. Follow Fearless Wallet on Telegram.
-3. Follow ZChains on X.
-4. Follow ZChains on Telegram.
+1. Follow Fearless Wallet on [X](https://x.com/FearlessWallet).
+2. Follow Fearless Wallet on [Telegram](https://t.me/fearlesswallet).
+3. Follow ZChains on [X](https://x.com/zchains_io).
+4. Follow ZChains on [Telegram](https://t.me/zchains).
 
-Complete these tasks and stand a chance to be one of our lucky winners! This is a great opportunity to not only learn more about Fearless Wallet and ZChains but also to earn rewards for your participation.
+Complete these tasks, and you could be one of our lucky winners! This is a great opportunity to learn more about Fearless Wallet and ZChains and earn rewards for your participation.
+
+Phase 2 of the campaign is coming soon! Keep your eyes peeled on our channels to stay informed!
 
 ### Get Started Today
 
-Join the celebration and take advantage of all that this partnership has to offer. Start managing your ZChains assets with ease, and don’t forget to participate in our TaskOn campaign to win exciting prizes!
+Join the celebration and take advantage of all this partnership offers. Start managing your ZChains assets easily, and don’t forget to participate in our TaskOn campaign to win exciting prizes!
 
-Join the TaskOn Campaign Now
+[Join TaskOn campaign](https://taskon.xyz/campaign/detail/19039909)
+
+[Download mobile app](https://www.notion.so/Website-article-58eb6a7f5fc64d309e58745d28814ce4?pvs=21)
+
+[Download browser extension](https://qrcodes.pro/dr0Fwi)
