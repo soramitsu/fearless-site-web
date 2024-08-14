@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "parseNetworks": "node ./parseNetworks.js > ./src/components/Network/networks.ts"
+    "parseNetworks": "node ./parseNetworks.js > ./src/components/Network/networks.ts",
+    "notes": "node ./fetchReleaseNotes.js"
   },
   "dependencies": {
     "@nuxt/content": "^2.13.2",
