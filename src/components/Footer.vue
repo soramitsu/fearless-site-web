@@ -1,27 +1,34 @@
 <script setup lang="ts">
-const community = [{
+type Link = {
+  title: string
+  href: string
+  icon?: string
+  external?: boolean
+}
+
+const community: Link[] = [{
   title: 'Telegram',
-  link: 'https://t.me/fearlesswallet',
+  href: 'https://t.me/fearlesswallet',
   icon: 'telegram'
 }, {
   title: 'X',
-  link: 'https://x.com/fearlesswallet',
+  href: 'https://x.com/fearlesswallet',
   icon: 'x'
 }, {
   title: 'GitHub',
-  link: 'https://github.com/soramitsu',
+  href: 'https://github.com/soramitsu',
   icon: 'github'
 }, {
   title: 'YouTube',
-  link: 'https://www.youtube.com/fearlesswallet',
+  href: 'https://www.youtube.com/fearlesswallet',
   icon: 'youtube'
 }, {
   title: 'Medium',
-  link: 'https://medium.com/fearlesswallet',
+  href: 'https://medium.com/fearlesswallet',
   icon: 'medium'
 }]
 
-const downloadLinks = [{
+const downloadLinks: Link[] = [{
   title: 'Chrome extension',
   href: 'https://chrome.google.com/webstore/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc',
   icon: 'chrome'
@@ -39,7 +46,7 @@ const downloadLinks = [{
   icon: 'github'
 }]
 
-const aboutLinks = [{
+const aboutLinks: Link[] = [{
   title: 'Fearless Wallet',
   href: '/'
 }, {
@@ -50,11 +57,13 @@ const aboutLinks = [{
   href: '/faq'
 }, {
   title: 'Blog',
-  href: '/blog',
-  external: true
+  href: '/blog'
 }]
 
-const resourcesLinks = [{
+const resourcesLinks: Link[] = [{
+  title: "Release notes",
+  href: '/release-notes',
+}, {
   title: "Wiki",
   href: 'https://wiki.fearlesswallet.io/',
   external: true
@@ -91,7 +100,7 @@ const resourcesLinks = [{
     <div class="community outline-block rounded-s p-s text-xs">
       Join our community
       <div class="buttons">
-        <Button v-for="item in community" :key="item.title" :href="item.link" :icon="item.icon" small />
+        <Button v-for="item in community" :key="item.title" :href="item.href" :icon="item.icon" small />
       </div>
     </div>
     <div class="soramitsu color-secondary text-xs p-s">

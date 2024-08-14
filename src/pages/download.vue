@@ -84,6 +84,8 @@ useSchemaOrg([
   </h1>
   <LinkTilesWithIconsSection :links="links" class="my-xxl" />
   <section class="w-narrow px-l mb-xxl rich">
+    <BannerButton href="/release-notes" class="mb-xl" title="Release notes" />
+
     <h2 class="text-l mb-m">
       Download Fearless Wallet: Your Secure Cryptocurrency Management Solution
     </h2>
