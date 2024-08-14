@@ -22,7 +22,7 @@ a {
   text-decoration: none;
 }
 a:not([class]) {
-  color: #b7f;
+  color: var(--color-link);
 }
 @media (hover: hover) {
   a:not([class]) {

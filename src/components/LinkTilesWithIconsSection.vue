@@ -4,6 +4,7 @@ type Link = {
   title: string
   description: string
   href: string
+  internal?: boolean
 }
 
 defineProps<{ links: Link[], columns?: 2 | 3 }>()
@@ -11,7 +12,8 @@ defineProps<{ links: Link[], columns?: 2 | 3 }>()
 
 <template>
   <section class="w px-3xs grid" :style="`--cols: ${columns || 2}`">
-    <a v-for="link in links" :key="link.title" class="bg-block rounded-s p-l link" :href="link.href" target="_blank">
+    <NuxtLink v-for="link in links" :key="link.title" class="bg-block rounded-s p-l link" :href="link.href"
+      :target="link.internal ? undefined : '_blank'">
       <div class="head">
         <div class="icon">
           <img :src="`/icons/${link.icon}.svg`" :alt="`${link.icon} icon`">
@@ -21,7 +23,7 @@ defineProps<{ links: Link[], columns?: 2 | 3 }>()
         </h2>
       </div>
       <p class="color-secondary text-s">{{ link.description }}</p>
-    </a>
+    </NuxtLink>
   </section>
 </template>
 
