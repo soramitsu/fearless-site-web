@@ -9,7 +9,7 @@ const { title, href, icon, external } = defineProps<{
 
 <template>
   <NuxtLink :href="href" class="banner outline-block rounded-s p-m bold" :target="external ? '_blank' : undefined">
-    <div>
+    <div class="title">
       {{ title }}
     </div>
     <img :src="`/icons/${icon || external ? 'arrow' : 'arrow-right'}.svg`" :alt="`${icon} icon`" class="icon">
@@ -23,6 +23,10 @@ const { title, href, icon, external } = defineProps<{
   justify-content: space-between;
   gap: var(--space-m);
   transition: border .3s ease;
+}
+
+.banner>.title {
+  flex: 1;
 }
 
 .icon {
