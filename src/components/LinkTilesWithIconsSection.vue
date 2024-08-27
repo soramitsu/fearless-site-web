@@ -45,6 +45,10 @@ defineProps<{ links: Link[], columns?: 2 | 3 }>()
   gap: var(--space-xs);
 }
 
+.head>h2 {
+  flex: 1;
+}
+
 .icon {
   width: var(--space-xl);
   height: var(--space-xl);
