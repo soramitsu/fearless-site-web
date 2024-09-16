@@ -2,15 +2,15 @@
 const platforms = {
   ios: {
     name: 'iOS',
-    title: 'Release Notes iOS Fearless Wallet',
-    description: 'TODO...',
-    keywords: 'TODO...'
+    title: 'Fearless Wallet Release Notes for iOS - Latest Features & Updates',
+    description: 'Explore the latest features and updates for the Fearless Wallet on iOS. Stay up-to-date with our detailed release notes.',
+    keywords: 'Fearless Wallet iOS, iOS updates, release notes, features, DeFi wallet'
   },
   android: {
     name: 'Android',
-    title: 'Release Notes Android Fearless Wallet',
-    description: 'TODO...',
-    keywords: 'TODO...'
+    title: 'Fearless Wallet Release Notes for Android - New Features & Updates',
+    description: 'Check out the latest features and updates for the Fearless Wallet on Android. Stay informed with our comprehensive release notes.',
+    keywords: 'Fearless Wallet Android, Android updates, release notes, features, DeFi wallet'
   },
 }
 
@@ -24,7 +24,7 @@ if (!(typeof os === 'string') || !(os in platforms)) {
   })
 }
 
-const { title, description, keywords } = platforms[os as keyof typeof platforms]
+const { name, title, description, keywords } = platforms[os as keyof typeof platforms]
 const { data } = await useAsyncData(`release-notes-${os}`, () => queryContent(`/release-notes/${os}`).sort({ date: -1 }).find())
 
 useSeoMeta({
@@ -36,6 +36,14 @@ useSeoMeta({
   twitterDescription: description,
   keywords
 })
+
+useSchemaOrg([
+  defineWebPage({
+    inLanguage: "en-US",
+    name: `Fearless Release Notes for ${name}`,
+    description: `Explore the latest features and updates for the Fearless Wallet on ${name}. Stay up-to-date with our detailed release notes.`,
+  })
+])
 </script>
 
 <template>
