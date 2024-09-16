@@ -31,6 +31,11 @@ export default defineNuxtConfig({
     },
   },
 
+  sitemap: {
+    sources: ['/api/sitemap'],
+    credits: false,
+  },
+
   runtimeConfig: {
     public: {
       baseUrl: '',
