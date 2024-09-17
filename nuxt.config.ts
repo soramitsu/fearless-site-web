@@ -1,3 +1,5 @@
+import remarkBreaks from 'remark-breaks'
+
 const title = 'Fearless Wallet The Mobile Crypto Wallet for Multi-Chain Future',
   description =
     'Fearless Wallet is a Multi-chain Web3 Wallet. Web and mobile app versions. Securely buy, sell, trade, store, stake and send Crypto across 80+ blockchains.',
@@ -10,6 +12,14 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
   modules: ['@nuxt/image', '@nuxt/content', 'nuxt-schema-org', '@nuxtjs/sitemap'],
+
+  content: {
+    markdown: {
+      remarkPlugins: {
+        'remark-breaks': remarkBreaks,
+      },
+    },
+  },
 
   site: {
     url: 'https://fearlesswallet.io',
@@ -29,6 +39,11 @@ export default defineNuxtConfig({
       ],
       email: 'fearless@soramitsu.co.jp',
     },
+  },
+
+  sitemap: {
+    sources: ['/api/sitemap'],
+    credits: false,
   },
 
   runtimeConfig: {
