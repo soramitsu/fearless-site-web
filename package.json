@@ -19,6 +19,7 @@
     "nuxt": "^3.13.2",
     "nuxt-schema-org": "^3.4.0",
     "ogl": "^1.0.8",
+    "remark-breaks": "^4.0.0",
     "vue": "^3.5.6",
     "vue-router": "^4.4.5"
   },
