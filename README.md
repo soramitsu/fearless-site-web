@@ -33,3 +33,20 @@ yarn preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## Release notes
+
+To fetch new release notes from GitHub run the following script
+
+```bash
+yarn notes
+```
+
+and then commit the changes to the repo
+
+```bash
+git add .
+git commit -m 'feat: upgrade release-notes'
+```
+
+source code of the fetching script can be found [here](./fetchReleaseNotes.js)
