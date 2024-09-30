@@ -1,3 +1,9 @@
+<script setup lang="ts">
+defineProps<{
+  icon?: string
+}>()
+</script>
+
 <template>
   <figure class="visual" width="375" height="812">
     <NuxtImg preload src="/hero/back.svg" alt="Fearless Wallet mobile app screen" class="back" />
@@ -12,6 +18,7 @@
     <div class="third" style="left: -24%; background-image: url('/hero/third1.svg'); aspect-ratio: 21/10" />
     <div class="third" style="left: 23%; background-image: url('/hero/third2.svg')" />
 
+    <div v-if="icon" class="icon" :style="`background-image: url('${icon}')`" />
   </figure>
 </template>
 
@@ -65,6 +72,17 @@
   aspect-ratio: 343/80;
 }
 
+.icon {
+  position: absolute;
+  bottom: -3%;
+  right: -45%;
+  aspect-ratio: 1/1;
+  transform: translateZ(40vw);
+  width: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 @keyframes rotate {
   from {
     transform: rotateX(26deg) rotateY(-16deg) rotateZ(20deg);
@@ -86,6 +104,10 @@
 
   .third {
     transform: translateZ(15rem);
+  }
+
+  .icon {
+    transform: translateZ(25rem);
   }
 }
 </style>

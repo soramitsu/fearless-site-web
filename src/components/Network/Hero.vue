@@ -27,7 +27,7 @@ defineProps<{
         </div>
       </div>
       <div class="image">
-        <HeroVisual class="inner" />
+        <HeroVisual class="inner" :icon="icon" />
       </div>
     </div>
   </section>
