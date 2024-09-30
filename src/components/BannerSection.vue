@@ -1,16 +1,27 @@
+<script setup lang="ts">
+defineProps<{
+  title: string
+  description?: string
+  img: {
+    src: string
+    alt: string
+  }
+}>()
+</script>
+
 <template>
   <section class="w px-3xs">
     <div class="banner bg-block rounded-s">
       <div class="text">
         <h2 class="text-xxl mb-s">
-          Earn with Staking
+          {{ title }}
         </h2>
-        <p class="color-secondary text-s">
-          Stake across 7+ networks, earn rewards, and contribute to network security.
+        <p v-if="description" class="color-secondary text-s">
+          {{ description }}
         </p>
       </div>
       <div class="image pt-xl px-xl">
-        <img src="/features/stake.svg" alt="Staking" loading="lazy" />
+        <img v-bind="img" loading="lazy" />
       </div>
     </div>
   </section>
@@ -38,7 +49,7 @@
   width: 100%;
 }
 
-@media (min-width: 760px) {
+@media (min-width: 800px) {
   .banner {
     display: grid;
     gap: var(--space-l);

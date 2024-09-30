@@ -16,10 +16,14 @@ const { fullName, shortName, icon, description } = networks[route.params.network
 
 <template>
   <NetworkHero :fullName="fullName" :icon="icon" />
-  <p v-for="line in description" class="w-narrow px-l mb-m">
-    {{ line }}
-  </p>
-
+  <NetworkWhy :fullName="fullName" />
+  <NetworkInfo :fullName="fullName" :description="description" :icon="icon" />
+  <BannerSection :title="`Using ${fullName} in Fearless Wallet`" :img="{
+    src: '/features/hero.svg',
+    alt: 'Home screen'
+  }" class="mb-m" />
+  <NetworkUsage :fullName="fullName" :shortName="shortName" />
+  <NetworkFAQ :fullName="fullName" :shortName="shortName" />
   <hr>
   <NetworkList title="Explore Other Networks" :networks="networks" />
 </template>

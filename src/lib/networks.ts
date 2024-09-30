@@ -105,7 +105,7 @@ const networks: {
   kaia: {
     fullName: 'Kaia',
     shortName: 'KAI',
-    icon: '/networks/ethereum.svg',
+    icon: '/networks/kaia.svg',
     description: [
       'Kaia is a blockchain network focused on sustainability and environmental impact. It enables transparent, traceable solutions for environmental projects and carbon credit trading.',
       'KAI, the native token of Kaia, is used for governance, staking, and rewarding projects that contribute to environmental sustainability, making it a key part of the green economy on blockchain.',

@@ -42,7 +42,11 @@ useSchemaOrg([
   <HeroSection class="pb-xl" />
   <NetworkSection class="mb-xxl" />
   <FeaturesSection class="mb-3xl" />
-  <BannerSection class="mb-3xl" />
+  <BannerSection title="Earn with Staking"
+    description="Stake across 7+ networks, earn rewards, and contribute to network security." :img="{
+      src: '/features/stake.svg',
+      alt: 'Staking'
+    }" class="mb-3xl" />
   <BenefitsSection class="mb-3xl" />
   <ManifestSection class="mb-3xl" />
 </template>
