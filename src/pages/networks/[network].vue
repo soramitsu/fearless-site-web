@@ -20,6 +20,34 @@ if (!(fullName && shortName && icon && description)) {
     fatal: true
   })
 }
+
+const title = `Fearless Wallet: The Secure ${fullName} Wallet for Easy Storage and Management`,
+  metaDescription = `Fearless Wallet is the best ${fullName} wallet for securing, managing, and accessing your ${shortName} with ease. Enjoy high-level protection, simple DeFi integration, and a user-friendly interface.`,
+  keywords = `${fullName} wallet, ${shortName} wallet, secure ${fullName} wallet, DeFi ${fullName} wallet, best ${fullName} wallet, Fearless Wallet, cryptocurrency wallet, ERC-20 tokens, Polkaswap`
+
+useSeoMeta({
+  title,
+  ogTitle: title,
+  twitterTitle: title,
+  description: metaDescription,
+  ogDescription: metaDescription,
+  twitterDescription: metaDescription,
+  keywords
+})
+
+useSchemaOrg([
+  defineArticle({
+    inLanguage: "en-US",
+    "headline": `Fearless Wallet: The Secure ${fullName} Wallet for Easy Storage and Management`,
+    "alternativeHeadline": `Store, send, receive, and swap ${shortName} with high-level protection, DeFi access, and a user-friendly interface.`,
+    "description": `Fearless Wallet is the best ${fullName} wallet for securing, managing, and accessing your ${shortName} with ease. Enjoy high-level protection, simple DeFi integration, and a user-friendly interface.`,
+    "keywords": [`${fullName} wallet`, `${shortName} wallet`, `secure ${fullName} wallet`, `DeFi ${fullName} wallet`, `best ${fullName} wallet`, "Fearless Wallet", "cryptocurrency wallet", "ERC-20 tokens", "Polkaswap"],
+    "author": {
+      "@type": "Organization",
+      "name": "Fearless Wallet"
+    }
+  })
+])
 </script>
 
 <template>
