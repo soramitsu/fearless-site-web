@@ -18,7 +18,7 @@ defineProps<{
         <img :src="network.icon" :alt="`${network.fullName} icon`" />
         <div>
           <h3 class="text-s">{{ network.fullName }}</h3>
-          <p class="color-secondary text-xxs">{{ network.shortName }}</p>
+          <p v-if="network.shortName" class="color-secondary text-xxs">{{ network.shortName }}</p>
         </div>
       </NuxtLink>
     </div>

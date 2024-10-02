@@ -5,7 +5,7 @@ const searchTerm = ref('')
 
 const filteredNetworks = computed(() => {
   return networks.filter(network =>
-    network.name.toLowerCase().includes(searchTerm.value.toLowerCase())
+    network.fullName.toLowerCase().includes(searchTerm.value.toLowerCase())
   )
 })
 </script>
@@ -13,11 +13,22 @@ const filteredNetworks = computed(() => {
 <template>
   <div class="search">
     <input v-model="searchTerm" placeholder="Search supported networks" class="input text-xs rounded-xs" />
-    <div class="list p-xs rounded-xs text-xs">
+    <div class="list p-3xs rounded-xs text-xs">
       <ul v-if="filteredNetworks.length">
-        <li v-for="network in filteredNetworks" :key="network.name">
-          <span class="icon"><img :src="network.icon" alt="Network logo" loading="lazy" /></span>
-          {{ network.name }}
+        <li v-for="network in filteredNetworks" :key="network.fullName">
+          <template v-if="network.slug">
+            <NuxtLink v-if="network.slug" :to="`/networks/${network.slug}`" class="rounded-xs">
+              <span class="icon"><img :src="network.icon" alt="Network logo" loading="lazy" /></span>
+              <span class="name">{{ network.fullName }}</span>
+              <img :src="`/icons/arrow-right-inverse.svg`" :alt="`arrow`" loading="lazy" class="arrow" />
+            </NuxtLink>
+          </template>
+          <template v-else>
+            <div>
+              <span class="icon"><img :src="network.icon" alt="Network logo" loading="lazy" /></span>
+              <span class="name">{{ network.fullName }}</span>
+            </div>
+          </template>
         </li>
       </ul>
       <p v-else class="text-center p-4xs">No networks found :-(</p>
@@ -67,13 +78,19 @@ const filteredNetworks = computed(() => {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
 }
 
-.list li {
+.list li div,
+.list li a {
   display: flex;
+  flex: 1;
   align-items: center;
   gap: var(--space-xs);
+  padding: var(--space-3xs);
+}
+
+.list li a {
+  transition: background-color .3s ease;
 }
 
 .list .icon {
@@ -93,10 +110,33 @@ const filteredNetworks = computed(() => {
   z-index: 0;
 }
 
+.list .name {
+  flex: 1;
+  text-align: left;
+}
+
+.list .arrow {
+  opacity: 0.25;
+  width: 1em;
+  height: 1em;
+  transition: transform .3s ease, opacity .3s ease;
+}
+
 .search:has(.input:focus) .list,
 .list:hover {
   visibility: visible;
   opacity: 1;
   transform: scaleY(1);
+}
+
+@media (hover: hover) {
+  .list li a:hover {
+    background-color: #f2f2f2;
+  }
+
+  .list li a:hover .arrow {
+    transform: translateX(-0.3em);
+    opacity: 1;
+  }
 }
 </style>

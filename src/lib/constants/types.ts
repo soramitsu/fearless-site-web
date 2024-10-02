@@ -6,7 +6,7 @@ export type Link = {
 
 export type NetworkInfo = {
   fullName: string
-  shortName: string
+  shortName?: string
   icon: string
-  description: string[]
+  description?: string[]
 }

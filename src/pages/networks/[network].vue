@@ -12,6 +12,14 @@ if (!(typeof route.params.network === 'string' && route.params.network in networ
 }
 
 const { fullName, shortName, icon, description } = networks[route.params.network]
+
+if (!(fullName && shortName && icon && description)) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Page Not Found',
+    fatal: true
+  })
+}
 </script>
 
 <template>
