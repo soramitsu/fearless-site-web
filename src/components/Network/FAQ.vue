@@ -35,7 +35,7 @@ const toggleAccordion = (id: number) => {
 </script>
 
 <template>
-  <h2 class="w-narrow px-l pt-3xl text-center text-xxl">
+  <h2 class="w-narrow px-l mt-3xl text-center text-xxl">
     FAQ
   </h2>
   <AccordionContainer class="w-narrow px-3xs mt-xl mb-3xl">

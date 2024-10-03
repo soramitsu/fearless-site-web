@@ -19,34 +19,11 @@ const data = computed(() => [
 </script>
 
 <template>
-  <section class="w grid px-3xs">
-    <div v-for="item, i in data" class="bg-block p-l rounded-s">
-      <div class="icon bold mb-m">{{ i + 1 }}</div>
-      <p class="text-s">{{ item }}</p>
-    </div>
+  <section class="mt-xxl mb-3xl w-narrow px-l rich">
+    <ol>
+      <li v-for="item in data">
+        {{ item }}
+      </li>
+    </ol>
   </section>
 </template>
-
-<style scoped>
-.grid {
-  display: grid;
-  gap: var(--space-m);
-}
-
-.icon {
-  width: var(--space-xl);
-  height: var(--space-xl);
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, .6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@media (min-width: 800px) {
-  .grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-auto-rows: 1fr;
-  }
-}
-</style>
