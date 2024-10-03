@@ -53,12 +53,7 @@ useSchemaOrg([
 <template>
   <NetworkHero :fullName="fullName" />
   <NetworkWhy :fullName="fullName" />
-  <NetworkInfo :fullName="fullName" :description="description" :icon="icon" />
-  <BannerSection :title="`Using ${fullName} in Fearless Wallet`" :img="{
-    src: '/features/hero.svg',
-    alt: 'Home screen'
-  }" class="mb-m" />
-  <NetworkUsage :fullName="fullName" :shortName="shortName" />
+  <NetworkInfo :fullName="fullName" :shortName="shortName" :description="description" :icon="icon" />
   <NetworkFAQ :fullName="fullName" :shortName="shortName" />
   <hr>
   <NetworkList title="Explore Other Networks" :networks="networks" />
