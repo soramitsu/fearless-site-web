@@ -51,7 +51,7 @@ useSchemaOrg([
 </script>
 
 <template>
-  <NetworkHero :fullName="fullName" :icon="icon" />
+  <NetworkHero :fullName="fullName" />
   <NetworkWhy :fullName="fullName" />
   <NetworkInfo :fullName="fullName" :description="description" :icon="icon" />
   <BannerSection :title="`Using ${fullName} in Fearless Wallet`" :img="{
