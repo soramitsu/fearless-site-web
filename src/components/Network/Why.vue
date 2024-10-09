@@ -13,7 +13,7 @@ const data = [{
   icon: 'networks'
 }, {
   title: 'Convenience',
-  description: 'Easy access to your tokens and management within a single app',
+  description: 'Easily access and manage all of your assets within a single app',
   icon: 'lock'
 }, {
   title: 'User-Friendly Interface',
