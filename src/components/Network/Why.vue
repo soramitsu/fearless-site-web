@@ -8,8 +8,8 @@ const data = [{
   description: 'High level of protection for your assets',
   icon: 'shield'
 }, {
-  title: 'DeFi Support',
-  description: 'Participation in decentralized finance and staking opportunities',
+  title: 'Scam Protection',
+  description: 'Our scam warning feature alerts you to fraudulent activities',
   icon: 'networks'
 }, {
   title: 'Convenience',
