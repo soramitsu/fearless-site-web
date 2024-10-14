@@ -11,7 +11,6 @@
 
     <div class="third" style="left: -24%; background-image: url('/hero/third1.svg'); aspect-ratio: 21/10" />
     <div class="third" style="left: 23%; background-image: url('/hero/third2.svg')" />
-
   </figure>
 </template>
 

@@ -20,7 +20,7 @@ useSeoMeta({
   <h1 class="w px-l pt-3xl pb-xxl text-center">
     Fearless <span class="color-accent">Blog</span>
   </h1>
-  <section class="grid w px-xs mb-xxl">
+  <section class="grid w px-3xs mb-xxl">
     <ContentList :query="{ sort: [{ 'date': -1 }] }" v-slot="{ list }" path="/blog">
       <NuxtLink v-for="article in list" :to="article._path" class="link rounded-s bg-block p-xxs">
         <NuxtImg :src="article.cover" :alt="list[0].title" class="cover rounded-xs" />
