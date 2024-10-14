@@ -17,7 +17,7 @@ const filteredNetworks = computed(() => {
       <ul v-if="filteredNetworks.length">
         <li v-for="network in filteredNetworks" :key="network.fullName">
           <template v-if="network.slug">
-            <NuxtLink v-if="network.slug" :to="`/networks/${network.slug}`" class="rounded-xs">
+            <NuxtLink v-if="network.slug" :to="`/${network.slug}-wallet`" class="rounded-xs">
               <span class="icon"><img :src="network.icon" alt="Network logo" loading="lazy" /></span>
               <span class="name">{{ network.fullName }}</span>
               <img :src="`/icons/arrow-right-inverse.svg`" :alt="`arrow`" loading="lazy" class="arrow" />

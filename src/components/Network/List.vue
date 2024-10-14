@@ -13,7 +13,7 @@ defineProps<{
   <section class="w mt-xxl mb-3xl px-m">
     <h2 class="mb-l">{{ title }}</h2>
     <div class="list">
-      <NuxtLink v-for="(network, slug) in networks" :href="slug.toString()" :key="network.shortName"
+      <NuxtLink v-for="(network, slug) in networks" :href="`/${slug.toString()}-wallet`" :key="network.shortName"
         class="bg-block rounded-s py-xs pl-xs pr-s link">
         <img :src="network.icon" :alt="`${network.fullName} icon`" />
         <div>

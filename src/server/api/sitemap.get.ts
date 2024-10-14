@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   return [
     ...blogArticles.map((el) => el._path),
-    ...Object.keys(networks).map((el) => `/networks/${el}`),
+    ...Object.keys(networks).map((el) => `/${el}-wallet`),
     '/release-notes/ios',
     '/release-notes/android',
   ]
