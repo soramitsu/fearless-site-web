@@ -4,23 +4,25 @@ const open = ref(false)
 const router = useRouter()
 router.afterEach(() => open.value = false)
 
-const menu = [{
-  title: 'Roadmap',
-  href: '/roadmap'
-},
-{
-  title: 'FAQ',
-  href: '/faq'
-},
-{
-  title: 'Blog',
-  href: '/blog',
-},
-{
-  title: 'wiki',
-  href: 'https://wiki.fearlesswallet.io/',
-  external: true
-}]
+const menu = [
+  {
+    title: 'Roadmap',
+    href: '/roadmap'
+  },
+  {
+    title: 'FAQ',
+    href: '/faq'
+  },
+  {
+    title: 'Blog',
+    href: '/blog',
+  },
+  {
+    title: 'wiki',
+    href: 'https://wiki.fearlesswallet.io/',
+    external: true
+  }
+];
 </script>
 
 <template>
@@ -32,7 +34,7 @@ const menu = [{
       </NuxtLink>
       <nav class="nav" :class="{ open }">
         <div class="main-nav">
-          <NuxtLink v-for="item in menu" :to="item.href" :target="item.external ? '_blank' : undefined" class="nav-item"
+          <NuxtLink v-for="(item, index) in menu" :key="index" :to="item.href" :target="item.external ? '_blank' : undefined" class="nav-item"
             active-class="active">
             {{ item.title }}
             <svg v-if="item.external" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
