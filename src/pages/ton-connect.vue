@@ -20,20 +20,21 @@ const steps = [
   {
     number: 1,
     title: "Launch the app and log into your wallet",
-    icon: "/icons/one.svg",
+    icon: "/icons/one.png",
     textBtn: "Install Fearless Wallet",
+    classes: "img-one",
   },
   {
     number: 2,
     title:
       "Once you launched Fearless Wallet, proceed by clicking the button below",
-    icon: "/icons/two.svg",
+    icon: "/icons/two.png",
     textBtn: "Open Fearless Wallet",
   },
   {
     number: 3,
     title: "Once you connected your wallet, go back to dApp",
-    icon: "/icons/three.svg",
+    icon: "/icons/three.png",
     textBtn: "Return to dApp",
   },
 ];
@@ -78,7 +79,7 @@ const handleCLick = (step: number) => {
     >
       <div class="step-content">
         <div class="step-icon">
-          <img :src="step.icon" class="img" />
+          <img :src="step.icon" :class="step.classes ?? 'img'" />
         </div>
 
         <div class="step-description py-s pr-xs">
@@ -124,8 +125,14 @@ const handleCLick = (step: number) => {
   display: flex;
 }
 
+.img-one {
+  height: 150px;
+  width: 44px;
+}
+
 .img {
   height: 150px;
+  width: 70px;
 }
 
 .step-description {
