@@ -10,16 +10,6 @@ export const networks = [
     slug: 'ethereum'
   },
   {
-    fullName: 'The Open Network',
-    shortName: 'TON',
-    icon: '/networks/ton.svg',
-    description: [
-      'A decentralized and open internet designed to onboard 500M people on-chain, built by the community using technology developed by Telegram.',
-      'Toncoin is TON`s native cryptocurrency. It is used for network operations, transactions, games or collectibles built on TON.'
-    ],
-    slug: 'ton'
-  },
-  {
     fullName: 'Polygon',
     shortName: 'MATIC',
     icon: '/networks/Polygon.svg',
