@@ -147,7 +147,7 @@ const resourcesLinks: Link[] = [{
       <img src="/elements/fearless-logo.svg" alt="Fearless Wallet logo" loading="lazy" />
     </div>
     <div class="legal p-m text-xs">
-      © {{ new Date().getFullYear() }} Soramitsu
+      © 2020-{{ new Date().getFullYear() }} Soramitsu
       <NuxtLink href="/privacy" class="link">Privacy Policy</NuxtLink>
       <NuxtLink href="/terms" class="link">Terms of Service</NuxtLink>
     </div>
