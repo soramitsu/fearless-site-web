@@ -12,6 +12,15 @@ const networks: {
       'Open to anyone, Ethereum is designed to be scalable, programmable, secure, and decentralized, allowing users to create secure digital technologies. Its native token, Ether, is primarily used to compensate for work supporting the blockchain, but it can also be used to purchase goods and services where accepted.',
     ],
   },
+  ton: {
+    fullName: 'The Open Network',
+    shortName: 'TON',
+    icon: '/networks/ton.svg',
+    description: [
+      'A decentralized and open internet designed to onboard 500M people on-chain, built by the community using technology developed by Telegram.',
+      'Toncoin is TON`s native cryptocurrency. It is used for network operations, transactions, games or collectibles built on TON.',
+    ],
+  },
   polygon: {
     fullName: 'Polygon',
     shortName: 'MATIC',

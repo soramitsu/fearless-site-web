@@ -2,6 +2,7 @@
 import { Engine, Render, Runner, Bodies, Body, Composite, MouseConstraint, Mouse } from 'matter-js'
 
 const networks = [
+  '/networks/ton.svg',
   '/networks/SORA.svg',
   '/networks/Polkadot.svg',
   '/networks/Kusama.svg',
