@@ -1,19 +1,23 @@
 <script setup lang="ts">
 const roadmap = [{
-  title: 'SORA Ecosystem',
+  title: 'New Ecosystems',
   items: [
-    'SORA Card integration',
-    'Demeter Farming integration',
+    'Finalize full integration of the TON ecosystem',
+    'Enable seamless access to TON dApps for users',
+    'Deliver an enhanced, up-to-date dApp browser',
+    'Improve UX and wallet management',
   ]
 }, {
-  title: 'TON Ecosystem',
+  title: 'DEX Aggregators & New Networks',
   items: [
-    'Improved UX/UI and wallet management',
+    'Complete integration of the OKX DEX aggregator',
+    'Expand the EVM chain list with a dozen additional chains to enhance user choice and flexibility',
   ]
 }, {
-  title: 'Coinbase',
+  title: 'Payments & Fiat On/Off Ramps',
   items: [
-    'Coinbase Onramp integration',
+    'Integrate SORA Card to revolutionize payment experiences',
+    'Introduce improved on-ramp and off-ramp options for a smoother transition between fiat and crypto',
   ]
 }]
 
