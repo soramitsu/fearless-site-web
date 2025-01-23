@@ -6,7 +6,7 @@
         <span class="color-accent">80+ Networks</span> from TON to EVM and Polkadot
       </h2>
       <p class="w-narrow text-s color-secondary mb-m">
-        Fearless Wallet supports over 80 networks: TON, Ethereum, Polkadot, BSC, Avalanche, Arbitrum, Optimism, Moonbeam, Kusama, Analog, Liberland, SORA and many more.
+        Fearless Wallet supports over 80 networks, including TON, Ethereum, Polkadot, BSC, Avalanche, Arbitrum, Optimism, Moonbeam, Analog, Liberland, SORA, and many more.
       </p>
       <NetworkSearch class="mx-auto" />
     </div>
