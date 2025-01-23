@@ -19,23 +19,24 @@ useSeoMeta({
 const steps = [
   {
     number: 1,
-    title: "Launch the app and log into your wallet",
+    subtitle: "Don’t have Fearless Wallet yet?",
     icon: "/icons/one.png",
     textBtn: "Install Fearless Wallet",
     classes: "img-one",
   },
   {
     number: 2,
-    title:
-      "Once you launched Fearless Wallet, proceed by clicking the button below",
+    title: "After installation: ",
+    subtitle: "Open the app and approve the dApp connection.",
     icon: "/icons/two.png",
-    textBtn: "Open Fearless Wallet",
+    //textBtn: "Open Fearless Wallet",
   },
   {
     number: 3,
-    title: "Once you connected your wallet, go back to dApp",
+    title: "Once connected: ",
+    subtitle: "Return to the dApp to continue.",
     icon: "/icons/three.png",
-    textBtn: "Return to dApp",
+    //textBtn: "Return to dApp",
   },
 ];
 
@@ -69,7 +70,7 @@ const handleCLick = (step: number) => {
 </script>
 
 <template>
-  <h3 class="px-l pt-3xl text-center">Connect Fearless Wallet</h3>
+  <h3 class="px-l pt-3xl text-center">Connect Fearless Wallet</h3>
 
   <div class="steps-container">
     <div
@@ -83,9 +84,10 @@ const handleCLick = (step: number) => {
         </div>
 
         <div class="step-description py-s pr-xs">
-          <div class="text-xs mb-s">{{ step.title }}</div>
+          <div v-if="step.title" class="text-s mt-xs step-title">{{ step.title }}</div>
+          <div v-if="step.subtitle" class="text-xs mb-s">{{ step.subtitle }}</div>
 
-          <Button
+          <Button v-if="step.textBtn"
             xsSmall
             accent
             :title="step.textBtn"
@@ -138,11 +140,15 @@ const handleCLick = (step: number) => {
 .step-description {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 155px;
+  justify-content: space-evenly;
+  min-height: 150px;
 }
 
 .step-btn {
   width: 200px;
+}
+
+.step-title {
+  color: var(--color-link);
 }
 </style>
