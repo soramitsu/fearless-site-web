@@ -84,6 +84,10 @@
   padding-top: var(--space-3xs);
   padding-bottom: var(--space-3xs);
 }
+.py-2xs {
+  padding-top: var(--space-2xs);
+  padding-bottom: var(--space-2xs);
+}
 .py-xs {
   padding-top: var(--space-xs);
   padding-bottom: var(--space-xs);

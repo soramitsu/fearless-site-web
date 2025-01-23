@@ -22,7 +22,7 @@ useSeoMeta({
   </h1>
   <section class="grid w px-3xs mb-xxl">
     <ContentList :query="{ sort: [{ 'date': -1 }] }" v-slot="{ list }" path="/blog">
-      <NuxtLink v-for="article in list" :to="article._path" class="link rounded-s bg-block p-xxs">
+      <NuxtLink v-for="(article, index) in list" :key="index" :to="article._path" class="link rounded-s bg-block p-xxs">
         <NuxtImg :src="article.cover" :alt="list[0].title" class="cover rounded-xs" />
         <div class="px-s pt-s pb-xs">
           <h2 class="text-m mb-3xs">{{ article.title }}</h2>
