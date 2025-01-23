@@ -1,27 +1,26 @@
 <script setup lang="ts">
 const roadmap = [{
-  title: 'New Ecosystems',
+  title: 'SORA Ecosystem',
   items: [
-    'Finalize full integration of the TON ecosystem',
-    'Enable seamless access to TON dApps for users',
-    'Deliver an enhanced, up-to-date dApp browser',
-    'Improve UX and wallet management',
+    'Polkaswap liquidity pools',
+    'Demeter Farming',
+    'SORA Card'
   ]
 }, {
-  title: 'DEX Aggregators & New Networks',
+  title: 'UI/UX Updates',
   items: [
-    'Complete integration of the OKX DEX aggregator',
-    'Expand the EVM chain list with a dozen additional chains to enhance user choice and flexibility',
+    'New Asset management flow'
   ]
 }, {
-  title: 'Payments & Fiat On/Off Ramps',
+  title: 'EVM',
   items: [
-    'Integrate SORA Card to revolutionize payment experiences',
-    'Introduce improved on-ramp and off-ramp options for a smoother transition between fiat and crypto',
+    'New chain support',
+    'Transaction gas management to speed them up',
+    'DeFi tool integrations',
   ]
 }]
 
-const title = 'Fearless Wallet 2025 Roadmap',
+const title = 'Fearless Wallet 2024 Roadmap',
   description =
     'The Fearless Wallet roadmap summarizes objectives and future direction, including ongoing ideas and concepts for blockchain development.',
   keywords =
@@ -41,7 +40,7 @@ useSchemaOrg([
   defineWebPage({
     inLanguage: "en-US",
     name: 'Fearless Wallet Roadmap',
-    description: 'Roadmap for Q1/Q2 2025 outlining key developments and strategic initiatives for Fearless Wallet.',
+    description: 'Roadmap for Q2 2024 outlining key developments and strategic initiatives within the SORA Ecosystem.',
     mainEntity: {
       "@type": "ItemList",
       itemListElement: [
@@ -125,7 +124,7 @@ useSchemaOrg([
 
 <template>
   <h1 class="w-narrow px-l pt-3xl text-center">
-    Roadmap for <span class="color-accent">Q1/Q2 2025</span>
+    Roadmap for <span class="color-accent">Q2 2024</span>
   </h1>
 
   <div class="w grid px-3xs py-xxl">
@@ -141,7 +140,10 @@ useSchemaOrg([
     Welcome to the Fearless Wallet Roadmap
   </p>
   <p class="w-narrow px-l mb-m">
-    This roadmap highlights our key focus areas, showcasing how we are committed to driving innovation, enhancing user experience, and fostering growth in the decentralized finance (DeFi) landscape.
+    Explore our comprehensive Roadmap page, where you’ll find a clear and concise overview of our upcoming developments
+    and strategic initiatives within the Fearless Wallet ecosystem. This roadmap highlights our key focus areas,
+    showcasing how we are committed to driving innovation, enhancing user experience, and fostering growth in the
+    decentralized finance (DeFi) landscape.
   </p>
   <p class="w-narrow px-l mb-xxl">
     Stay tuned for detailed updates as we unveil exciting new features, improvements, and partnerships that will elevate

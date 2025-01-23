@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "YLWWUD25VZ.jp.co.soramitsu.fearless.dev",
+        "paths": ["*"]
+      },
+            {
+        "appID": "YLWWUD25VZ.jp.co.soramitsu.fearlesswallet",
+        "paths": ["*"]
+      }
+    ]
+  }
+}

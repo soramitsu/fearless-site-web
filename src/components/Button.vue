@@ -1,51 +1,24 @@
 <script setup lang="ts">
-const props = defineProps<{
-  href?: string;
-  title?: string;
-  icon?: string;
-  small?: boolean;
-  xsSmall?: boolean;
-  accent?: boolean;
-  target?: "_blank" | "_self";
-}>();
+const { href } = defineProps<{
+  href?: string
+  title?: string
+  icon?: string
+  small?: boolean
+  accent?: boolean
+  target?: '_blank' | '_self'
+}>()
 
 const component = computed(() => {
-  if (props.href) return resolveComponent("NuxtLink");
-
-  return "button";
-});
-
-const classComponent = computed(() => {
-  const classes = [
-    "button",
-    {
-      accent: props.accent,
-      "text-s bold px-m py-s": !props.xsSmall && !props.small,
-      "text-xs px-3xs py-2xs": props.xsSmall,
-      "text-xxs px-s py-xs": props.small,
-    },
-  ];
-
-  return classes;
-});
+  if (href) return resolveComponent('NuxtLink')
+  return 'button'
+})
 </script>
 
 <template>
-  <component
-    :href="href"
-    :is="component"
-    :class="classComponent"
-    :target="target"
-  >
+  <component :href="href" class="button" :is="component"
+    :class="accent && 'accent', small ? 'text-xxs px-s py-xs' : 'text-s bold px-m py-s'" :target="target">
     <span class="shape" />
-
-    <img
-      v-if="icon"
-      :src="`/icons/${icon}.svg`"
-      :alt="`${icon} icon`"
-      class="icon"
-    />
-
+    <img v-if="icon" :src="`/icons/${icon}.svg`" :alt="`${icon} icon`" class="icon">
     <span v-if="title">{{ title }}</span>
   </component>
 </template>
@@ -60,7 +33,7 @@ const classComponent = computed(() => {
   color: var(--color-text-primary);
 }
 
-.button > * {
+.button>* {
   position: relative;
 }
 
@@ -81,12 +54,12 @@ const classComponent = computed(() => {
 
 .shape::before,
 .shape::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   height: 100%;
   width: 55%;
-  background-image: url("/elements/button.svg");
+  background-image: url('/elements/button.svg');
   background-size: auto 100%;
   background-repeat: no-repeat;
 }
@@ -107,10 +80,10 @@ const classComponent = computed(() => {
 
 .button.accent .shape::before,
 .button.accent .shape::after {
-  background-image: url("/elements/button-accent.svg");
+  background-image: url('/elements/button-accent.svg');
 }
 
-@media (hover: hover) {
+@media (hover:hover) {
   .shape {
     transition: opacity 0.3s ease;
   }

@@ -1,7 +1,6 @@
 :root {
   --space-4xs: 0.4rem;
   --space-3xs: 0.8rem;
-  --space-2xs: 0.9rem;
   --space-xs: 1.6rem;
   --space-s: 2rem;
   --space-m: 3rem;
@@ -30,7 +29,6 @@
   :root {
     --space-4xs: 0.4rem;
     --space-3xs: 0.8rem;
-    --space-2xs: 0.9rem;
     --space-xs: 1.6rem;
     --space-s: 2.4rem;
     --space-m: 3.2rem;
