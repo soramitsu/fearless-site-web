@@ -2,25 +2,22 @@
 const roadmap = [{
   title: 'SORA Ecosystem',
   items: [
-    'Polkaswap liquidity pools',
-    'Demeter Farming',
-    'SORA Card'
+    'SORA Card integration',
+    'Demeter Farming integration',
   ]
 }, {
-  title: 'UI/UX Updates',
+  title: 'TON Ecosystem',
   items: [
-    'New Asset management flow'
+    'Improved UX/UI and wallet management',
   ]
 }, {
-  title: 'EVM',
+  title: 'Coinbase',
   items: [
-    'New chain support',
-    'Transaction gas management to speed them up',
-    'DeFi tool integrations',
+    'Coinbase Onramp integration',
   ]
 }]
 
-const title = 'Fearless Wallet 2024 Roadmap',
+const title = 'Fearless Wallet 2025 Roadmap',
   description =
     'The Fearless Wallet roadmap summarizes objectives and future direction, including ongoing ideas and concepts for blockchain development.',
   keywords =
@@ -40,7 +37,7 @@ useSchemaOrg([
   defineWebPage({
     inLanguage: "en-US",
     name: 'Fearless Wallet Roadmap',
-    description: 'Roadmap for Q2 2024 outlining key developments and strategic initiatives within the SORA Ecosystem.',
+    description: 'Roadmap for Q1/Q2 2025 outlining key developments and strategic initiatives for Fearless Wallet.',
     mainEntity: {
       "@type": "ItemList",
       itemListElement: [
@@ -124,7 +121,7 @@ useSchemaOrg([
 
 <template>
   <h1 class="w-narrow px-l pt-3xl text-center">
-    Roadmap for <span class="color-accent">Q2 2024</span>
+    Roadmap for <span class="color-accent">Q1/Q2 2025</span>
   </h1>
 
   <div class="w grid px-3xs py-xxl">
@@ -140,10 +137,7 @@ useSchemaOrg([
     Welcome to the Fearless Wallet Roadmap
   </p>
   <p class="w-narrow px-l mb-m">
-    Explore our comprehensive Roadmap page, where you’ll find a clear and concise overview of our upcoming developments
-    and strategic initiatives within the Fearless Wallet ecosystem. This roadmap highlights our key focus areas,
-    showcasing how we are committed to driving innovation, enhancing user experience, and fostering growth in the
-    decentralized finance (DeFi) landscape.
+    This roadmap highlights our key focus areas, showcasing how we are committed to driving innovation, enhancing user experience, and fostering growth in the decentralized finance (DeFi) landscape.
   </p>
   <p class="w-narrow px-l mb-xxl">
     Stay tuned for detailed updates as we unveil exciting new features, improvements, and partnerships that will elevate
