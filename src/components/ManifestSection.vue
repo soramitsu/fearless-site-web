@@ -11,7 +11,7 @@
       </div>
     </h2>
     <p class="text-l bold w-narrow px-m mb-l">
-      At Fearless Wallet, our goal is to empower you to take <span class="color-accent">charge of your financial
+      Fearless Wallet's goal is to empower You to take <span class="color-accent">charge of your financial
         destiny</span>. With <span class="color-accent">our easy-to-use tools</span> and blockchain flexibility,
       managing and growing your wealth has never been easier or more exciting.
     </p>
