@@ -16,7 +16,7 @@
     "@nuxt/image": "^1.8.1",
     "@nuxtjs/sitemap": "^6.1.1",
     "matter-js": "^0.20.0",
-    "nuxt": "^3.13.2",
+    "nuxt": "^3.16.0",
     "nuxt-schema-org": "^3.4.0",
     "ogl": "^1.0.8",
     "remark-breaks": "^4.0.0",
