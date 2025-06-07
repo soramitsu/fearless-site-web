@@ -8,7 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "parseNetworks": "npx tsx ./parseNetworks.ts > ./src/components/Network/networks.ts",
+    "parseNetworks": "tsx ./parseNetworks.ts > ./src/components/Network/networks.ts",
     "notes": "node ./fetchReleaseNotes.js"
   },
   "dependencies": {
@@ -24,11 +24,13 @@
     "vue-router": "^4.4.5"
   },
   "resolutions": {
-    "@nuxtjs/mdc": "0.13.3"
+    "@nuxtjs/mdc": "0.13.3",
+    "vite": "6.3.4"
   },
   "packageManager": "yarn@4.9.1",
   "devDependencies": {
     "@types/matter-js": "^0.19.7",
+    "tsx": "^4.19.4",
     "typescript": "^5.6.3"
   }
 }
