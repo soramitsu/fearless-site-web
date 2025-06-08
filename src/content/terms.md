@@ -10,7 +10,7 @@ SORAMITSU provides the Application for the purpose of interacting with the Platf
 
 **By using Fearless Wallet or any of our other products or services that link to these Terms (we refer to these simply as the "Services"), you agree to the Terms. Of course, if you don't agree with them, then don't use the Services.**
 
-Your privacy matters to us. You can learn how we handle your information when you use our Services by reading our [Privacy Policy](/privacy).
+Your privacy matters to us. You can learn how we handle your information when you use our Services by reading our [Privacy Policy](https://fearlesswallet.io/privacy).
 
 ## 1. Definitions
 

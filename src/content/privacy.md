@@ -12,7 +12,7 @@ This page is used to inform visitors regarding our policies with the collection,
 
 If you choose to use our Service, then you agree to the collection and use of information in relation to this policy. We will not use or share your information with anyone except as described in this Privacy Policy.
 
-The terms used in this Privacy Policy have the same meanings as in our [Terms and Conditions](/terms), which is accessible at Fearless Wallet unless otherwise defined in this Privacy Policy.
+The terms used in this Privacy Policy have the same meanings as in our [Terms and Conditions](https://fearlesswallet.io/terms), which is accessible at Fearless Wallet unless otherwise defined in this Privacy Policy.
 
 ## Information Collection and Use
 
