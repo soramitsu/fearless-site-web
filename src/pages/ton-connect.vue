@@ -48,8 +48,8 @@ onMounted(() => {
 
 const handleCLick = (step: number) => {
   if (step === 1) {
-    if (deviceType === "desktop") window.open("https://qrcodes.pro/5FVEPa");
-    else window.open("https://qrcodes.pro/RC9fNu");
+    if (deviceType === "desktop") window.open("https://chrome.google.com/webstore/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc");
+    else window.open("https://fearlesswallet.io/download");
 
     return;
   }

@@ -57,6 +57,6 @@ With Fearless Wallet, you're not just storing crypto; you're embracing a new way
 
 ### Download now
 
-[Download for iOS/Android](https://qrcodes.pro/9cSnKW)
+[Download for iOS/Android](https://fearlesswallet.io/download)
 
-[Download browser extension](https://qrcodes.pro/5FVEPa)
+[Download browser extension](https://chrome.google.com/webstore/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc)

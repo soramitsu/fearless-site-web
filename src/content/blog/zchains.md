@@ -49,4 +49,4 @@ Join the celebration and take advantage of all this partnership offers. Start ma
 
 [Download mobile app](https://www.notion.so/Website-article-58eb6a7f5fc64d309e58745d28814ce4?pvs=21)
 
-[Download browser extension](https://qrcodes.pro/dr0Fwi)
+[Download browser extension](https://chrome.google.com/webstore/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc)

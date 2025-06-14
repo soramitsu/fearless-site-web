@@ -19,8 +19,8 @@ const isTrailerOpen = ref(false)
           Fearless Wallet makes DeFi simple for beginners and unlocks advanced features for pros.
         </p>
         <div class="buttons mb-l">
-          <Button href="https://qrcodes.pro/5FVEPa" title="Get extension" icon="desktop" target="_blank" accent />
-          <Button href="https://qrcodes.pro/9cSnKW " title="Get mobile app" icon="mobile" target="_blank" accent />
+          <Button href="https://chrome.google.com/webstore/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc" title="Get extension" icon="desktop" target="_blank" accent />
+          <Button href="https://fearlesswallet.io/download " title="Get mobile app" icon="mobile" target="_blank" accent />
         </div>
         <div class="benefits">
           <div v-for="benefit in benefits" class="text-s px-xs py-xs outline-block rounded-xs">

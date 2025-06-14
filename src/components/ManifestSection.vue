@@ -19,8 +19,8 @@
       Join us and Stay Fearless!
     </p>
     <div class="w-narrow px-m buttons">
-      <Button href="https://qrcodes.pro/5FVEPa" title="Get extension" icon="desktop" target="_blank" />
-      <Button href="https://qrcodes.pro/9cSnKW " title="Get mobile app" icon="mobile" target="_blank" />
+      <Button href="https://chrome.google.com/webstore/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc" title="Get extension" icon="desktop" target="_blank" />
+      <Button href="https://fearlesswallet.io/download " title="Get mobile app" icon="mobile" target="_blank" />
     </div>
   </section>
 </template>
