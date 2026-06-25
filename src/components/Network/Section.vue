@@ -3,10 +3,11 @@
     <div class="rounded-s bg-block px-l pt-xxl text-center networks">
       <NetworkVisual class="bg rounded-s" />
       <h2 class="w-narrow mb-s">
-        <span class="color-accent">80+ Networks</span> from TON to EVM and Polkadot
+        <span class="color-accent">80+ Networks</span> including Bitcoin, Solana, TON, EVM, and Polkadot
       </h2>
       <p class="w-narrow text-s color-secondary mb-m">
-        Fearless Wallet supports over 80 networks, including TON, Ethereum, Polkadot, BSC, Avalanche, Arbitrum, Optimism, Moonbeam, Analog, Liberland, SORA, and many more.
+        Fearless Wallet supports over 80 networks and is expanding Universal Wallet support across Bitcoin, Solana,
+        TON, Ethereum, Polkadot, BSC, Avalanche, Arbitrum, Optimism, Moonbeam, SORA, Taira, and SORA Nexus.
       </p>
       <NetworkSearch class="mx-auto" />
     </div>

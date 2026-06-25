@@ -9,6 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "parseNetworks": "tsx ./parseNetworks.ts > ./src/components/Network/networks.ts",
+    "verify:release-content": "node scripts/verify-release-content.mjs",
+    "typecheck": "nuxt typecheck",
     "notes": "node ./fetchReleaseNotes.js"
   },
   "dependencies": {
@@ -16,11 +18,11 @@
     "@nuxt/image": "^1.8.1",
     "@nuxtjs/sitemap": "^6.1.1",
     "matter-js": "^0.20.0",
-    "nuxt": "^3.17.0",
+    "nuxt": "^3.21.7",
     "nuxt-schema-org": "^3.4.0",
     "ogl": "^1.0.8",
     "remark-breaks": "^4.0.0",
-    "vue": "^3.5.11",
+    "vue": "^3.5.38",
     "vue-router": "^4.4.5"
   },
   "resolutions": {
@@ -32,7 +34,9 @@
   "packageManager": "yarn@4.9.1",
   "devDependencies": {
     "@types/matter-js": "^0.19.7",
+    "@types/node": "^26.0.1",
     "tsx": "^4.19.4",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "vue-tsc": "^3.3.5"
   }
 }

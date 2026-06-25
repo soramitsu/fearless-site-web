@@ -18,7 +18,7 @@ useSeoMeta({
 })
 
 useSchemaOrg([
-  defineWebPage({
+  {
     inLanguage: "en-US",
     "@type": "FAQPage",
     "name": "Fearless Wallet Frequently Asked Questions",
@@ -33,7 +33,7 @@ useSchemaOrg([
           "text": item.answer
         }
       }))
-  })
+  }
 ])
 
 const activeItem = ref<number>()

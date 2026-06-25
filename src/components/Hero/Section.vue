@@ -13,10 +13,11 @@ const isTrailerOpen = ref(false)
     <div class="w hero">
       <div class="text">
         <h1 class="mb-s">
-          Effortless Multi-Chain Management
+          Open-Source Universal Wallet
         </h1>
         <p class="color-secondary text-s mb-m">
-          Fearless Wallet makes DeFi simple for beginners and unlocks advanced features for pros.
+          One self-custody wallet for browser, iOS, and Android, with one phrase for Bitcoin, Solana, TON, EVM,
+          Polkadot, and SORA accounts.
         </p>
         <div class="buttons mb-l">
           <Button href="https://qrcodes.pro/5FVEPa" title="Get extension" icon="desktop" target="_blank" accent />
