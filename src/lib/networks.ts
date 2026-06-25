@@ -3,6 +3,24 @@ import type { NetworkInfo } from './constants/types'
 const networks: {
   [key: string]: NetworkInfo
 } = {
+  bitcoin: {
+    fullName: 'Bitcoin',
+    shortName: 'BTC',
+    icon: '/networks/bitcoin.svg',
+    description: [
+      'Bitcoin is the original decentralized digital currency and the most widely recognized cryptocurrency. Fearless Wallet support focuses on native SegWit accounts for self-custody, receiving, sending, balance tracking, and transaction history.',
+      'BTC is used as peer-to-peer digital money and a long-term store of value. In Fearless Wallet, Bitcoin support is built for one recovery phrase alongside the rest of your Universal Wallet accounts.',
+    ],
+  },
+  solana: {
+    fullName: 'Solana',
+    shortName: 'SOL',
+    icon: '/networks/solana.svg',
+    description: [
+      'Solana is a high-throughput blockchain designed for low-cost applications, payments, and token activity. Fearless Wallet supports native SOL accounts, SPL Token and Token-2022 visibility, transaction history, and browser-extension dApp connection flows.',
+      'SOL is used for transaction fees, staking, and network operations. Fearless Wallet uses the public Solana indexer endpoint at si.soramitsu.io for wallet-facing reads and configured Solana RPC endpoints for simulation and broadcast.',
+    ],
+  },
   ethereum: {
     fullName: 'Ethereum',
     shortName: 'ETH',
@@ -73,6 +91,24 @@ const networks: {
     description: [
       'SORA is a decentralized economic system and a blockchain network that enables parachain functionality within the Polkadot ecosystem. It focuses on decentralized finance (DeFi) and applications that use digital assets.',
       'XOR, SORA’s native token, is used for transaction fees, staking, and governance. The network also supports the decentralized exchange Polkaswap.',
+    ],
+  },
+  nexus: {
+    fullName: 'SORA Nexus',
+    shortName: 'NEXUS',
+    icon: '/networks/SORA.svg',
+    description: [
+      'SORA Nexus is the Iroha-based SORA network tracked for the Universal Wallet rollout. It uses I105 account addresses derived from the same wallet phrase as the rest of Fearless Wallet.',
+      'Nexus mainnet support is registry-gated until the production Torii TLS endpoint is confirmed. The public website lists the network so users can understand the roadmap without implying that mainnet writes are already enabled.',
+    ],
+  },
+  taira: {
+    fullName: 'Taira Testnet',
+    shortName: 'TAIRA',
+    icon: '/networks/SORA.svg',
+    description: [
+      'Taira is the SORA Iroha testnet used to validate Nexus-compatible account derivation, Torii reads, and wallet integration before mainnet release.',
+      'Fearless Wallet derives Taira I105 testnet addresses from the Universal Wallet phrase and uses Taira-specific network validation so testnet and mainnet accounts do not collide.',
     ],
   },
   avalanche: {
