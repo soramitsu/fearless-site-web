@@ -1,0 +1,14 @@
+# Owners must have write access to this repository.
+
+* @soramitsu/frontend @soramitsu/webdev
+
+/.github/ @soramitsu/devops-team
+/CONTRIBUTING.md @soramitsu/frontend @soramitsu/webdev
+/README.md @soramitsu/frontend @soramitsu/webdev
+/docs/deployment.md @soramitsu/frontend @soramitsu/webdev @soramitsu/devops-team
+/docs/release-checklist.md @soramitsu/frontend @soramitsu/webdev @soramitsu/devops-team
+/docs/rollback-checklist.md @soramitsu/frontend @soramitsu/webdev @soramitsu/devops-team
+/scripts/audit-public-artifacts.sh @soramitsu/frontend @soramitsu/webdev @soramitsu/devops-team
+/scripts/verify-release-content.mjs @soramitsu/frontend @soramitsu/webdev
+/src/lib/networks.ts @soramitsu/frontend @soramitsu/webdev
+/src/components/Network/networks.ts @soramitsu/frontend @soramitsu/webdev

@@ -43,7 +43,8 @@ useSeoMeta({
 })
 
 useSchemaOrg([
-  defineWebPage({
+  {
+    "@type": "WebPage",
     inLanguage: "en-US",
     name: 'Fearless Wallet Community',
     description: 'Join the Fearless Wallet community for real-time discussions, support, and updates.',
@@ -131,7 +132,7 @@ useSchemaOrg([
         }
       ]
     },
-  })
+  }
 ])
 </script>
 

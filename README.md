@@ -34,6 +34,10 @@ yarn preview
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 
+Production deployment for Fearless Site must source only from the protected
+`master` branch. See [docs/deployment.md](./docs/deployment.md) for the release
+branch contract and provider-side checks.
+
 ## Release notes
 
 To fetch new release notes from GitHub run the following script
