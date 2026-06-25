@@ -17,9 +17,11 @@ only from the protected `master` branch.
 
 This repository does not contain a production deploy workflow. GitHub Actions
 builds the site for pull requests and pushes to `develop` and `master` only.
-Production deployment is expected to be controlled by the external hosting
-provider. During release setup, verify that provider-side branch filters deploy
-production from `master` only.
+`vercel.json` pins the Vercel framework preset to Nuxt and uses Yarn 4.9.1 via
+`@yarnpkg/cli-dist` so Vercel does not fall back to the runner's global Yarn 1
+binary. Production deployment is expected to be controlled by the external
+hosting provider. During release setup, verify that provider-side branch filters
+deploy production from `master` only.
 
 ## Release Verification
 
