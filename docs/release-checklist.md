@@ -18,6 +18,9 @@ Use this checklist for every website release PR from `develop` to `master`.
   production dependency audit findings.
 - Run `yarn verify:release-content` and confirm supported-network and release
   content checks pass.
+- Run `yarn test:app-associations && yarn verify:app-associations` and confirm
+  the Android and Apple association schemas, identities, response limits, and
+  mocked live-response adversarial cases pass.
 - Run `yarn typecheck` and confirm Nuxt type generation and TypeScript checks
   pass.
 - Confirm the hosting provider production branch is `master` and that `develop`
@@ -40,5 +43,8 @@ Use this checklist for every website release PR from `develop` to `master`.
 ## After Release
 
 - Verify the deployed site is serving the tagged commit.
+- Run `yarn verify:app-associations:live` and require all three deployed
+  association endpoints to exactly match the checked-in release contract with
+  HTTP 200, JSON content type, and `X-Content-Type-Options: nosniff`.
 - Smoke critical pages, download links, wallet links, and supported-network copy.
 - Keep the hotfix path ready from `master` until monitoring is clear.
