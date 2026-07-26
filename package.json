@@ -10,6 +10,9 @@
     "postinstall": "nuxt prepare",
     "parseNetworks": "tsx ./parseNetworks.ts > ./src/components/Network/networks.ts",
     "verify:release-content": "node scripts/verify-release-content.mjs",
+    "verify:app-associations": "node scripts/verify-app-associations.mjs",
+    "verify:app-associations:live": "node scripts/verify-app-associations.mjs --live-base-url https://fearlesswallet.io",
+    "test:app-associations": "bash scripts/test-app-associations.sh",
     "typecheck": "nuxt typecheck",
     "notes": "node ./fetchReleaseNotes.js"
   },

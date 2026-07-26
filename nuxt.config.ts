@@ -52,6 +52,30 @@ export default defineNuxtConfig({
     },
   },
 
+  routeRules: {
+    '/.well-known/assetlinks.json': {
+      headers: {
+        'cache-control': 'public, max-age=300, must-revalidate',
+        'content-type': 'application/json; charset=utf-8',
+        'x-content-type-options': 'nosniff',
+      },
+    },
+    '/.well-known/apple-app-site-association': {
+      headers: {
+        'cache-control': 'public, max-age=300, must-revalidate',
+        'content-type': 'application/json; charset=utf-8',
+        'x-content-type-options': 'nosniff',
+      },
+    },
+    '/.well-known/apple-app-site-association.json': {
+      headers: {
+        'cache-control': 'public, max-age=300, must-revalidate',
+        'content-type': 'application/json; charset=utf-8',
+        'x-content-type-options': 'nosniff',
+      },
+    },
+  },
+
   app: {
     head: {
       htmlAttrs: {
