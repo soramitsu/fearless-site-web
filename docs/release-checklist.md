@@ -14,16 +14,21 @@ Use this checklist for every website release PR from `develop` to `master`.
 - Run `./scripts/audit-public-artifacts.sh` and confirm it passes.
 - Run `bash ./scripts/test-todo-debt-audit.sh && bash ./scripts/audit-todo-debt.sh`
   and confirm no new TODO/FIXME/STOPSHIP debt was introduced.
-- Run `yarn npm audit --environment production` and confirm there are no
-  production dependency audit findings.
+- Run `yarn audit:dependencies && yarn audit:dependencies:production` and confirm
+  there are no full-tree or production dependency audit findings at low severity
+  or above. Preserve the reviewed resolution contract documented in
+  `docs/dependency-security.md`.
 - Run `yarn verify:release-content` and confirm supported-network and release
   content checks pass.
+- Run `yarn test:app-associations && yarn verify:app-associations` and confirm
+  the Android and Apple association schemas, identities, response limits, and
+  mocked live-response adversarial cases pass.
 - Run `yarn typecheck` and confirm Nuxt type generation and TypeScript checks
   pass.
 - Confirm the hosting provider production branch is `master` and that `develop`
   or PR preview deployments cannot update the production domain.
 - Run or confirm green CI for branch-flow audit, public artifact audit,
-  TODO-debt audit, production dependency audit, install, release-content
+  TODO-debt audit, full and production dependency audits, install, release-content
   verification, typecheck, and build.
 - Confirm deployment target, rollback owner, monitoring owner, and release
   communication channel.
@@ -40,5 +45,8 @@ Use this checklist for every website release PR from `develop` to `master`.
 ## After Release
 
 - Verify the deployed site is serving the tagged commit.
+- Run `yarn verify:app-associations:live` and require all three deployed
+  association endpoints to exactly match the checked-in release contract with
+  HTTP 200, JSON content type, and `X-Content-Type-Options: nosniff`.
 - Smoke critical pages, download links, wallet links, and supported-network copy.
 - Keep the hotfix path ready from `master` until monitoring is clear.
