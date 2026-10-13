@@ -32,3 +32,13 @@ Before merging a release PR to `master`:
 3. Confirm CI is green for the release PR.
 4. After merge, verify the production deployment reports the `master` merge
    commit or a tag that points to it.
+
+## Support page rollout
+
+Deploy `/support/` before releasing app builds that replace their email row with
+Help & Support. Android, iOS, and the browser extension link to
+`https://fearlesswallet.io/support/`. Verify that this URL returns the support
+page in production and that its email, Telegram, FAQ, and wiki links work.
+Keep the support inbox monitored and retain the required contact email in
+store listings and publisher accounts. The app UI change does not update store
+metadata or remove privacy/security contacts.
