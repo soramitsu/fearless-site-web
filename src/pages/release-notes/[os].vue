@@ -16,7 +16,7 @@ const platforms = {
 
 const os = useRoute().params.os
 
-if (!(typeof os === 'string') || !(os in platforms)) {
+if (!(typeof os === 'string') || !Object.hasOwn(platforms, os)) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Page Not Found',
@@ -33,8 +33,11 @@ useSeoMeta({
   twitterTitle: title,
   description,
   ogDescription: description,
-  twitterDescription: description,
-  keywords
+  twitterDescription: description
+})
+
+useHead({
+  meta: [{ name: 'keywords', content: keywords }]
 })
 
 useSchemaOrg([

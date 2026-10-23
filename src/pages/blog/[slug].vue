@@ -34,9 +34,6 @@ const meta = {
     description: description,
     ogDescription: description,
     twitterDescription: description
-  } : {}),
-  ...(keywords ? {
-    keywords: keywords
   } : {})
 }
 
@@ -58,6 +55,9 @@ const schema = [
 ]
 
 useSeoMeta(meta)
+useHead({
+  meta: keywords ? [{ name: 'keywords', content: keywords }] : []
+})
 useSchemaOrg(schema)
 </script>
 

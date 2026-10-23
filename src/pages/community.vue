@@ -38,8 +38,11 @@ useSeoMeta({
   twitterTitle: title,
   description,
   ogDescription: description,
-  twitterDescription: description,
-  keywords
+  twitterDescription: description
+})
+
+useHead({
+  meta: [{ name: 'keywords', content: keywords }]
 })
 
 useSchemaOrg([
