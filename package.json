@@ -1,6 +1,7 @@
 {
   "name": "nuxt-app",
   "private": true,
+  "license": "Apache-2.0",
   "type": "module",
   "scripts": {
     "build": "nuxt build",
@@ -11,30 +12,38 @@
     "parseNetworks": "tsx ./parseNetworks.ts > ./src/components/Network/networks.ts",
     "verify:release-content": "node scripts/verify-release-content.mjs",
     "typecheck": "nuxt typecheck",
-    "notes": "node ./fetchReleaseNotes.js"
+    "notes": "node ./fetchReleaseNotes.js",
+    "audit:dependencies": "yarn test:dependency-patches && node scripts/audit-dependencies.mjs",
+    "audit:dependencies:production": "yarn test:dependency-patches && node scripts/audit-dependencies.mjs --production",
+    "test:dependency-patches": "node --test scripts/test-dependency-patches.mjs",
+    "test:production": "node scripts/test-production.mjs"
   },
   "dependencies": {
     "@nuxt/content": "^2.13.2",
-    "@nuxt/image": "^1.8.1",
-    "@nuxtjs/sitemap": "^6.1.1",
+    "@nuxt/image": "^2.2.0",
+    "@nuxtjs/sitemap": "7.4.3",
+    "@unhead/vue": "^2.1.15",
     "matter-js": "^0.20.0",
-    "nuxt": "^3.21.7",
-    "nuxt-schema-org": "^3.4.0",
+    "nuxt": "^4.6.2",
+    "nuxt-schema-org": "5.0.6",
     "ogl": "^1.0.8",
     "remark-breaks": "^4.0.0",
-    "vue": "^3.5.38",
-    "vue-router": "^4.4.5"
+    "unhead": "^2.1.15",
+    "vue": "^3.5.42",
+    "vue-router": "^5.4.0",
+    "zod": "^3.25.76"
   },
   "resolutions": {
-    "@nuxtjs/mdc": "0.13.3",
-    "vite": "6.3.4",
-    "sharp/tar-fs": "3.0.9",
-    "brace-expansion": "^2.0.2"
+    "@nuxtjs/mdc": "0.23.2",
+    "@vueuse/head/@unhead/vue": "2.1.15",
+    "node-forge@npm:^1.4.0": "patch:node-forge@npm%3A1.4.0#~/.yarn/patches/node-forge-npm-1.4.0-646822c506.patch",
+    "braces@npm:^3.0.3": "patch:braces@npm%3A3.0.3#~/.yarn/patches/braces-npm-3.0.3-582c14023c.patch"
   },
   "packageManager": "yarn@4.9.1",
   "devDependencies": {
     "@types/matter-js": "^0.19.7",
-    "@types/node": "^26.0.1",
+    "@types/node": "^22.0.0",
+    "rolldown": "~1.2.1",
     "tsx": "^4.19.4",
     "typescript": "^5.6.3",
     "vue-tsc": "^3.3.5"

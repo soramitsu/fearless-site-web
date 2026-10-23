@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import remarkBreaks from 'remark-breaks'
 
 const title = 'Fearless Wallet The DeFi Crypto Wallet for Multi-Chain Future',
@@ -8,12 +9,20 @@ const title = 'Fearless Wallet The DeFi Crypto Wallet for Multi-Chain Future',
   ogImage = `${process.env.NUXT_PUBLIC_BASE_URL || ''}/og.jpg`
 
 export default defineNuxtConfig({
+  // Content 2 snapshots its cache with an fs driver that ignores node_modules.
+  // Keep the build cache outside Nuxt 4's relocated node_modules cache.
+  buildDir: '.nuxt',
   srcDir: 'src/',
+  serverDir: 'src/server',
+  dir: { public: 'src/public' },
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
   modules: ['@nuxt/image', '@nuxt/content', 'nuxt-schema-org', '@nuxtjs/sitemap'],
 
   content: {
+    sources: {
+      content: { driver: 'fs', base: fileURLToPath(new URL('./src/content', import.meta.url)) },
+    },
     markdown: {
       remarkPlugins: {
         'remark-breaks': {}
