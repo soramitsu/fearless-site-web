@@ -11,8 +11,9 @@ pull requests from `develop`, `release/*` stabilization branches, or urgent
 `hotfix/*` branches. Every commit on `master` must be safe to deploy, and
 release tags must point at commits already merged to `master`.
 
-Feature PRs are squash-merged after review and green CI. Release PRs to
-`master` use merge commits so the release boundary remains visible.
+Feature and release PRs are squash-merged after review and green CI. Both
+`develop` and `master` require linear history, so merge commits are not allowed.
+Record the release boundary with a tag on the resulting `master` commit.
 
 ## Local Checks
 

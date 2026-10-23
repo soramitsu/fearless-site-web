@@ -2,8 +2,12 @@
 import networks from '~/lib/networks'
 
 const route = useRoute()
+const networkName = route.params.network
+const network = typeof networkName === 'string' && Object.hasOwn(networks, networkName)
+  ? networks[networkName]
+  : undefined
 
-if (!(typeof route.params.network === 'string' && route.params.network in networks)) {
+if (!network) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Page Not Found',
@@ -11,7 +15,7 @@ if (!(typeof route.params.network === 'string' && route.params.network in networ
   })
 }
 
-const { fullName, shortName, icon, description } = networks[route.params.network]
+const { fullName, shortName, icon, description } = network
 
 if (!(fullName && shortName && icon && description)) {
   throw createError({
@@ -31,8 +35,11 @@ useSeoMeta({
   twitterTitle: title,
   description: metaDescription,
   ogDescription: metaDescription,
-  twitterDescription: metaDescription,
-  keywords
+  twitterDescription: metaDescription
+})
+
+useHead({
+  meta: [{ name: 'keywords', content: keywords }]
 })
 
 useSchemaOrg([
