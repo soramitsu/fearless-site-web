@@ -19,7 +19,10 @@ configuration checked out beside this repository:
 team, bundle IDs, Android URL/credential relations, Apple applinks, and Apple
 webcredentials. The Android certificate fingerprint was retained from the
 pre-existing public association file; this change does not derive, guess, or
-publish any signing key material. The verifier rejects unknown fields,
+publish any signing key material. Before production rollout, the Android
+release owner must compare it with the Play-distributed app's signing
+certificate. The source verifier checks consistency, not ownership of that
+certificate. The verifier rejects unknown fields,
 symlinked or oversized source files, redirects, non-200 responses, oversized
 live bodies, non-JSON responses, and missing `X-Content-Type-Options: nosniff`.
 Live JSON must be structurally identical to the checked-in source contract, so
