@@ -61,6 +61,9 @@ const aboutLinks: Link[] = [{
 }]
 
 const resourcesLinks: Link[] = [{
+  title: 'Help & Support',
+  href: '/support/',
+}, {
   title: "Release notes",
   href: '/release-notes',
 }, {

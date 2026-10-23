@@ -14,10 +14,13 @@ Use this checklist for every website release PR from `develop` to `master`.
 - Run `./scripts/audit-public-artifacts.sh` and confirm it passes.
 - Run `bash ./scripts/test-todo-debt-audit.sh && bash ./scripts/audit-todo-debt.sh`
   and confirm no new TODO/FIXME/STOPSHIP debt was introduced.
-- Run `yarn npm audit --environment production` and confirm there are no
-  production dependency audit findings.
+- Run `yarn audit:dependencies && yarn audit:dependencies:production` and
+  confirm there are no unpatched dependency audit findings.
 - Run `yarn verify:release-content` and confirm supported-network and release
   content checks pass.
+- Run `yarn test:app-associations && yarn verify:app-associations` and confirm
+  the Android and Apple association schemas, identities, response limits, and
+  mocked live-response adversarial cases pass.
 - Run `yarn typecheck` and confirm Nuxt type generation and TypeScript checks
   pass.
 - Confirm the hosting provider production branch is `master` and that `develop`
@@ -34,11 +37,15 @@ Use this checklist for every website release PR from `develop` to `master`.
 - Include build evidence, deployment notes, release notes, and rollback notes.
 - Include the production hosting-provider branch filter evidence.
 - Require review and green CI before merge.
-- Merge with a merge commit so the release boundary is visible.
-- Create the release tag only after the merge commit is on `master`.
+- Squash-merge after the required code-owner approval and green checks to
+  preserve the protected branch's linear history.
+- Create the release tag only after the resulting commit is on `master`.
 
 ## After Release
 
 - Verify the deployed site is serving the tagged commit.
+- Run `yarn verify:app-associations:live` and require all three deployed
+  association endpoints to exactly match the checked-in release contract with
+  HTTP 200, JSON content type, and `X-Content-Type-Options: nosniff`.
 - Smoke critical pages, download links, wallet links, and supported-network copy.
 - Keep the hotfix path ready from `master` until monitoring is clear.

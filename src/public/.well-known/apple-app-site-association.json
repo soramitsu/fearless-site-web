@@ -3,8 +3,8 @@
     "details": [
       {
         "appIDs": [
-          "YLWWUD25VZ.jp.co.soramitsu.fearless.dev",
-          "YLWWUD25VZ.jp.co.soramitsu.fearlesswallet"
+          "YLWWUD25VZ.jp.co.soramitsu.fearlesswallet",
+          "YLWWUD25VZ.jp.co.soramitsu.fearlesswallet.dev"
         ],
         "components": [
           {
@@ -13,6 +13,12 @@
           }
         ]
       }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "YLWWUD25VZ.jp.co.soramitsu.fearlesswallet",
+      "YLWWUD25VZ.jp.co.soramitsu.fearlesswallet.dev"
     ]
   }
 }

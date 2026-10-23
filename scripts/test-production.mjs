@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { spawn } from 'node:child_process'
 import { once } from 'node:events'
+import { readFile } from 'node:fs/promises'
 import { createServer } from 'node:net'
 import { setTimeout as delay } from 'node:timers/promises'
 
@@ -46,6 +47,7 @@ try {
     ['/blog', 'Fearless Wallet Crypto and Web3 Blog', 'Welcome to Fearless Wallet'],
     ['/blog/welcome', 'Welcome to Fearless Wallet', 'Why Choose Fearless Wallet?'],
     ['/faq', 'Fearless Wallet FAQ', 'How safe is Fearless Wallet?'],
+    ['/support/', 'Help & Support | Fearless Wallet', 'Contact support'],
     ['/release-notes/ios', 'Fearless Wallet Release Notes for iOS', 'Source Code (zip)'],
     ['/release-notes/android', 'Fearless Wallet Release Notes for Android', 'Source Code (zip)'],
     ['/bitcoin-wallet', 'The Secure Bitcoin Wallet', 'Bitcoin'],
@@ -53,11 +55,17 @@ try {
     ['/terms', 'Terms', 'Intellectual Property Rights'],
   ]) {
     const body = await html(path)
-    assert.ok(body.match(/<title>(.*?)<\/title>/)?.[1].includes(title), `${path}: title ${body.match(/<title>(.*?)<\/title>/)?.[1]}`)
+    assert.ok(body.match(/<title>(.*?)<\/title>/)?.[1].includes(title.replaceAll('&', '&amp;')), `${path}: title ${body.match(/<title>(.*?)<\/title>/)?.[1]}`)
     assert.ok(body.includes(marker), `${path}: rendered content`)
     assert.equal((body.match(/<meta\b[^>]*name="keywords"/g) || []).length, 1, `${path}: keyword metadata`)
     console.log(`Rendered page passed: ${path}`)
   }
+  const support = await html('/support/')
+  for (const href of ['mailto:fearless@soramitsu.co.jp', 'https://t.me/fearlesshappiness', '/faq', 'https://wiki.fearlesswallet.io/']) {
+    assert.ok(support.includes(`href="${href}"`), `Support link: ${href}`)
+  }
+  assert.match(support, /Never share your recovery phrase/)
+  assert.ok((await html('/')).includes('href="/support/"'), 'Footer links to Help & Support')
   const blog = await html('/blog')
   assert.match(blog, /alt="Welcome to Fearless Wallet: Your Gateway to the Decentralized Future"/)
   const image = blog.match(/src="(\/_ipx\/[^"?]*welcome[^"?]*)"/)
@@ -80,10 +88,14 @@ try {
   const xml = await fetch(`${base}/sitemap.xml`)
   assert.equal(xml.status, 200)
   assert.match(await xml.text(), /https:\/\/fearlesswallet.io\/blog\/welcome/)
-  for (const name of ['assetlinks.json', 'apple-app-site-association']) {
-    const response = await fetch(`${base}/.well-known/${name}`)
+  for (const name of ['assetlinks.json', 'apple-app-site-association', 'apple-app-site-association.json']) {
+    const response = await fetch(`${base}/.well-known/${name}`, { redirect: 'error' })
     assert.equal(response.status, 200, name)
-    assert.ok(await response.json(), name)
+    assert.match(response.headers.get('content-type'), /^application\/json(?:;|$)/, `${name}: JSON content type`)
+    assert.equal(response.headers.get('x-content-type-options'), 'nosniff', `${name}: nosniff`)
+    assert.equal(response.headers.get('cache-control'), 'public, max-age=300, must-revalidate', `${name}: cache policy`)
+    const source = JSON.parse(await readFile(`src/public/.well-known/${name}`, 'utf8'))
+    assert.deepEqual(await response.json(), source, `${name}: deployed association contract`)
   }
   console.log('Production regression checks passed: content, metadata, assets, images, 404s, sitemaps and app associations.')
 } catch (error) {
