@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { detectDeviceType } from "../helpers/common";
+import { detectDeviceType, detectMobileAppUrl } from "../helpers/common";
+import { chromeExtensionUrl, downloadPagePath } from "~/lib/appLinks";
 
 const title = "TON Connect";
 const description = "TON Connect desctiption";
@@ -51,8 +52,8 @@ onMounted(() => {
 
 const handleCLick = (step: number) => {
   if (step === 1) {
-    if (deviceType === "desktop") window.open("https://qrcodes.pro/5FVEPa");
-    else window.open("https://qrcodes.pro/RC9fNu");
+    if (deviceType === "desktop") window.open(chromeExtensionUrl);
+    else window.open(detectMobileAppUrl() ?? downloadPagePath);
 
     return;
   }

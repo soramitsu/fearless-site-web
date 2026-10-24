@@ -26,39 +26,49 @@ const menu = [
 </script>
 
 <template>
-  <header class="header pt-xs pb-l" v-on-click-outside="() => { open = false }">
-    <div class="w px-xs inner text-xxs">
-      <NuxtLink to="/" class="home text-xxs" active-class="active">
-        <img src="/logo.svg" alt="Fearless Wallet logo" width="74" height="32">
-        <span class="nav-item">Fearless wallet</span>
-      </NuxtLink>
-      <nav class="nav" :class="{ open }">
-        <div class="main-nav">
-          <NuxtLink v-for="(item, index) in menu" :key="index" :to="item.href" :target="item.external ? '_blank' : undefined" class="nav-item"
-            active-class="active">
-            {{ item.title }}
-            <svg v-if="item.external" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M6.66667 5.77778C6.66667 4.79594 7.4626 4 8.44444 4H18.2222C19.2041 4 20 4.79594 20 5.77778V15.5556C20 16.5374 19.2041 17.3333 18.2222 17.3333C17.2404 17.3333 16.4444 16.5374 16.4444 15.5556V10.0697L7.03486 19.4793C6.34059 20.1736 5.21496 20.1736 4.5207 19.4793C3.82643 18.785 3.82643 17.6594 4.5207 16.9651L13.9303 7.55556H8.44444C7.4626 7.55556 6.66667 6.75962 6.66667 5.77778Z"
-                fill="currentColor" />
-            </svg>
+  <div class="header-anchor">
+    <header class="header pt-xs pb-l" v-on-click-outside="() => { open = false }">
+      <div class="w px-xs inner text-xxs">
+        <NuxtLink to="/" class="home text-xxs" active-class="active">
+          <img src="/logo.svg" alt="Fearless Wallet logo" width="74" height="32">
+          <span class="nav-item">Fearless wallet</span>
+        </NuxtLink>
+        <nav class="nav" :class="{ open }">
+          <div class="main-nav">
+            <NuxtLink v-for="(item, index) in menu" :key="index" :to="item.href" :target="item.external ? '_blank' : undefined" class="nav-item"
+              active-class="active">
+              {{ item.title }}
+              <svg v-if="item.external" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M6.66667 5.77778C6.66667 4.79594 7.4626 4 8.44444 4H18.2222C19.2041 4 20 4.79594 20 5.77778V15.5556C20 16.5374 19.2041 17.3333 18.2222 17.3333C17.2404 17.3333 16.4444 16.5374 16.4444 15.5556V10.0697L7.03486 19.4793C6.34059 20.1736 5.21496 20.1736 4.5207 19.4793C3.82643 18.785 3.82643 17.6594 4.5207 16.9651L13.9303 7.55556H8.44444C7.4626 7.55556 6.66667 6.75962 6.66667 5.77778Z"
+                  fill="currentColor" />
+              </svg>
 
-          </NuxtLink>
-        </div>
-        <NuxtLink to="/community" class="nav-item" active-class="active">Community</NuxtLink>
-        <Button href="/download" title="Download" icon="download" small accent class="download" />
-      </nav>
-      <button class="burger" :class="{ open }" @click="open = !open">Menu</button>
-    </div>
-  </header>
+            </NuxtLink>
+          </div>
+          <NuxtLink to="/community" class="nav-item" active-class="active">Community</NuxtLink>
+          <Button href="/download" title="Download" icon="download" small accent class="download" />
+        </nav>
+        <button class="burger" :class="{ open }" @click="open = !open">Menu</button>
+      </div>
+    </header>
+  </div>
 </template>
 
 <style scoped>
+/* Sticky with no height: the header still overlays the page like a fixed
+   header, but starts below the update banner and pins once it scrolls away. */
+.header-anchor {
+  position: sticky;
+  top: 0;
+  height: 0;
+  z-index: 10;
+}
+
 .header {
-  position: fixed;
+  position: absolute;
   top: 0;
   width: 100%;
-  z-index: 10;
   background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.58) 22.5%, rgba(0, 0, 0, 0.40) 43.5%, rgba(0, 0, 0, 0.25) 62%, rgba(0, 0, 0, 0.12) 77%, rgba(0, 0, 0, 0.06) 87.5%, rgba(0, 0, 0, 0.00) 100%);
   pointer-events: none;
 }

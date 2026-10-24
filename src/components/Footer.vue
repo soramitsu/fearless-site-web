@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { androidApkUrl, androidAppUrl, chromeExtensionUrl, iosAppUrl } from '~/lib/appLinks'
+
 type Link = {
   title: string
   href: string
@@ -30,19 +32,19 @@ const community: Link[] = [{
 
 const downloadLinks: Link[] = [{
   title: 'Chrome extension',
-  href: 'https://chrome.google.com/webstore/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc',
+  href: chromeExtensionUrl,
   icon: 'chrome'
 }, {
   title: 'iOS (App Store)',
-  href: 'https://apps.apple.com/us/app/fearless-wallet/id1537251089',
+  href: iosAppUrl,
   icon: 'appstore'
 }, {
   title: 'Android (Play Market)',
-  href: 'https://play.google.com/store/apps/details?id=jp.co.soramitsu.fearless',
+  href: androidAppUrl,
   icon: 'playmarket'
 }, {
   title: 'Android (APK)',
-  href: 'https://github.com/soramitsu/fearless-Android/releases',
+  href: androidApkUrl,
   icon: 'github'
 }]
 

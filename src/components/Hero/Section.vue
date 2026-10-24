@@ -20,8 +20,7 @@ const isTrailerOpen = ref(false)
           Polkadot, and SORA accounts.
         </p>
         <div class="buttons mb-l">
-          <Button href="https://qrcodes.pro/5FVEPa" title="Get extension" icon="desktop" target="_blank" accent />
-          <Button href="https://qrcodes.pro/9cSnKW " title="Get mobile app" icon="mobile" target="_blank" accent />
+          <GetAppButtons accent />
         </div>
         <div class="benefits">
           <div v-for="benefit in benefits" class="text-s px-xs py-xs outline-block rounded-xs">

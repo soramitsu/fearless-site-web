@@ -28,6 +28,25 @@ for (const file of ['src/public/networks/bitcoin.svg', 'src/public/networks/sola
   }
 }
 
+// These short links expired and now serve a 404 page. Link to the stores
+// through src/lib/appLinks.ts instead.
+const expiredLinkHosts = ['qrcodes.pro'];
+const sourceFiles = dir => fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+  const path = `${dir}/${entry.name}`;
+  return entry.isDirectory() ? sourceFiles(path) : [path];
+});
+
+for (const file of sourceFiles('src').filter(file => /\.(vue|ts|md|json|html)$/.test(file))) {
+  const content = fs.readFileSync(file, 'utf8');
+
+  for (const host of expiredLinkHosts) {
+    if (content.includes(host)) {
+      console.error(`${file} links to the expired short-link host ${host}`);
+      failed = true;
+    }
+  }
+}
+
 if (failed) process.exit(1);
 
 console.log('Release content verification passed.');

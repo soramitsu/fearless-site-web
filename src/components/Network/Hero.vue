@@ -13,8 +13,7 @@ defineProps<{
       Securely store and manage your assets with Fearless Wallet on the {{ fullName }} network.
     </p>
     <p class="flex">
-      <Button href="https://qrcodes.pro/5FVEPa" title="Get extension" icon="desktop" target="_blank" accent />
-      <Button href="https://qrcodes.pro/9cSnKW " title="Get mobile app" icon="mobile" target="_blank" accent />
+      <GetAppButtons accent />
     </p>
   </section>
 </template>

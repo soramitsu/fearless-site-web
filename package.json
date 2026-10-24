@@ -34,7 +34,7 @@
     "unhead": "^2.1.15",
     "vue": "^3.5.42",
     "vue-router": "^5.4.0",
-    "zod": "^3.25.76"
+    "zod": "^4.6.6"
   },
   "resolutions": {
     "@nuxtjs/mdc": "0.23.2",

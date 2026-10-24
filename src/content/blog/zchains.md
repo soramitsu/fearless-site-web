@@ -47,6 +47,6 @@ Join the celebration and take advantage of all this partnership offers. Start ma
 
 [Join TaskOn campaign](https://taskon.xyz/campaign/detail/19039909)
 
-[Download mobile app](https://www.notion.so/Website-article-58eb6a7f5fc64d309e58745d28814ce4?pvs=21)
+[Download mobile app](/download)
 
-[Download browser extension](https://qrcodes.pro/dr0Fwi)
+[Download browser extension](https://chromewebstore.google.com/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc)
