@@ -23,8 +23,8 @@ onMounted(() => {
         <summary class="bold">How to update safely</summary>
         <ol>
           <li>
-            Open <code>chrome://extensions</code>, turn on Developer mode, click Update, then check the version is
-            {{ minimumExtensionVersion }} or later.
+            Chrome updates it from the store automatically. To check, open <code>chrome://extensions</code> and click
+            Details under Fearless Wallet. If the version is older than {{ minimumExtensionVersion }}, restart Chrome.
           </li>
           <li>In the extension, create a new wallet and move your funds to it, as it guides you.</li>
           <li>
