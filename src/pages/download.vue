@@ -1,27 +1,29 @@
 <script setup lang="ts">
+import { androidApkUrl, androidAppUrl, chromeExtensionUrl, iosAppUrl } from '~/lib/appLinks'
+
 const links = [{
   icon: "chrome",
   title: "Fearless Wallet for Chrome",
   description: "Easily access and manage your Fearless Wallet directly from your browser with our Chrome extension.",
-  href: 'https://chrome.google.com/webstore/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc',
+  href: chromeExtensionUrl,
 },
 {
   icon: "appstore",
   title: "Fearless Wallet for iOS",
   description: "Download Fearless Wallet from the App Store for a seamless and secure crypto experience on your iPhone or iPad.",
-  href: 'https://apps.apple.com/us/app/fearless-wallet/id1537251089',
+  href: iosAppUrl,
 },
 {
   icon: "playmarket",
   title: "Fearless Wallet for Android",
   description: "Get Fearless Wallet on your Android device from the Play Market.",
-  href: 'https://play.google.com/store/apps/details?id=jp.co.soramitsu.fearless',
+  href: androidAppUrl,
 },
 {
   icon: "github",
   title: "Fearless Wallet APK for Android",
   description: "Download the Fearless Wallet APK directly from GitHub for your Android device.",
-  href: 'https://github.com/soramitsu/fearless-Android/releases',
+  href: androidApkUrl,
 }]
 
 const title = 'Download Fearless Wallet - Open-Source Self-Custody Multichain Wallet',

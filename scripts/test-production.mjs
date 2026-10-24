@@ -66,6 +66,29 @@ try {
   }
   assert.match(support, /Never share your recovery phrase/)
   assert.ok((await html('/')).includes('href="/support/"'), 'Footer links to Help & Support')
+  // App buttons go to the stores directly: the short links they used expired.
+  const chromeExtensionUrl = 'https://chromewebstore.google.com/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc'
+  const linkHrefs = (body, text) => [...body.matchAll(/<a\b[^>]*\bhref="([^"]*)"[^>]*>((?:(?!<\/a>)[\s\S])*)<\/a>/g)]
+    .filter(([, , content]) => content.includes(text)).map(([, href]) => href)
+  for (const [path, count] of [['/', 2], ['/bitcoin-wallet', 1]]) {
+    const body = await html(path)
+    assert.deepEqual(linkHrefs(body, 'Get extension'), Array(count).fill(chromeExtensionUrl), `${path}: Get extension`)
+    assert.deepEqual(linkHrefs(body, 'Get mobile app'), Array(count).fill('/download'), `${path}: Get mobile app`)
+  }
+  for (const [path, mobileText] of [
+    ['/blog/welcome', 'Download for iOS/Android'],
+    ['/blog/2024-in-review', 'Download for iOS/Android'],
+    ['/blog/zchains', 'Download mobile app'],
+  ]) {
+    const body = await html(path)
+    assert.deepEqual(linkHrefs(body, 'Download browser extension'), [chromeExtensionUrl], `${path}: extension link`)
+    assert.deepEqual(linkHrefs(body, mobileText), ['/download'], `${path}: mobile app link`)
+  }
+  for (const path of ['/', '/download', '/bitcoin-wallet', '/blog/welcome', '/blog/2024-in-review', '/blog/zchains', '/ton-connect']) {
+    const body = await html(path)
+    assert.ok(!body.includes('qrcodes.pro'), `${path}: no expired short links`)
+    assert.match(body, /id="update-extension"[\s\S]*?\d+\.\d+\.\d+ or later[\s\S]*?chrome:\/\/extensions/, `${path}: extension update banner`)
+  }
   const blog = await html('/blog')
   assert.match(blog, /alt="Welcome to Fearless Wallet: Your Gateway to the Decentralized Future"/)
   const image = blog.match(/src="(\/_ipx\/[^"?]*welcome[^"?]*)"/)
