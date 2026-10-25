@@ -5,7 +5,7 @@ const requiredContent = [
   ['src/pages/download.vue', ['self-custody', 'browser extension', 'iOS', 'Android', 'GitHub']],
   ['src/pages/roadmap.vue', ['Universal Wallet', 'Bitcoin', 'Solana', 'Taira', 'SORA Nexus']],
   ['src/lib/networks.ts', ['bitcoin:', 'solana:', 'nexus:', 'taira:', 'si.soramitsu.io']],
-  ['src/components/Network/networks.ts', ["slug: 'bitcoin'", "slug: 'solana'", "slug: 'nexus'", "slug: 'taira'"]],
+  ['src/components/Network/networks.ts', ['"slug": "bitcoin"', '"slug": "solana"', '"slug": "nexus"', '"slug": "taira"']],
 ];
 
 let failed = false;

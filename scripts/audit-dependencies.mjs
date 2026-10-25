@@ -7,8 +7,7 @@ const nonemptyString = value => typeof value === 'string' && value.length > 0
 const isVersion = value => typeof value === 'string'
   && /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/.test(value)
 
-// Only bulk-query findings for reviewed patches may be exempted. A finding
-// from Yarn means a registry locator exists and must fail, even at this version.
+// Only findings proven to refer to reviewed patches may be exempted.
 export function isBackportedAdvisory(entry) {
   if (entry.source !== 'patched-version' || !Object.hasOwn(backports, entry.value)) return false
   const expected = backports[entry.value]
@@ -34,6 +33,7 @@ function patchedVersions(result) {
   const rows = commandLines(result, 'Yarn info')
   if (result.status !== 0 || rows.length === 0) throw new Error('Could not enumerate installed patch locators.')
   const versions = new Map()
+  const reviewedLocators = new Set()
   for (const row of rows) {
     if (!isRecord(row) || !nonemptyString(row.value) || !isRecord(row.children)
       || !(row.children.Version === null || typeof row.children.Version === 'string')) {
@@ -65,6 +65,7 @@ function patchedVersions(result) {
       if (patchPath !== `~/${backports[name].patch}`) {
         throw new Error(`Unreviewed patch for an exempted package: ${row.value}`)
       }
+      reviewedLocators.add(row.value)
     }
     if (!versions.has(name)) versions.set(name, new Set())
     versions.get(name).add(version)
@@ -72,7 +73,32 @@ function patchedVersions(result) {
   for (const [name, patch] of Object.entries(backports)) {
     if (!versions.get(name)?.has(patch.version)) throw new Error(`Missing reviewed patch locator: ${name}@${patch.version}`)
   }
-  return Object.fromEntries([...versions].map(([name, entries]) => [name, [...entries].sort()]))
+  // Yarn 4.17 can report the base version of a patched dependency. Prove that
+  // every dependency edge uses the reviewed patch before classifying such a
+  // finding. Merely having a patch locator alongside an unpatched one is not
+  // enough; base locators retained only as patch inputs have no incoming edge.
+  const edges = new Map()
+  for (const row of rows) {
+    if (row.children.Dependencies === undefined) continue
+    if (!Array.isArray(row.children.Dependencies)) throw new Error('Unexpected Yarn dependencies.')
+    for (const dependency of row.children.Dependencies) {
+      if (!isRecord(dependency) || !nonemptyString(dependency.locator)) throw new Error('Unexpected Yarn dependency locator.')
+      const name = dependency.locator.match(/^((?:@[^/]+\/)?[^@]+)@/)?.[1]
+      if (!name) throw new Error('Unexpected Yarn dependency locator.')
+      if (!edges.has(name)) edges.set(name, [])
+      edges.get(name).push({ parent: row.value, locator: dependency.locator })
+    }
+  }
+  return {
+    requested: Object.fromEntries([...versions].map(([name, entries]) => [name, [...entries].sort()])),
+    isReviewedFinding(entry) {
+      const references = edges.get(entry.value) ?? []
+      const dependents = entry.children.Dependents
+      return references.length > 0 && references.every(edge => reviewedLocators.has(edge.locator))
+        && Array.isArray(dependents) && dependents.length > 0
+        && dependents.every(parent => references.some(edge => edge.parent === parent))
+    },
+  }
 }
 
 function bulkFindings(response, requested) {
@@ -123,7 +149,10 @@ export async function auditDependencies(production = false, dependencies = {}) {
   // patches. Query every installed patch origin, not just our two backports.
   // This intentionally includes development patch origins in production mode.
   // The package scripts run provenance and behavior tests before this audit.
-  const requested = patchedVersions(execute(['info', '--all', '--recursive', '--json']))
+  const { requested, isReviewedFinding } = patchedVersions(execute(['info', '--all', '--recursive', '--json']))
+  for (const finding of findings) {
+    if (isReviewedFinding(finding)) finding.source = 'patched-version'
+  }
   const response = await fetchRegistry('https://registry.npmjs.org/-/npm/v1/security/advisories/bulk', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },

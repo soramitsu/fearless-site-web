@@ -12,7 +12,7 @@ Content 2's filesystem cache driver ignores paths inside `node_modules`, where
 Nuxt 4 otherwise relocates an existing build directory. A build that succeeds
 without those settings can still serve empty content pages.
 
-Run the complete verification matrix on Node 22:
+Run the complete verification matrix on the Node version in `.nvmrc`:
 
 ```sh
 yarn install --immutable
@@ -42,11 +42,14 @@ the reviewed installed-file and patch hashes in `scripts/dependency-patches.json
 Tests cover hostile nested/cyclic brace inputs, valid ordinary glob behavior,
 malformed RSA DigestInfo rejection, and valid signatures.
 
-Yarn's registry audit skips `patch:` locators, including its built-in
-compatibility patches. The audit wrapper additionally queries npm for every
+Yarn's registry audit can omit `patch:` locators, including its built-in
+compatibility patches, or report their base versions (Yarn 4.17). The audit wrapper additionally queries npm for every
 patched package's original registry version. Only the two exact advisories on
 the two tested backport versions are exempted from that additional query.
-Every advisory returned for an unpatched Yarn registry locator fails the gate,
+For a Yarn-reported base version, the wrapper requires every dependency edge
+and every reported dependent to resolve to the reviewed patch before applying
+the same exact-advisory exception. A patch existing beside an unpatched
+dependency is insufficient. Every advisory for an unpatched registry locator fails the gate,
 as do new advisories, changed versions, invalid audit responses and network
 errors. Both full and production audits check all patch origins, including
 build tooling, so the latter deliberately retains this broader coverage.
@@ -55,3 +58,11 @@ TODO: Replace each backport with an official fixed release when available,
 remove its exact exception and provenance entry, and rerun the full matrix.
 Third-party licenses and copyright notices continue to apply to the patched
 packages; the website's Apache 2.0 grant covers first-party source only.
+
+## Consolidation dependency update
+
+The 2026-10-25 consolidation imports the browser website's reviewed dependency
+version pins, removes the unused direct Zod dependency, and selects
+serialize-javascript 7.1.3. It retains this repository's installed-source hash
+checks, cyclic AST regression coverage, and audit of every patched registry
+origin. No audit exception is added by this update.

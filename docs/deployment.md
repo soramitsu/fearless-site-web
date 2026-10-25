@@ -1,7 +1,10 @@
 # Deployment Policy
 
 Fearless Site is a public Nuxt website. Production deployment must be sourced
-only from the protected `master` branch.
+only from the protected `master` branch of `soramitsu/fearless-site-web`, with
+the repository root as the hosting project root. Keep the existing hosting
+project and domain; the four-repository consolidation does not reconnect it to
+the browser repository.
 
 ## Branch Contract
 
@@ -17,7 +20,7 @@ only from the protected `master` branch.
 
 This repository does not contain a production deploy workflow. GitHub Actions
 builds the site for pull requests and pushes to `develop` and `master` only.
-`vercel.json` pins the Vercel framework preset to Nuxt and uses Yarn 4.9.1 via
+`vercel.json` pins the Vercel framework preset to Nuxt and uses Yarn 4.17.0 via
 `@yarnpkg/cli-dist` so Vercel does not fall back to the runner's global Yarn 1
 binary. Production deployment is expected to be controlled by the external
 hosting provider. During release setup, verify that provider-side branch filters

@@ -16,6 +16,7 @@ Use this checklist for every website release PR from `develop` to `master`.
   and confirm no new TODO/FIXME/STOPSHIP debt was introduced.
 - Run `yarn audit:dependencies && yarn audit:dependencies:production` and
   confirm there are no unpatched dependency audit findings.
+- Run `yarn verify:networks` to validate owned network data and local icons.
 - Run `yarn verify:release-content` and confirm supported-network and release
   content checks pass.
 - Run `yarn test:app-associations && yarn verify:app-associations` and confirm
