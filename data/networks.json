@@ -1,0 +1,582 @@
+[
+  {
+    "name": "Polkadot",
+    "icon": "/networks/Polkadot.svg",
+    "disabled": false
+  },
+  {
+    "name": "Kusama",
+    "icon": "/networks/Kusama.svg",
+    "disabled": false
+  },
+  {
+    "name": "Westend",
+    "icon": "/networks/Westend.svg",
+    "disabled": false
+  },
+  {
+    "name": "Kusama AssetHub",
+    "icon": "/networks/Assethub.svg",
+    "disabled": false
+  },
+  {
+    "name": "Polkadot AssetHub",
+    "icon": "/networks/Assethub.svg",
+    "disabled": false
+  },
+  {
+    "name": "Acala",
+    "icon": "/networks/acala.svg",
+    "disabled": false
+  },
+  {
+    "name": "Karura",
+    "icon": "/networks/Karura.svg",
+    "disabled": false
+  },
+  {
+    "name": "Moonriver",
+    "icon": "/networks/Moonriver.svg",
+    "disabled": false
+  },
+  {
+    "name": "Shiden",
+    "icon": "/networks/Shiden.svg",
+    "disabled": false
+  },
+  {
+    "name": "Bifrost",
+    "icon": "/networks/Bifrost.svg",
+    "disabled": false
+  },
+  {
+    "name": "Khala",
+    "icon": "/networks/Khala.svg",
+    "disabled": true
+  },
+  {
+    "name": "KILT Spiritnet",
+    "icon": "/networks/kilt.svg",
+    "disabled": false
+  },
+  {
+    "name": "Calamari",
+    "icon": "/networks/Calamari.svg",
+    "disabled": false
+  },
+  {
+    "name": "Quartz",
+    "icon": "/networks/quartz.svg",
+    "disabled": false
+  },
+  {
+    "name": "Parallel Heiko",
+    "icon": "/networks/parallelfinance.svg",
+    "disabled": false
+  },
+  {
+    "name": "Picasso",
+    "icon": "/networks/picasso.svg",
+    "disabled": false
+  },
+  {
+    "name": "Altair",
+    "icon": "/networks/Altair.svg",
+    "disabled": false
+  },
+  {
+    "name": "Pioneer Network",
+    "icon": "/networks/bitcountry.svg",
+    "disabled": false
+  },
+  {
+    "name": "Clover",
+    "icon": "/networks/clover.svg",
+    "disabled": false
+  },
+  {
+    "name": "Astar",
+    "icon": "/networks/astar.svg",
+    "disabled": false
+  },
+  {
+    "name": "Parallel",
+    "icon": "/networks/parallelfinance.svg",
+    "disabled": true
+  },
+  {
+    "name": "Basilisk",
+    "icon": "/networks/Basilisk.svg",
+    "disabled": false
+  },
+  {
+    "name": "Moonbeam",
+    "icon": "/networks/Moonbeam.svg",
+    "disabled": false
+  },
+  {
+    "name": "Moonbase Alpha",
+    "icon": "/networks/Moonbeam.svg",
+    "disabled": true
+  },
+  {
+    "name": "Kintsugi",
+    "icon": "/networks/kintsugi.svg",
+    "disabled": false
+  },
+  {
+    "name": "Genshiro",
+    "icon": "/networks/Genshiro.svg",
+    "disabled": true
+  },
+  {
+    "name": "Robonomics",
+    "icon": "/networks/robonomics.svg",
+    "disabled": false
+  },
+  {
+    "name": "Subsocial",
+    "icon": "/networks/subsocial_new.svg",
+    "disabled": false
+  },
+  {
+    "name": "Zeitgeist",
+    "icon": "/networks/zeitgeist.svg",
+    "disabled": false
+  },
+  {
+    "name": "Hydration",
+    "icon": "/networks/hydradx.svg",
+    "disabled": false
+  },
+  {
+    "name": "Centrifuge",
+    "icon": "/networks/centrifuge.svg",
+    "disabled": false
+  },
+  {
+    "name": "Nodle Parachain",
+    "icon": "/networks/nodle.svg",
+    "disabled": false
+  },
+  {
+    "name": "Interlay",
+    "icon": "/networks/interlay.svg",
+    "disabled": false
+  },
+  {
+    "name": "Litmus",
+    "icon": "/networks/litmus.svg",
+    "disabled": true
+  },
+  {
+    "name": "Polkadex Main Network",
+    "icon": "/networks/polkadex.svg",
+    "disabled": false
+  },
+  {
+    "name": "Dorafactory Network",
+    "icon": "/networks/DoraFactory.svg",
+    "disabled": true
+  },
+  {
+    "name": "NeuroWeb Parachain",
+    "icon": "/networks/Neuroweb.svg",
+    "disabled": false
+  },
+  {
+    "name": "UNIQUE",
+    "icon": "/networks/unique.svg",
+    "disabled": false
+  },
+  {
+    "name": "Bifrost Polkadot",
+    "icon": "/networks/Bifrost.svg",
+    "disabled": false
+  },
+  {
+    "name": "Heima",
+    "icon": "/networks/heima.svg",
+    "disabled": false
+  },
+  {
+    "name": "Phala",
+    "icon": "/networks/phala.svg",
+    "disabled": false
+  },
+  {
+    "name": "Composable Finance",
+    "icon": "/networks/composable.svg",
+    "disabled": false
+  },
+  {
+    "name": "Bajun Kusama",
+    "icon": "/networks/Bajun.svg",
+    "disabled": false
+  },
+  {
+    "name": "Kabocha",
+    "icon": "/networks/Kabocha.svg",
+    "disabled": false
+  },
+  {
+    "name": "KICO",
+    "icon": "/networks/KICO.svg",
+    "disabled": true
+  },
+  {
+    "name": "Mangata Kusama Mainnet",
+    "icon": "/networks/MagnataX.svg",
+    "disabled": true
+  },
+  {
+    "name": "DataHighway Tanganika",
+    "icon": "/networks/DataHighway.svg",
+    "disabled": true
+  },
+  {
+    "name": "Equilibrium",
+    "icon": "/networks/equilibrium.svg",
+    "disabled": true
+  },
+  {
+    "name": "Integritee Network (Polkadot)",
+    "icon": "/networks/integritee.svg",
+    "disabled": false
+  },
+  {
+    "name": "Turing Network",
+    "icon": "/networks/OAK.svg",
+    "disabled": false
+  },
+  {
+    "name": "Encointer on Kusama",
+    "icon": "/networks/encointer.svg",
+    "disabled": false
+  },
+  {
+    "name": "Pichiu Network",
+    "icon": "/networks/pichiu.svg",
+    "disabled": true
+  },
+  {
+    "name": "GM Parachain",
+    "icon": "/networks/GM%20Parachain.svg",
+    "disabled": true
+  },
+  {
+    "name": "Imbue Kusama",
+    "icon": "/networks/Imbue.svg",
+    "disabled": true
+  },
+  {
+    "name": "Amplitude",
+    "icon": "/networks/Amplitude.svg",
+    "disabled": false
+  },
+  {
+    "name": "Darwinia2",
+    "icon": "/networks/darwinia.svg",
+    "disabled": true
+  },
+  {
+    "name": "Kylin Network",
+    "icon": "/networks/Kylin%20Network.svg",
+    "disabled": true
+  },
+  {
+    "name": "Crust Shadow Parachain",
+    "icon": "/networks/crustshadow.svg",
+    "disabled": false
+  },
+  {
+    "name": "Kusama (test)",
+    "icon": "/networks/Kusama.svg",
+    "disabled": true
+  },
+  {
+    "name": "Polkadot (test)",
+    "icon": "/networks/Polkadot.svg",
+    "disabled": true
+  },
+  {
+    "name": "Snow Kusama",
+    "icon": "/networks/SNOW.svg",
+    "disabled": true
+  },
+  {
+    "name": "SORA test",
+    "icon": "/networks/SORA.svg",
+    "disabled": true
+  },
+  {
+    "name": "SORA Mainnet",
+    "icon": "/networks/SORA.svg",
+    "disabled": false
+  },
+  {
+    "name": "Aleph Zero",
+    "icon": "/networks/Aleph%20Zero.svg",
+    "disabled": false
+  },
+  {
+    "name": "Kusama BridgeHub",
+    "icon": "/networks/Bridgehub.svg",
+    "disabled": false
+  },
+  {
+    "name": "Ipci",
+    "icon": "/networks/DAOIPCI.svg",
+    "disabled": true
+  },
+  {
+    "name": "Integritee Network (Kusama)",
+    "icon": "/networks/integritee.svg",
+    "disabled": false
+  },
+  {
+    "name": "Subzero",
+    "icon": "/networks/Subzero.svg",
+    "disabled": true
+  },
+  {
+    "name": "Ajuna Polkadot",
+    "icon": "/networks/Bajun.svg",
+    "disabled": false
+  },
+  {
+    "name": "Bitgreen",
+    "icon": "/networks/Bitgreen.svg",
+    "disabled": false
+  },
+  {
+    "name": "Crust",
+    "icon": "/networks/Crust.svg",
+    "disabled": false
+  },
+  {
+    "name": "Frequency",
+    "icon": "/networks/Frequency.svg",
+    "disabled": false
+  },
+  {
+    "name": "Kapex",
+    "icon": "/networks/Kapex%20%28Totem%29.svg",
+    "disabled": true
+  },
+  {
+    "name": "Pendulum",
+    "icon": "/networks/Pendulum.svg",
+    "disabled": false
+  },
+  {
+    "name": "Ternoa Mainnet",
+    "icon": "/networks/Ternoa.svg",
+    "disabled": false
+  },
+  {
+    "name": "SORA Kusama parachain",
+    "icon": "/networks/SORA.svg",
+    "disabled": false
+  },
+  {
+    "name": "SORA Polkadot parachain",
+    "icon": "/networks/SORA.svg",
+    "disabled": false
+  },
+  {
+    "name": "Ethereum",
+    "icon": "/networks/Ethereum.svg",
+    "disabled": false
+  },
+  {
+    "name": "BNB Smart Chain",
+    "icon": "/networks/bnbchain.svg",
+    "disabled": false
+  },
+  {
+    "name": "Polygon",
+    "icon": "/networks/Polygon.svg",
+    "disabled": false
+  },
+  {
+    "name": "Enjin Matrixchain",
+    "icon": "/networks/Enjin.svg",
+    "disabled": false
+  },
+  {
+    "name": "Canary Matrixchain",
+    "icon": "/networks/Enjin.svg",
+    "disabled": false
+  },
+  {
+    "name": "Enjin Relaychain",
+    "icon": "/networks/Enjin.svg",
+    "disabled": true
+  },
+  {
+    "name": "Arbitrum One",
+    "icon": "/networks/Arbitrum.svg",
+    "disabled": false
+  },
+  {
+    "name": "OP Mainnet",
+    "icon": "/networks/Optimism.svg",
+    "disabled": false
+  },
+  {
+    "name": "Avalanche C-Chain",
+    "icon": "/networks/Avalanche.svg",
+    "disabled": false
+  },
+  {
+    "name": "Polygon zkEVM",
+    "icon": "/networks/Polygon.svg",
+    "disabled": false
+  },
+  {
+    "name": "ZetaChain Mainnet",
+    "icon": "/networks/Zetachain.svg",
+    "disabled": false
+  },
+  {
+    "name": "Reef Mainnet",
+    "icon": "/networks/reefchain.svg",
+    "disabled": false
+  },
+  {
+    "name": "Manta Parachain",
+    "icon": "/networks/mantachain.svg",
+    "disabled": false
+  },
+  {
+    "name": "Liberland",
+    "icon": "/networks/liberland.svg",
+    "disabled": false
+  },
+  {
+    "name": "Oasys Mainnet",
+    "icon": "/networks/oasys.svg",
+    "disabled": false
+  },
+  {
+    "name": "CAGA Ankara Testnet",
+    "icon": "/networks/cagachain.svg",
+    "disabled": false
+  },
+  {
+    "name": "CAGA Mainnet",
+    "icon": "/networks/cagachain.svg",
+    "disabled": false
+  },
+  {
+    "name": "XX network",
+    "icon": "/networks/xxnetwork.svg",
+    "disabled": false
+  },
+  {
+    "name": "Avail Turing Testnet",
+    "icon": "/networks/Avail.svg",
+    "disabled": false
+  },
+  {
+    "name": "X Layer Mainnet",
+    "icon": "/networks/xlayerchain.svg",
+    "disabled": false
+  },
+  {
+    "name": "Analog Testnet",
+    "icon": "/networks/Analog.svg",
+    "disabled": true
+  },
+  {
+    "name": "Analog Timechain",
+    "icon": "/networks/Analog.svg",
+    "disabled": false
+  },
+  {
+    "name": "Kusama People",
+    "icon": "/networks/People.svg",
+    "disabled": false
+  },
+  {
+    "name": "Polkadot People",
+    "icon": "/networks/People.svg",
+    "disabled": false
+  },
+  {
+    "name": "Kaia Mainnet",
+    "icon": "/networks/kaiachain.svg",
+    "disabled": false
+  },
+  {
+    "name": "Kaia Kairos Testnet",
+    "icon": "/networks/kaiachain.svg",
+    "disabled": false
+  },
+  {
+    "name": "Viction",
+    "icon": "/networks/viction.svg",
+    "disabled": false
+  },
+  {
+    "name": "5ire",
+    "icon": "/networks/5irechain.svg",
+    "disabled": false
+  },
+  {
+    "name": "Avail DA Mainnet",
+    "icon": "/networks/Avail.svg",
+    "disabled": false
+  },
+  {
+    "name": "Atleta Olympia",
+    "icon": "/networks/Atleta.svg",
+    "disabled": false
+  },
+  {
+    "name": "ZChains",
+    "icon": "/networks/zchain.svg",
+    "disabled": false
+  },
+  {
+    "name": "inEVM",
+    "icon": "/networks/inevm.svg",
+    "disabled": false
+  },
+  {
+    "name": "TON Mainnet",
+    "icon": "/networks/tonchain.svg",
+    "disabled": false
+  },
+  {
+    "name": "TON Testnet",
+    "icon": "/networks/tonchain.svg",
+    "disabled": true
+  },
+  {
+    "name": "Polkadot BridgeHub",
+    "icon": "/networks/Bridgehub.svg",
+    "disabled": false
+  },
+  {
+    "name": "Polkadot Collectives",
+    "icon": "/networks/collectives.svg",
+    "disabled": false
+  },
+  {
+    "name": "AvN Polkadot",
+    "icon": "/networks/aventus.svg",
+    "disabled": false
+  },
+  {
+    "name": "InvArch Network",
+    "icon": "/networks/invarch.svg",
+    "disabled": false
+  },
+  {
+    "name": "Polimec",
+    "icon": "/networks/polimec.svg",
+    "disabled": false
+  }
+]

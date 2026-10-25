@@ -156,6 +156,26 @@ for (const production of [false, true]) {
     }
   })
 
+  test(`${scope} audit verifies all dependency edges for Yarn-reported patch base versions`, async () => {
+    for (const [name, patch] of Object.entries(manifest)) {
+      const patched = reviewedLocators.find(row => row.value.startsWith(`${name}@`))
+      const parent = { value: 'consumer@npm:1.0.0', children: { Version: '1.0.0', Dependencies: [{ locator: patched.value }] } }
+      const finding = { value: name, children: { URL: patch.advisory, 'Tree Versions': [patch.version], Dependents: [parent.value] } }
+      const info = [...patchInfo, parent, { value: `${name}@npm:${patch.version}`, children: { Version: patch.version } }]
+      assert.equal(await auditDependencies(production, auditFixture({ info, yarn: [finding] }).dependencies), 0)
+      const unpatched = { value: 'other@npm:1.0.0', children: { Version: '1.0.0', Dependencies: [{ locator: `${name}@npm:${patch.version}` }] } }
+      assert.equal(await auditDependencies(production, auditFixture({ info: [...info, unpatched], yarn: [finding] }).dependencies), 1)
+      for (const children of [
+        { ...finding.children, URL: 'https://github.com/advisories/GHSA-future-advisory' },
+        { ...finding.children, Dependents: ['unknown@npm:1.0.0'] },
+        { ...finding.children, Dependents: [] },
+        { ...finding.children, 'Tree Versions': [patch.version, '0.0.0'] },
+      ]) {
+        assert.equal(await auditDependencies(production, auditFixture({ info, yarn: [{ ...finding, children }] }).dependencies), 1)
+      }
+    }
+  })
+
   test(`${scope} audit fails closed when a reviewed patch is missing or replaced`, async () => {
     for (const missing of reviewedLocators) {
       const fixture = auditFixture({ info: patchInfo.filter(row => row !== missing) })
