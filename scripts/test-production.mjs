@@ -60,6 +60,21 @@ try {
     assert.equal((body.match(/<meta\b[^>]*name="keywords"/g) || []).length, 1, `${path}: keyword metadata`)
     console.log(`Rendered page passed: ${path}`)
   }
+  const privacy = await html('/privacy/')
+  for (const disclosure of [
+    'Browser extension privacy supplement',
+    'Effective 25 October 2026, for browser extension release 4.2.0.',
+    'Wallet data on your device',
+    'Network services and public transactions',
+    'Websites and connected applications',
+    'Optional Google Drive backups',
+    'drive.appdata',
+    'Use, retention and your controls',
+    'Soramitsu Helvetia AG',
+    'dataprotection@soramitsu.co.jp',
+  ]) {
+    assert.ok(privacy.includes(disclosure), `Browser extension privacy disclosure: ${disclosure}`)
+  }
   const support = await html('/support/')
   for (const href of ['mailto:fearless@soramitsu.co.jp', 'https://t.me/fearlesshappiness', '/faq', 'https://wiki.fearlesswallet.io/']) {
     assert.ok(support.includes(`href="${href}"`), `Support link: ${href}`)
