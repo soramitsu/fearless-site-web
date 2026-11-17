@@ -1,14 +1,15 @@
 import assert from 'node:assert/strict'
 import { createHash, generateKeyPairSync } from 'node:crypto'
-import { readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
-import { dirname, resolve } from 'node:path'
+import { dirname, join, relative, resolve } from 'node:path'
 import test from 'node:test'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { auditDependencies, isBackportedAdvisory } from './audit-dependencies.mjs'
 
 const require = createRequire(import.meta.url)
 const manifest = JSON.parse(readFileSync(new URL('./dependency-patches.json', import.meta.url)))
+const root = fileURLToPath(new URL('../', import.meta.url))
 
 for (const [name, patch] of Object.entries(manifest)) {
   test(`${name}: installed source and patch match the reviewed backport`, () => {
@@ -83,6 +84,44 @@ test('archiver loads as an ES module and its glob reader matches with a patched 
       .on('match', match => found.push(match.relative)).on('error', fail).on('end', () => done(found.sort()))
   })
   assert.deepEqual(matches, ['audit-dependencies.mjs', 'dependency-patches.json'])
+})
+
+// Every installed copy of a package, hoisted or nested.
+function installedPackages(name, directory = join(root, 'node_modules')) {
+  const found = []
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    if (!entry.isDirectory() || entry.name.startsWith('.')) continue
+    const packages = entry.name.startsWith('@')
+      ? readdirSync(join(directory, entry.name)).map(scoped => join(entry.name, scoped))
+      : [entry.name]
+    for (const packageName of packages) {
+      const location = join(directory, packageName)
+      if (packageName === name) found.push(location)
+      if (existsSync(join(location, 'node_modules'))) found.push(...installedPackages(name, join(location, 'node_modules')))
+    }
+  }
+  return found
+}
+
+// Advisories closed by moving to a fixed upstream release rather than by a backport. Every installed copy must stay at
+// or above the first version outside its advisory, so a resolution edit that brings an older copy back fails here.
+const advisoryFloors = [
+  ['fast-xml-parser', [5, 11, 3], 'GHSA-474x-hrwr-fgx4 covers 5.11.2 and earlier'],
+]
+test('installed packages stay at or above their advisory floors', () => {
+  const atLeast = (version, floor) => {
+    const parts = version.split('.').map(Number)
+    for (let index = 0; index < 3; index++) if (parts[index] !== floor[index]) return parts[index] > floor[index]
+    return true
+  }
+  for (const [name, floor, advisory] of advisoryFloors) {
+    const installed = installedPackages(name)
+    assert.ok(installed.length > 0, name)
+    for (const location of installed) {
+      const { version } = JSON.parse(readFileSync(join(location, 'package.json'), 'utf8'))
+      assert.ok(atLeast(version, floor), `${relative(root, location)} is ${name} ${version}; ${advisory}`)
+    }
+  }
 })
 
 test('audit exceptions apply only to the patched versions and exact advisories', () => {

@@ -55,7 +55,7 @@
     "browserslist@npm:^4.28.4": "4.29.4",
     "defu": "6.1.7",
     "devalue@npm:^5.8.1": "5.9.4",
-    "fast-xml-parser": "5.10.1",
+    "fast-xml-parser": "5.12.1",
     "glob": "10.5.0",
     "glob/minimatch": "9.0.9",
     "h3": "1.15.11",

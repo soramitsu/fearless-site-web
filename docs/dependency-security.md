@@ -98,3 +98,12 @@ minimatch 11.
 `yarn test:dependency-patches` loads archiver the way Nitro does and matches
 files through the reader, so a resolution that breaks this chain fails the
 dependency audits instead of the next install.
+
+## Advisories closed by upstream releases (2026-11-18)
+
+- `fast-xml-parser` 5.12.1 (was 5.10.1):
+  [GHSA-474x-hrwr-fgx4](https://github.com/advisories/GHSA-474x-hrwr-fgx4)
+  covers 5.11.2 and earlier. `@nuxtjs/sitemap` uses it in the built server.
+
+`yarn test:dependency-patches` checks that every installed copy stays at or
+above the first release outside its advisory.
