@@ -43,7 +43,9 @@ test('braces rejects deep patterns while preserving ordinary globs and shared no
   assert.doesNotThrow(() => braces.compile('{'.repeat(64) + 'x,y' + '}'.repeat(64)))
 })
 
+// node-forge 1.4.1 fixed GHSA-86w9-cpqp-85rv upstream; the site's 1.4.0 backport is gone, the regression test stays.
 test('node-forge rejects extra DigestAlgorithm children and accepts valid signatures', () => {
+  assert.equal(require('node-forge/package.json').version, '1.4.3')
   const forge = require('node-forge')
   const { privateKey } = generateKeyPairSync('rsa', { modulusLength: 1024 })
   const key = forge.pki.privateKeyFromPem(privateKey.export({ type: 'pkcs1', format: 'pem' }).toString())
@@ -83,7 +85,7 @@ test('archiver loads as an ES module and its glob reader matches with a patched 
   assert.deepEqual(matches, ['audit-dependencies.mjs', 'dependency-patches.json'])
 })
 
-test('audit exceptions apply only to the two patched versions and exact advisories', () => {
+test('audit exceptions apply only to the patched versions and exact advisories', () => {
   for (const [value, patch] of Object.entries(manifest)) {
     const children = { URL: patch.advisory, 'Tree Versions': [patch.version] }
     assert.equal(isBackportedAdvisory({ value, source: 'patched-version', children }), true)
@@ -148,15 +150,14 @@ for (const production of [false, true]) {
     })
     assert.equal(await auditDependencies(production, fixture.dependencies), 0)
     assert.deepEqual(fixture.payloads, [{
-      braces: ['3.0.3'], 'node-forge': ['1.4.0'], fsevents: ['2.3.3'], resolve: ['1.22.13'], typescript: ['5.9.3'],
-      '@example/tool': ['1.2.3', '2.0.0'],
+      braces: ['3.0.3'], fsevents: ['2.3.3'], resolve: ['1.22.13'], typescript: ['5.9.3'], '@example/tool': ['1.2.3', '2.0.0'],
     }])
     assert.deepEqual(fixture.calls[1], ['info', '--all', '--recursive', '--json'])
     assert.equal(fixture.calls[0].includes('production'), production)
   })
 
   test(`${scope} audit fails on future advisories in every patched dependency`, async () => {
-    for (const name of ['braces', 'node-forge', 'fsevents', 'resolve', 'typescript']) {
+    for (const name of ['braces', 'fsevents', 'resolve', 'typescript']) {
       const fixture = auditFixture({ bulk: { [name]: [advisory()] } })
       assert.equal(await auditDependencies(production, fixture.dependencies), 1, name)
     }

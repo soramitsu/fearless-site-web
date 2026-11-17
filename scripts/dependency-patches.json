@@ -12,15 +12,5 @@
       "lib/parse.js": "e5785862edf7deb86ea583bafc88089fdd06dce265b61eaf2daf411a129be7b8",
       "lib/stringify.js": "056ab10d759e5d2ca81fc888b122acf450c692b5e409dc19a41aca06aba8f2ef"
     }
-  },
-  "node-forge": {
-    "version": "1.4.0",
-    "advisory": "https://github.com/advisories/GHSA-86w9-cpqp-85rv",
-    "upstream": "https://github.com/digitalbazaar/forge/pull/1152/commits/ceba34402e329f0365134f23fe19898756527d65",
-    "patch": ".yarn/patches/node-forge-npm-1.4.0-646822c506.patch",
-    "patchSha256": "b6876574a5de19521a766856b293aeae2689848c5d8dab03f93040be0a64b8b4",
-    "files": {
-      "lib/rsa.js": "c9b1e3799e230528b6d6815c1f6cd3c6058b9d45975264b55d995abb976589af"
-    }
   }
 }
