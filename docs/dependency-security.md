@@ -118,3 +118,47 @@ dependency audits instead of the next install.
 
 `yarn test:dependency-patches` checks that every installed copy stays at or
 above the first release outside its advisory.
+
+## picomatch repeated-extglob guard
+
+[GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf)
+(CVE-2026-112366, high), which npm began reporting on 2026-11-17, covers every
+picomatch release up to the latest, 4.0.7, and has no fix. A `+(...)` or
+`*(...)` extglob whose body can match the same text in more than one way, such
+as `+(*a)`, `+(a+)`, `+({a,aa})` or `+(@(a|aa))`, compiles to nested
+quantifiers that backtrack exponentially on a short string that does not match.
+
+Every picomatch package now resolves to `vendor/picomatch-2` or
+`vendor/picomatch-4`: upstream 2.3.2 and 4.0.7, byte-identical except for two
+marked blocks in `lib/parse.js`. When a repeated extglob closes, the guard reads
+the regular expression picomatch has emitted for its body and keeps it only if
+it is a plain sequence of literal characters and single-character classes;
+anything else (an alternation, wildcard, quantifier, brace, group or nested
+extglob) is emitted as a literal string, the fallback upstream already uses for
+its own risky forms. Tools that used 4.0.5 now get 4.0.7. The cost is that a
+repeated extglob with an alternation or a wildcard, such as `+(a|b)` or
+`*.+(js|ts)`, matches only its own text; 306 of upstream's assertions at each
+tag change, all of that kind. The site's configuration uses no extglob, and
+picomatch is build tooling that does not appear in the built server or the
+generated pages. The README in each copy records the upstream commit, digests,
+the exact change and the changed assertions.
+
+Three packages bundle their own picomatch inside their files, where no
+resolution reaches: rollup 4.62.2 (`dist/shared/*.js`,
+`dist/es/shared/{node-entry,watch}.js`), rollup-plugin-visualizer 7.1.3 (the
+report templates in `dist/lib/*.js`) and tsx 4.19.4 (`dist/cli.cjs`,
+`dist/cli.mjs`). They run only at build or development time, on this
+repository's own patterns.
+
+These copies are `file:` packages, which Yarn's registry audit skips. The audit
+wrapper therefore asks npm about their upstream versions too, as it does for
+patch origins, and accepts only this advisory on exactly 2.3.2 and 4.0.7, and
+only while each copy's guarded `lib/parse.js` matches the digest reviewed with
+it (`scripts/vendored-dependencies.json`); a missing, moved, renumbered or
+edited copy, or a picomatch that is also patched, fails closed.
+`yarn test:dependency-patches` checks the copies against upstream's digests,
+that every installed picomatch package is one of them, ordinary and
+literal-only matches, and runs `scripts/picomatch-extglob-sweep.cjs`: 35 named
+ReDoS shapes must be literal, and every repeated extglob built from one or two
+of 28 atoms must compile and answer crafted strings within a CPU budget. Remove
+the copies and their resolutions when upstream publishes a fixed release.
