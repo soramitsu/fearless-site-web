@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { dirname, resolve } from 'node:path'
 import test from 'node:test'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import { auditDependencies, isBackportedAdvisory } from './audit-dependencies.mjs'
 
 const require = createRequire(import.meta.url)
@@ -61,6 +62,25 @@ test('node-forge rejects extra DigestAlgorithm children and accepts valid signat
     const invalid = asn1.toDer(sequence([sequence([...parameters, octets('garbage')]), octets(digest)])).getBytes()
     assert.throws(() => publicKey.verify(digest, key.sign(invalid, 'NONE')), /valid RSASSA-PKCS1-v1_5 DigestInfo/)
   }
+})
+
+// Nitro imports archiver 8 as an ES module while it reads the Nuxt configuration, and archiver's glob reader imports
+// `Minimatch` by name. A resolution that gives the reader a CommonJS-only minimatch stops `nuxt prepare`, and with it
+// every install, before any page is built.
+test('archiver loads as an ES module and its glob reader matches with a patched minimatch', async () => {
+  const archiverEntry = createRequire(require.resolve('nitropack/package.json')).resolve('archiver')
+  assert.equal(typeof (await import(pathToFileURL(archiverEntry))).ZipArchive, 'function')
+  const readerEntry = createRequire(archiverEntry).resolve('readdir-glob')
+  const [major, minor, patch] = createRequire(readerEntry)('minimatch/package.json').version.split('.').map(Number)
+  // GHSA-g3hv-75wg-m249 covers every minimatch from 7.0.0 up to 11.0.0.
+  assert.ok(major > 11 || (major === 11 && (minor > 0 || patch >= 1)), `minimatch ${major}.${minor}.${patch}`)
+  const { readdirGlob } = await import(pathToFileURL(resolve(dirname(readerEntry), 'index.mjs')))
+  const matches = await new Promise((done, fail) => {
+    const found = []
+    readdirGlob(dirname(fileURLToPath(import.meta.url)), { pattern: '*dependenc*.{mjs,json}', ignore: ['test-*'] })
+      .on('match', match => found.push(match.relative)).on('error', fail).on('end', () => done(found.sort()))
+  })
+  assert.deepEqual(matches, ['audit-dependencies.mjs', 'dependency-patches.json'])
 })
 
 test('audit exceptions apply only to the two patched versions and exact advisories', () => {

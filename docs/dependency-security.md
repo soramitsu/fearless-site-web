@@ -1,6 +1,6 @@
 # Dependency security checks
 
-The website runs Nuxt 4.6.2 or newer with patched Vue, MDC, image processing,
+The website runs Nuxt 4.6.4 or newer with patched Vue, MDC, image processing,
 HTTP and build dependencies. Nuxt 3 no longer receives the security fixes
 needed by this dependency graph; see the [Nuxt advisory](https://github.com/nuxt/nuxt/security/advisories/GHSA-xfq5-w38q-pc2x).
 
@@ -66,3 +66,28 @@ version pins, removes the unused direct Zod dependency, and selects
 serialize-javascript 7.1.3. It retains this repository's installed-source hash
 checks, cyclic AST regression coverage, and audit of every patched registry
 origin. No audit exception is added by this update.
+
+## Nuxt 4.6.4 update
+
+Nuxt 4.6.4 (2026-11-18 update from 4.6.2) closes the ten advisories that the
+audits reported for `nuxt`, `@nuxt/nitro-server`, `@nuxt/schema`,
+`@nuxt/vite-builder` and `@nuxt/vite-server` 4.6.2, among them route-rule and
+`server/middleware` bypasses through dot segments, a leading `//` or an encoded
+slash in the request path.
+
+It also brings Nitro 2.13.6, whose archiver 8 is an ES module with a new glob
+reader (`readdir-glob` 3). That reader imports `Minimatch` by name and asks for
+`minimatch` `^10.2.2`. The `readdir-glob/minimatch` resolution used to select
+5.1.9, the patched release of the 5.x line that `readdir-glob` 1 asked for.
+minimatch 5 is CommonJS without that named export, so `nuxt prepare` stopped
+with "does not provide an export named 'Minimatch'" and every install failed in
+its `postinstall` step. The resolution now selects 11.0.3:
+[GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249) covers
+every 10.x release, and the reader only constructs `Minimatch` and calls
+`match`, which 11 keeps. minimatch 11 needs `brace-expansion` 5, so the
+`brace-expansion` pin is now per range: 2.1.7 for minimatch 9 and 5.0.12 for
+minimatch 11.
+
+`yarn test:dependency-patches` loads archiver the way Nitro does and matches
+files through the reader, so a resolution that breaks this chain fails the
+dependency audits instead of the next install.
