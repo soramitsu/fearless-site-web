@@ -107,6 +107,8 @@ function installedPackages(name, directory = join(root, 'node_modules')) {
 // or above the first version outside its advisory, so a resolution edit that brings an older copy back fails here.
 const advisoryFloors = [
   ['fast-xml-parser', [5, 11, 3], 'GHSA-474x-hrwr-fgx4 covers 5.11.2 and earlier'],
+  ['glob', [14, 0, 2], 'GHSA-3g3m-2fjr-6pw4 covers 9.0.0 to 14.0.1'],
+  ['minimatch', [11, 0, 1], 'GHSA-g3hv-75wg-m249 covers 7.0.0 to 11.0.0'],
 ]
 test('installed packages stay at or above their advisory floors', () => {
   const atLeast = (version, floor) => {
@@ -122,6 +124,13 @@ test('installed packages stay at or above their advisory floors', () => {
       assert.ok(atLeast(version, floor), `${relative(root, location)} is ${name} ${version}; ${advisory}`)
     }
   }
+})
+
+// @vercel/nft traces Nitro's server files with glob; glob 14 keeps the promise API it calls.
+test('@vercel/nft globs through glob 14', async () => {
+  const { glob } = createRequire(require.resolve('@vercel/nft/package.json'))('glob')
+  const matches = await glob('*dependenc*.{mjs,json}', { cwd: dirname(fileURLToPath(import.meta.url)), ignore: ['test-*'] })
+  assert.deepEqual(matches.sort(), ['audit-dependencies.mjs', 'dependency-patches.json'])
 })
 
 test('audit exceptions apply only to the patched versions and exact advisories', () => {

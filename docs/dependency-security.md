@@ -104,6 +104,17 @@ dependency audits instead of the next install.
 - `fast-xml-parser` 5.12.1 (was 5.10.1):
   [GHSA-474x-hrwr-fgx4](https://github.com/advisories/GHSA-474x-hrwr-fgx4)
   covers 5.11.2 and earlier. `@nuxtjs/sitemap` uses it in the built server.
+- `glob` 14.0.6 (was 10.5.0) with `minimatch` 11.0.8 (was 9.0.9):
+  [GHSA-3g3m-2fjr-6pw4](https://github.com/advisories/GHSA-3g3m-2fjr-6pw4)
+  covers glob 9.0.0 to 14.0.1, and
+  [GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249)
+  covers minimatch 7.0.0 to 11.0.0. The `glob` resolution already overrode
+  `@vercel/nft`'s `^13` and `cacache`'s `^10.2.2`; glob 14 keeps the promise
+  API both call and needs minimatch 11, so `glob/minimatch` follows and the
+  `brace-expansion` 2 pin that only minimatch 9 used goes. `@vercel/nft` traces
+  the built server's files with it; `cacache` is reached only through
+  `node-gyp`, which this install never runs. readdir-glob's `^10.2.2` stays on
+  11.0.3: the newest 10.x, 10.2.6, is also covered by GHSA-g3hv-75wg-m249.
 
 `yarn test:dependency-patches` checks that every installed copy stays at or
 above the first release outside its advisory.
