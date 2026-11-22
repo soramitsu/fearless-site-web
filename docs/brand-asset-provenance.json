@@ -169,19 +169,19 @@
     },
     {
       "path": "src/public/brand/crow-launch.webm",
-      "sha256": "1af621f8722f34ee39162176d8dbb509b3a94df946296dd91be94a49fb466ea1",
-      "bytes": 959365,
-      "from": "hero/popup-launch-ignite.webm",
-      "kitSha256": "1af621f8722f34ee39162176d8dbb509b3a94df946296dd91be94a49fb466ea1",
-      "how": "copied byte for byte"
+      "sha256": "7fcf883e6c30a9c9c0d3c6acdbc9e3dcb7fbb2f858e4d2f83982309c009b4b39",
+      "bytes": 334631,
+      "from": "hero/popup-launch-ignite.mp4",
+      "kitSha256": "7d683594358c5d3568c00c3421d500d9ff8b22aa55f3c18efd3b9564d698da0d",
+      "how": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers: 640 px, -c:v libvpx-vp9 -b:v 0 -crf 38 -deadline good -cpu-used 2 -pix_fmt yuv420p -f webm"
     },
     {
       "path": "src/public/brand/crow-launch.mp4",
-      "sha256": "7d683594358c5d3568c00c3421d500d9ff8b22aa55f3c18efd3b9564d698da0d",
-      "bytes": 1147986,
+      "sha256": "4e9aa910e14b4dd7a9619cd671fca9b9d6759c6a4ff1e48a5a54d48ecda2c52b",
+      "bytes": 277136,
       "from": "hero/popup-launch-ignite.mp4",
       "kitSha256": "7d683594358c5d3568c00c3421d500d9ff8b22aa55f3c18efd3b9564d698da0d",
-      "how": "copied byte for byte"
+      "how": "ffmpeg version 9.0.2 Copyright (c) 2000-2026 the FFmpeg developers: 640 px, -c:v libx264 -preset slow -crf 28 -profile:v high -pix_fmt yuv420p -movflags +faststart -f mp4"
     },
     {
       "path": "src/public/brand/crow-poster.webp",

@@ -24,14 +24,16 @@ const zoomStartSeconds = 2
 // Once the stage is seen the clip loads, and the crest shows the wallet's
 // loader until it plays. Right after a deploy the CDN's cache is cold and
 // the first byte can take seconds: wait up to 6 s for it. Once bytes arrive,
-// a clip that receives nothing for 1.5 s has stalled; and it must be playing
-// within 9 s in any case. (If the script never runs at all, the stylesheet
-// lifts the cover by itself at 8 s.)
+// a clip that receives nothing for 1.5 s has stalled. Whatever happens, it
+// must be playing within 9 s of the stage being seen and reach the dive
+// within 10 s, so a clip that crawls in cannot keep the stage covered.
+// (If the script never runs at all, the stylesheet lifts the cover by
+// itself at 8 s.)
 const firstByteMs = 6000
 const playCapMs = 9000
+const diveCapMs = 10000
 // Once playing, the clip must keep moving and reach the dive in time.
 const noProgressMs = 1500
-const diveDeadlineMs = 7000
 
 const stage = ref<HTMLElement>()
 const cover = ref<HTMLElement>()
@@ -94,7 +96,6 @@ let finished = false
 let unmounted = false
 let startTimer: ReturnType<typeof setTimeout> | undefined
 let fadeTimer: ReturnType<typeof setTimeout> | undefined
-let clipStartedAt = 0
 let lastClipTime = -1
 let lastProgressAt = 0
 let visibility: IntersectionObserver | undefined
@@ -300,7 +301,9 @@ const watchClip = (now: number) => {
   }
   // Buffering while bytes still arrive is a wait, not a stall.
   const stalled = now - Math.max(lastProgressAt, gotBytes ? lastNetworkAt : 0) > noProgressMs
-  if (stalled || now - clipStartedAt > diveDeadlineMs) return abort()
+  // The deadline counts from the moment the stage was seen, not from when
+  // playback began, so buffering cannot stretch it.
+  if (stalled || now - seenAt > diveCapMs) return abort()
   frame = requestAnimationFrame(watchClip)
 }
 
@@ -345,7 +348,7 @@ const startClip = () => {
     waiting.value = false
     // A tap may already have started the flight; the clip just plays on.
     if (flightStarted) return
-    clipStartedAt = lastProgressAt = performance.now()
+    lastProgressAt = performance.now()
     lastClipTime = -1
     frame = requestAnimationFrame(watchClip)
   }).catch(abort)

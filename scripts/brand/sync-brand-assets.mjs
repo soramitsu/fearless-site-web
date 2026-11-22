@@ -6,11 +6,14 @@
 //   node scripts/brand/sync-brand-assets.mjs --kit <brand kit dir> --tools <dir>
 //   node scripts/brand/sync-brand-assets.mjs --check
 //
+// --ffmpeg names the ffmpeg binary (default: ffmpeg on PATH); it encodes the
+// launch clip for the web.
 // --tools is a folder whose node_modules has opentype.js and wawoff2 (they
 // turn the kit's Figtree TTFs into WOFF2 and the share image's words into
 // outlines). They are authoring tools only; the site does not depend on them.
 // --check needs neither: it verifies that the committed files still match the
 // recorded hashes.
+import { spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
@@ -97,8 +100,25 @@ copy('hero/popup-idle.webm', 'src/public/brand/crow-idle.webm')
 copy('hero/popup-idle.mp4', 'src/public/brand/crow-idle.mp4')
 copy('hero/popup-caw.webm', 'src/public/brand/crow-caw.webm')
 copy('hero/popup-caw.mp4', 'src/public/brand/crow-caw.mp4')
-copy('hero/popup-launch-ignite.webm', 'src/public/brand/crow-launch.webm')
-copy('hero/popup-launch-ignite.mp4', 'src/public/brand/crow-launch.mp4')
+// The launch clip plays once, at most about 760 px wide, and must start within
+// seconds on a slow connection: a 640 px encode of the kit's master is a
+// third of the size and looks the same there (SSIM 0.94 to 0.97 against the
+// master). Single-threaded and bit-exact, so a rebuild gives the same bytes.
+const ffmpeg = option('--ffmpeg') || 'ffmpeg'
+const encode = (from, to, codecArgs) => {
+  const source = join(kit, from)
+  readKit(from)
+  const temporary = join(root, `.${to.split('/').pop()}.tmp`)
+  // bitexact: no encoder version or random container IDs in the output.
+  const result = spawnSync(ffmpeg, ['-v', 'error', '-y', '-i', source, '-vf', 'scale=640:-2:flags=lanczos', '-an', '-threads', '1', '-map_metadata', '-1', '-fflags', '+bitexact', '-flags:v', '+bitexact', ...codecArgs, temporary], { encoding: 'utf8' })
+  if (result.status !== 0) throw new Error(`ffmpeg failed for ${to}: ${result.stderr}`)
+  const bytes = readFileSync(temporary)
+  spawnSync('rm', ['-f', temporary])
+  const version = spawnSync(ffmpeg, ['-version'], { encoding: 'utf8' }).stdout.split('\n')[0]
+  write(to, bytes, { from, kitSha256: kitHashes.get(from), how: `${version}: 640 px, ${codecArgs.join(' ')}` })
+}
+encode('hero/popup-launch-ignite.mp4', 'src/public/brand/crow-launch.webm', ['-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '38', '-deadline', 'good', '-cpu-used', '2', '-pix_fmt', 'yuv420p', '-f', 'webm'])
+encode('hero/popup-launch-ignite.mp4', 'src/public/brand/crow-launch.mp4', ['-c:v', 'libx264', '-preset', 'slow', '-crf', '28', '-profile:v', 'high', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-f', 'mp4'])
 copy('hero/popup-poster.webp', 'src/public/brand/crow-poster.webp')
 copy('hero/popup-launch-ignite-hold.webp', 'src/public/brand/crow-launch-hold.webp')
 copy('hero/bust.webp', 'src/public/brand/crow-bust.webp')
