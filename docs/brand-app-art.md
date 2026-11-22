@@ -6,7 +6,7 @@ These standalone wallet illustrations use fictitious balances, not live chain da
 node scripts/brand/build-app-art.mjs --kit /path/to/brand/yatagarasu --tools /path/to/tools
 ```
 
-Add `--check` for a read-only byte comparison of all SVGs and this receipt. The tools directory contains `node_modules/opentype.js`; omit it if installed alongside the kit. For a standalone kit set `SORA_BOLD_OTF` to the matching iOS Sora Bold font. Figtree outlines are shared within each SVG, with fixed digit advances for updates. Each feature plays a ten-second illustrative sequence. The static presentation is the settled state. The sunset card’s weakest text is “Total balance”: 6.21:1 minimum measured against its glyph footprint. The 118 px send seal and warning-card break are positioned for the site’s 85% crop (including the warning’s 13% upward shift).
+Add `--check` for a read-only byte comparison of all SVGs and this receipt. The tools directory contains `node_modules/opentype.js`; omit it if installed alongside the kit. For a standalone kit set `SORA_BOLD_OTF` to the matching iOS Sora Bold font. Figtree outlines are shared within each SVG, with fixed digit advances for updates. Each feature plays a ten-second illustrative sequence. The static presentation is the settled state. The sunset card’s weakest text is “Total balance”: 6.21:1 minimum measured against its glyph footprint. The send seal is 118 px across. The recipient and warning sit below the site’s 13% top crop (about 56 SVG units). Its ember seal breaks beside the title, clear of the warning text.
 
 ## Animated icons
 
@@ -66,12 +66,12 @@ Additional display font:
 Generator and delivered artwork (the receipt excludes its own recursive digest):
 
 ```
-bff39036ff87df5e6cecbb960d68b22262737d156e4d1acb35344c731e1b2df6  scripts/brand/art.mjs
+13044923b85385e6f666e5bd89ebe313b4da2a7ea46349a43161207c6e3ba47f  scripts/brand/art.mjs
 e74d41f203b5a85037c446727d7a26162f0660a469d96dad1e73b29b46355c50  scripts/brand/figures.mjs
 e8f4e6bff9b1bac17610ce0d9d72c66149b2445abdb09394aa6d7b93f75d1081  scripts/brand/home.mjs
-b8358cd350b003ee0e65d520bf374d3c2fb6fa77e5cc55db6a3b4b2324fec6bf  scripts/brand/features.mjs
+34e885557ce5de1d1683f8b69be9e88eb0d704c1f50c8d85da661771be6e99e0  scripts/brand/features.mjs
 52bdcb3e514b84398184ea96c47420d4e8d64e0fd6c5a7fc941549c64030d052  scripts/brand/icons.mjs
-22f3ad428f77e169c2c210c5e07506626e3f1151e065e12b12ce33e2077e1233  scripts/brand/build-app-art.mjs
+28a13c62c050eb1ce865f3bf422269eb20e081bc4b566513e9f7a4a6d928d599  scripts/brand/build-app-art.mjs
 025251be1ea8b14e78ae595dfa36852081e3c9d6178ddcfcc6e640b951b8fd7c  src/public/hero/back.svg
 98a3a1be17a4a4d79444740683e490175c8aac3827019ad41759a69844b483b7  src/public/hero/screen.svg
 46f9329fe1d84da29289359c5c9f2db5694a37c11ffb30d39cb8f87d7d438056  src/public/hero/card.svg
@@ -83,7 +83,7 @@ a3623c487657b30a94753c0962585aaf843dff1a097a6763aa47dba58db85f9f  src/public/her
 767bd48ff644b1b153efe591302bee89e0b194a73bd86957a89b4242aae4f525  src/public/hero/toast.svg
 7334e32a45e1ad8fb9c66a5c55288e0eb4f9894b8d56aca2e9e0301c96cf06b1  src/public/features/networks.svg
 0699a4cac5e5dea02726f8fcc73fa541d74057a344c022a3773a7d997286387e  src/public/features/send.svg
-ccc4904036d1e7ebb1dc62bac78e7955244836f261c7fcdf6a0f39fe9fb7ab26  src/public/features/scam-warning.svg
+1b053616640d53f5fdf1934b0dfbd3311a03a975c384404ee664b76b24819b5b  src/public/features/scam-warning.svg
 72a5dd9c6bd4a2d7b16401a4841220b8dfe72e814ab9694091909abe27dca31f  src/public/features/swap.svg
 e0e5062ec887d3cf91c694bd83ca2cf03f8bbabda7fef5b3f8a4dcb7a8ff13dc  src/public/features/stake.svg
 23a99953787960c7120124f4be14d7258b50c46ab0bccb0583d0204a4f8a6393  src/public/icons/animated/custody.svg
