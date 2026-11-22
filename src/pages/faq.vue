@@ -38,16 +38,6 @@ useSchemaOrg([
       }))
   }
 ])
-
-const activeItem = ref<number>()
-
-const toggleAccordion = (id: number) => {
-  if (activeItem.value === id) {
-    activeItem.value = undefined
-  } else {
-    activeItem.value = id
-  }
-}
 </script>
 
 <template>
@@ -55,8 +45,7 @@ const toggleAccordion = (id: number) => {
     Fearless Wallet <span class="color-accent">FAQ</span>
   </h1>
   <AccordionContainer class="w-narrow px-3xs my-xxl">
-    <AccordionItem v-for="(item, i) in data" :title="item.question" :key="i" :id="i" @toggle="toggleAccordion"
-      :open="i === activeItem">
+    <AccordionItem v-for="item in data" :key="item.question" :title="item.question" name="wallet-faq">
       <ContentRenderer :value="item" />
     </AccordionItem>
   </AccordionContainer>

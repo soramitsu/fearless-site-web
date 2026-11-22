@@ -1,27 +1,19 @@
 <script setup lang="ts">
-defineProps<{ title: string, id: number, open?: boolean }>()
-defineEmits<{
-  (e: 'toggle', id: number): void
-}>()
+defineProps<{ title: string, name: string }>()
 </script>
 
 <template>
-  <div class="item bg-block lit rounded-s px-m" :class="{ open }">
-    <h3 @click="$emit('toggle', id)" class="text-m py-m hover-trigger">
-      {{ title }}
-      <div class="icon">
-        <span class="line"></span>
-        <span class="line"></span>
-      </div>
-    </h3>
-    <div class="content">
-      <div>
-        <div class="pb-m inner text-s color-secondary rich">
-          <slot />
-        </div>
-      </div>
+  <details :name="name" class="item bg-block lit rounded-s px-m">
+    <summary>
+      <h3 class="text-m py-m">
+        {{ title }}
+        <span class="icon" aria-hidden="true"></span>
+      </h3>
+    </summary>
+    <div class="pb-m text-s color-secondary rich">
+      <slot />
     </div>
-  </div>
+  </details>
 </template>
 
 <style scoped>
@@ -29,20 +21,28 @@ defineEmits<{
   transition: background-color var(--d-255) var(--ease-glide);
 }
 
-.item.open {
+.item[open] {
   background-color: var(--color-bg-raised);
 }
 
-.item.open>h3 {
+.item[open] summary {
   color: var(--fw-gold);
 }
 
-.item>h3 {
+summary {
+  display: block;
+  cursor: pointer;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary h3 {
   display: grid;
   gap: var(--space-xs);
   grid-template-columns: 1fr auto;
   align-items: center;
-  cursor: pointer;
 }
 
 .icon {
@@ -65,39 +65,20 @@ defineEmits<{
   background-color: currentColor;
 }
 
-.item:not(.open)>h3 .icon:after {
+.item:not([open]) .icon::after {
   transform: rotate(90deg);
 }
 
-.item.open>h3 .icon::before {
+.item[open] .icon::before {
   transform: rotate(-180deg);
 }
 
-.content {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--d-360) var(--ease-settle);
-  overflow: hidden;
-  min-height: 0;
-}
-
-.content>div {
-  min-height: 0;
-}
-
-.item.open .content {
-  grid-template-rows: 1fr;
-}
-
-.inner {
-  transform: translateY(var(--space-s));
-  opacity: 0;
-  transition: transform var(--d-360) var(--ease-settle), opacity var(--d-255) linear;
-}
-
-.item.open .inner {
-  opacity: 1;
-  transform: translateY(0);
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .icon::before,
+  .icon::after {
+    transition: none;
+  }
 }
 
 @media (hover:hover) {

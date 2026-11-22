@@ -124,7 +124,7 @@ const filteredNetworks = computed(() => {
   transition: transform .3s ease, opacity .3s ease;
 }
 
-.search:has(.input:focus) .list,
+.search:focus-within .list,
 .list:hover {
   visibility: visible;
   opacity: 1;

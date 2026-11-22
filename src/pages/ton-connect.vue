@@ -136,6 +136,8 @@ const handleCLick = (step: number) => {
 
 .step-description {
   display: flex;
+  flex: 1;
+  min-width: 0;
   flex-direction: column;
   justify-content: space-evenly;
   min-height: 150px;
@@ -143,6 +145,7 @@ const handleCLick = (step: number) => {
 
 .step-btn {
   width: 200px;
+  max-width: 100%;
 }
 
 .step-title {

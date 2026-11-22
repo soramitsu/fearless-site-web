@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Engine, Render, Runner, Bodies, Body, Composite, MouseConstraint, Mouse } from 'matter-js'
+import { Engine, Render, Runner, Bodies, Body, Composite, Events, MouseConstraint, Mouse } from 'matter-js'
 
 const networks = [
   '/networks/ton.svg',
@@ -119,57 +119,46 @@ onMounted(async () => {
 
   Composite.add(world, [top, floor, leftWall, rightWall, ...chains])
 
-  // add mouse control: only while the coins move. On a still picture the
-  // handlers would swallow touch scrolling for nothing.
-
-  let mouse: Mouse | undefined
-  let mouseConstraint: MouseConstraint | undefined
-
-  const attachMouse = () => {
-    if (mouse) return
-    mouse = Mouse.create(render.canvas)
-    mouseConstraint = MouseConstraint.create(engine, {
-      mouse: mouse,
-      constraint: {
-        stiffness: 0.2,
-        render: {
-          visible: false
-        }
-      }
-    })
-
-    // keep scroll of the page
-
-    // @ts-ignore
-    mouse.element.removeEventListener('wheel', mouse.mousewheel)
-
-    Composite.add(world, mouseConstraint)
-
-    // keep the mouse in sync with rendering
-
-    render.mouse = mouse
-  }
-
-  const detachMouse = () => {
-    if (!mouse) return
-    // matter-js keeps its pointer handlers on the Mouse object, untyped.
-    const handlers = mouse as unknown as Record<'mousemove' | 'mousedown' | 'mouseup', EventListener>
-    for (const [name, handler] of [
-      ['mousemove', handlers.mousemove],
-      ['mousedown', handlers.mousedown],
-      ['mouseup', handlers.mouseup],
-      ['touchmove', handlers.mousemove],
-      ['touchstart', handlers.mousedown],
-      ['touchend', handlers.mouseup],
-    ] as const) {
-      mouse.element.removeEventListener(name, handler)
+  // Each MouseConstraint registers an engine listener that survives removal
+  // from the world. Keep one for this engine across preference changes.
+  const mouse = Mouse.create(render.canvas)
+  const mouseConstraint = MouseConstraint.create(engine, {
+    mouse,
+    constraint: {
+      stiffness: 0.2,
+      render: { visible: false }
     }
-    if (mouseConstraint) Composite.remove(world, mouseConstraint)
-    mouse = undefined
-    mouseConstraint = undefined
+  })
+  render.mouse = mouse
+
+  // Matter stores these DOM listeners on Mouse but omits them from its types.
+  const handlers = mouse as Mouse & Record<'mousemove' | 'mousedown' | 'mouseup' | 'mousewheel', EventListener>
+  const setMouseEnabled = (enabled: boolean) => {
+    if (enabled) {
+      Mouse.setElement(mouse, render.canvas)
+      Composite.add(world, mouseConstraint)
+    } else {
+      for (const [name, handler] of [
+        ['mousemove', handlers.mousemove],
+        ['mousedown', handlers.mousedown],
+        ['mouseup', handlers.mouseup],
+        ['touchmove', handlers.mousemove],
+        ['touchstart', handlers.mousedown],
+        ['touchend', handlers.mouseup],
+      ] as const) {
+        mouse.element.removeEventListener(name, handler)
+      }
+      // A release can occur while the handlers are detached.
+      mouse.button = -1
+      mouseConstraint.constraint.bodyB = null
+      Mouse.clearSourceEvents(mouse)
+      Composite.remove(world, mouseConstraint)
+    }
+    // Both create and setElement bind the wheel. Keep it available for scrolling.
+    mouse.element.removeEventListener('wheel', handlers.mousewheel)
   }
 
-  if (!still) attachMouse()
+  setMouseEnabled(!still)
 
   // fit the render viewport to the scene
 
@@ -259,16 +248,16 @@ onMounted(async () => {
   // The visitor changed the setting while the page was open.
 
   const onPreference = () => {
+    if (still === reduced.matches) return
     still = reduced.matches
+    setMouseEnabled(!still)
     if (still) {
       stop()
-      detachMouse()
       settled = false
       if (inView) settle()
     } else {
       cancelAnimationFrame(settleFrame)
       settleFrame = 0
-      attachMouse()
       if (inView) run()
     }
   }
@@ -309,7 +298,8 @@ onMounted(async () => {
     cancelAnimationFrame(settleFrame)
     clearTimeout(stillTimer)
     stop()
-    detachMouse()
+    setMouseEnabled(false)
+    Events.off(engine, 'beforeUpdate')
     Composite.clear(world, false)
     Engine.clear(engine)
   }

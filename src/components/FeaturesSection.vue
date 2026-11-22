@@ -17,10 +17,10 @@ const features = [{
 
 <template>
   <section class="w">
-    <h2 v-reveal class="text-xxl text-center mb-xxl">
+    <h2 id="features-heading" v-reveal class="text-xxl text-center mb-xxl">
       Features
     </h2>
-    <div class="grid px-3xs">
+    <div class="grid px-3xs" role="region" aria-labelledby="features-heading" tabindex="0">
       <div v-for="(feature, index) in features" :key="feature.image" v-reveal="index % 2"
         class="rounded-s o-hidden bg-block lit feature">
         <ShikibanLattice />

@@ -19,6 +19,7 @@ const el = ref<SVGSVGElement>()
 const travel = gates[gates.length - 1]!.depth * 0.92
 let frame = 0
 let observer: IntersectionObserver | undefined
+let reduced: MediaQueryList | undefined
 let watching = false
 
 const update = () => {
@@ -33,11 +34,13 @@ const update = () => {
 }
 
 const onScroll = () => {
-  if (watching && !frame) frame = requestAnimationFrame(update)
+  if (watching && !reduced?.matches && !frame) frame = requestAnimationFrame(update)
 }
 
 onMounted(() => {
-  if (!el.value || !document.documentElement.classList.contains('motion')) return
+  if (!el.value) return
+  reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+  reduced.addEventListener('change', onScroll)
   observer = new IntersectionObserver(entries => {
     watching = entries.some(entry => entry.isIntersecting)
     if (watching) onScroll()
@@ -48,6 +51,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  reduced?.removeEventListener('change', onScroll)
   observer?.disconnect()
   window.removeEventListener('scroll', onScroll)
   window.removeEventListener('resize', onScroll)

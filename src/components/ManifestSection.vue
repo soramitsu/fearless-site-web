@@ -1,14 +1,15 @@
 <template>
   <section class="w px-3xs">
     <h2 class="bg-block lit rounded-s py-s o-hidden mb-xxl">
-      <div class="sliding">
-        <template v-for="i in new Array(3)">
+      <span class="phrase visually-hidden">Fearlessly <span class="color-accent">Feature-ready</span></span>
+      <span class="sliding" aria-hidden="true">
+        <template v-for="i in 3" :key="i">
           <span>Fearlessly</span>
           <span class="icon crest"><img src="/brand/crest-badge-small.svg" alt="" /></span>
           <span class="color-accent">Feature-ready</span>
           <span class="icon icon-well"><img src="/icons/networks.svg" alt="" /></span>
         </template>
-      </div>
+      </span>
     </h2>
     <p v-reveal class="text-l bold w-narrow px-m mb-l">
       Fearless Wallet's goal is to empower You to take <span class="color-accent">charge of your financial
@@ -70,6 +71,26 @@
 
   to {
     transform: translateX(-33.33%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sliding {
+    display: none;
+    animation: none;
+  }
+
+  .phrase {
+    position: static;
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding-inline: var(--space-xs);
+    clip: auto;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
   }
 }
 </style>

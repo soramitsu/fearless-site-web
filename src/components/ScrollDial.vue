@@ -44,12 +44,16 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+:global(:root) {
+  --scroll-dial-size: 5.2rem;
+}
+
 .scroll-dial {
   position: fixed;
   left: var(--space-xs);
   bottom: var(--space-xs);
-  width: 5.2rem;
-  height: 5.2rem;
+  width: var(--scroll-dial-size);
+  height: var(--scroll-dial-size);
   padding: 0.7rem;
   border-radius: 50%;
   background-color: rgba(26, 14, 62, 0.86);
