@@ -62,6 +62,13 @@ const data = [{
   height: 50%;
 }
 
+/* Two columns leave too little room for a word like "Convenience". */
+@media (max-width: 399px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 @media (min-width: 800px) {
   .grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));

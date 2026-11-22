@@ -21,12 +21,17 @@ const { flight, gates, perspective, mirror } = geometry
 // Where the dive is centred in the clip's frame (kit: focus.popup).
 const focus = { x: 0.5, y: 0.4625 }
 const zoomStartSeconds = 2
-// Once the stage is seen, the clip must be playing within this long. (If the
-// script never runs at all, the stylesheet lifts the cover by itself at 8 s.)
-const playDeadlineMs = 2000
+// Once the stage is seen the clip loads, and the crest shows the wallet's
+// loader until it plays. A server may take a while to send the first byte
+// (a cold CDN): wait up to 5 s for it. Once bytes arrive, a clip that
+// receives nothing for 1.5 s has stalled; and it must be playing within 8 s
+// in any case. (If the script never runs at all, the stylesheet lifts the
+// cover by itself at 8 s.)
+const firstByteMs = 5000
+const playCapMs = 8000
 // Once playing, the clip must keep moving and reach the dive in time.
-const noProgressMs = 1000
-const diveDeadlineMs = 4500
+const noProgressMs = 1500
+const diveDeadlineMs = 7000
 
 const stage = ref<HTMLElement>()
 const cover = ref<HTMLElement>()
@@ -48,6 +53,8 @@ const armed = ref(false)
 // the clip are up (the kit's launch screen is the white crest on plain ink),
 // only once the mirror opens or the cover fades.
 const revealed = ref(false)
+// The stage has been seen and the clip is on its way.
+const waiting = ref(false)
 const skipButton = ref<HTMLButtonElement>()
 const callButton = ref<HTMLButtonElement>()
 const clipPlaying = ref(false)
@@ -91,6 +98,15 @@ let clipStartedAt = 0
 let lastClipTime = -1
 let lastProgressAt = 0
 let visibility: IntersectionObserver | undefined
+let clipLoading = false
+// When the clip's bytes last arrived, and when the stage was first seen.
+let lastNetworkAt = 0
+let seenAt = 0
+let gotBytes = false
+const onClipProgress = () => {
+  gotBytes = true
+  lastNetworkAt = performance.now()
+}
 let reduced: MediaQueryList | undefined
 let callTimer: ReturnType<typeof setTimeout> | undefined
 let callCapTimer: ReturnType<typeof setTimeout> | undefined
@@ -100,7 +116,6 @@ const callStartMs = 4000
 const callCapMs = 8000
 // The share of the stage that must be seen before the launch plays.
 let need = 0.35
-let skippedByKeyboard = false
 
 const motionAllowed = () => document.documentElement.classList.contains('motion') && !reduced?.matches
 
@@ -135,7 +150,12 @@ const clearFlightStyles = () => {
 
 const finish = () => {
   if (finished) return
+  // Skip is about to go away: if it still holds focus, keep focus in the
+  // stage. If the visitor has moved on, leave focus where it is.
+  const skipHadFocus = skipButton.value !== undefined && document.activeElement === skipButton.value
   finished = true
+  waiting.value = false
+  clip.value?.removeEventListener('progress', onClipProgress)
   cancelAnimationFrame(frame)
   clearTimeout(startTimer)
   clearTimeout(fadeTimer)
@@ -159,8 +179,7 @@ const finish = () => {
   if (!unmounted) {
     nextTick(() => {
       syncMedia()
-      // Skipped from the keyboard: keep focus in the stage, not on the page.
-      if (skippedByKeyboard) callButton.value?.focus({ preventScroll: true })
+      if (skipHadFocus) callButton.value?.focus({ preventScroll: true })
     })
   }
 }
@@ -170,6 +189,7 @@ const finish = () => {
 const abort = () => {
   if (finished || flightStarted || aborting) return
   aborting = true
+  waiting.value = false
   cancelAnimationFrame(frame)
   clearTimeout(startTimer)
   const el = cover.value
@@ -278,22 +298,51 @@ const watchClip = (now: number) => {
     lastClipTime = video.currentTime
     lastProgressAt = now
   }
-  if (now - lastProgressAt > noProgressMs || now - clipStartedAt > diveDeadlineMs) return abort()
+  // Buffering while bytes still arrive is a wait, not a stall.
+  const stalled = now - Math.max(lastProgressAt, gotBytes ? lastNetworkAt : 0) > noProgressMs
+  if (stalled || now - clipStartedAt > diveDeadlineMs) return abort()
   frame = requestAnimationFrame(watchClip)
 }
 
 // The stage has come on screen: play the clip, or give up if it has not
 // started in time.
+// Fetch the clip once the stage is seen (not before: a phone visitor who
+// never scrolls to it should not pay for it).
+const loadClip = () => {
+  const video = clip.value
+  if (!video || clipLoading || finished) return
+  clipLoading = true
+  lastNetworkAt = performance.now()
+  video.addEventListener('progress', onClipProgress)
+  video.preload = 'auto'
+  video.load()
+}
+
+// Until the clip plays: give up if its first byte has not come in 5 s, if
+// its bytes stop for 1.5 s, or after 8 s in any case.
+const checkStart = () => {
+  if (finished || clipPlaying.value || aborting) return
+  const now = performance.now()
+  const waited = now - seenAt
+  const stalled = gotBytes ? now - lastNetworkAt > noProgressMs : waited > firstByteMs
+  if (stalled || waited > playCapMs) return abort()
+  startTimer = setTimeout(checkStart, 250)
+}
+
 const startClip = () => {
   const video = clip.value
   if (finished || clipRequested) return
   if (!video) return abort()
   clipRequested = true
-  startTimer = setTimeout(abort, playDeadlineMs)
+  seenAt = performance.now()
+  loadClip()
+  waiting.value = true
+  startTimer = setTimeout(checkStart, 250)
   video.play().then(() => {
     if (finished || unmounted || aborting || clipPlaying.value) return
     clearTimeout(startTimer)
     clipPlaying.value = true
+    waiting.value = false
     // A tap may already have started the flight; the clip just plays on.
     if (flightStarted) return
     clipStartedAt = lastProgressAt = performance.now()
@@ -305,7 +354,6 @@ const startClip = () => {
 // A tap during the launch plays the rest 2.5 times faster.
 const skip = () => {
   if (!launching.value || finished || aborting) return
-  skippedByKeyboard = skippedByKeyboard || (skipButton.value !== undefined && document.activeElement === skipButton.value)
   speed = 2.5
   if (clip.value) clip.value.playbackRate = 2.5
   if (!flightStarted) {
@@ -446,6 +494,7 @@ onBeforeUnmount(() => {
   document.removeEventListener('visibilitychange', syncMedia)
   reduced?.removeEventListener('change', onMotionPreference)
   visibility?.disconnect()
+  clip.value?.removeEventListener('progress', onClipProgress)
   cancelAnimationFrame(frame)
   cancelAnimationFrame(tiltFrame)
   clearTimeout(startTimer)
@@ -467,7 +516,8 @@ const rows = [
 </script>
 
 <template>
-  <figure ref="stage" class="stage" :class="{ launching, armed, revealed, playing: clipPlaying, calling, off: offScreen }"
+  <figure ref="stage" class="stage"
+    :class="{ launching, armed, revealed, waiting, playing: clipPlaying, calling, off: offScreen }"
     @click="skip" @pointermove="onPointerMove" @pointerleave="onPointerLeave">
     <figcaption class="visually-hidden">
       The Yatagarasu, the three-legged crow on the Fearless crest, with the Fearless Wallet home screen.
@@ -531,6 +581,7 @@ const rows = [
     <div ref="cover" class="cover" aria-hidden="true">
       <div class="frame">
         <img src="/brand/crest.svg" alt="" class="crest" :class="{ away: clipPlaying }" width="512" height="512">
+        <div v-if="waiting" class="wait"><ShikibanLoader /></div>
         <video ref="clip" class="clip" muted playsinline preload="none" width="842" height="900" tabindex="-1">
           <source src="/brand/crow-launch.webm" type="video/webm">
           <source src="/brand/crow-launch.mp4" type="video/mp4">
@@ -785,6 +836,26 @@ const rows = [
 
 .cover .crest.away {
   opacity: 0;
+}
+
+/* The wallet's loader circles the crest while the clip is on its way; it
+   appears only if the wait is noticeable. */
+.wait {
+  position: absolute;
+  top: 46.25%;
+  left: 50%;
+  width: 40%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  opacity: 0;
+  animation: fw-wait-in var(--d-360) linear var(--d-510) forwards;
+}
+
+@keyframes fw-wait-in {
+  to {
+    opacity: 1;
+  }
 }
 
 .clip,
