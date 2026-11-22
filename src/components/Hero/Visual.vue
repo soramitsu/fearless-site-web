@@ -22,13 +22,13 @@ const { flight, gates, perspective, mirror } = geometry
 const focus = { x: 0.5, y: 0.4625 }
 const zoomStartSeconds = 2
 // Once the stage is seen the clip loads, and the crest shows the wallet's
-// loader until it plays. A server may take a while to send the first byte
-// (a cold CDN): wait up to 5 s for it. Once bytes arrive, a clip that
-// receives nothing for 1.5 s has stalled; and it must be playing within 8 s
-// in any case. (If the script never runs at all, the stylesheet lifts the
-// cover by itself at 8 s.)
-const firstByteMs = 5000
-const playCapMs = 8000
+// loader until it plays. Right after a deploy the CDN's cache is cold and
+// the first byte can take seconds: wait up to 6 s for it. Once bytes arrive,
+// a clip that receives nothing for 1.5 s has stalled; and it must be playing
+// within 9 s in any case. (If the script never runs at all, the stylesheet
+// lifts the cover by itself at 8 s.)
+const firstByteMs = 6000
+const playCapMs = 9000
 // Once playing, the clip must keep moving and reach the dive in time.
 const noProgressMs = 1500
 const diveDeadlineMs = 7000
@@ -155,7 +155,7 @@ const finish = () => {
   const skipHadFocus = skipButton.value !== undefined && document.activeElement === skipButton.value
   finished = true
   waiting.value = false
-  clip.value?.removeEventListener('progress', onClipProgress)
+  for (const event of ['progress', 'loadedmetadata', 'loadeddata']) clip.value?.removeEventListener(event, onClipProgress)
   cancelAnimationFrame(frame)
   clearTimeout(startTimer)
   clearTimeout(fadeTimer)
@@ -313,9 +313,9 @@ const loadClip = () => {
   if (!video || clipLoading || finished) return
   clipLoading = true
   lastNetworkAt = performance.now()
-  video.addEventListener('progress', onClipProgress)
+  for (const event of ['progress', 'loadedmetadata', 'loadeddata']) video.addEventListener(event, onClipProgress)
+  // play() starts the download; a load() here would only cancel and repeat it.
   video.preload = 'auto'
-  video.load()
 }
 
 // Until the clip plays: give up if its first byte has not come in 5 s, if
@@ -494,7 +494,7 @@ onBeforeUnmount(() => {
   document.removeEventListener('visibilitychange', syncMedia)
   reduced?.removeEventListener('change', onMotionPreference)
   visibility?.disconnect()
-  clip.value?.removeEventListener('progress', onClipProgress)
+  for (const event of ['progress', 'loadedmetadata', 'loadeddata']) clip.value?.removeEventListener(event, onClipProgress)
   cancelAnimationFrame(frame)
   cancelAnimationFrame(tiltFrame)
   clearTimeout(startTimer)
