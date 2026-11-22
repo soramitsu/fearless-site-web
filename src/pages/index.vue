@@ -50,7 +50,7 @@ useSchemaOrg([
     <div v-reveal class="rounded-s bg-block lit o-hidden px-l py-xxl universal">
       <ShikibanLattice />
       <ShikibanMarks />
-      <div class="gates">
+      <div class="tunnel">
         <ShikibanGates />
       </div>
       <h2 class="text-xl mb-s">
@@ -93,7 +93,7 @@ useSchemaOrg([
 
 /* The launch's gates, seen from the side of the card: scrolling the page
    moves the camera through them. */
-.gates {
+.tunnel {
   position: absolute;
   right: -12rem;
   top: 50%;
@@ -129,7 +129,7 @@ useSchemaOrg([
 }
 
 @media (max-width: 799px) {
-  .gates {
+  .tunnel {
     right: -26rem;
     opacity: 0.28;
   }

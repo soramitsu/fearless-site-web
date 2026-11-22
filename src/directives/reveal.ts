@@ -30,10 +30,13 @@ const land = (el: HTMLElement) => {
   el.addEventListener('transitionend', onEnd)
 }
 
-const reveal: ObjectDirective<RevealElement, number | undefined> = {
+// `isHydrating` tells whether the server's page is still being taken over.
+// What is already on screen then has been visible since the first paint, so
+// it is left alone: hiding it now to land it again would make it blink.
+const createReveal = (isHydrating: () => boolean): ObjectDirective<RevealElement, number | undefined> => ({
   mounted(el, binding: DirectiveBinding<number | undefined>) {
     if (!('IntersectionObserver' in window) || !document.documentElement.classList.contains('motion')) return
-
+    if (isHydrating() && el.getBoundingClientRect().top < window.innerHeight) return
 
     el.setAttribute('data-reveal', '')
     if (binding.value) el.style.setProperty('--tier', String(binding.value))
@@ -54,6 +57,6 @@ const reveal: ObjectDirective<RevealElement, number | undefined> = {
   // Rendered on the server as a plain element: nothing is hidden until the
   // page is running and motion is allowed.
   getSSRProps: () => ({}),
-}
+})
 
-export default reveal
+export default createReveal

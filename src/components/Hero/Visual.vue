@@ -86,6 +86,8 @@ let lastClipTime = -1
 let lastProgressAt = 0
 let visibility: IntersectionObserver | undefined
 let reduced: MediaQueryList | undefined
+let callTimer: ReturnType<typeof setTimeout> | undefined
+const callStartMs = 4000
 
 const motionAllowed = () => document.documentElement.classList.contains('motion') && !reduced?.matches
 
@@ -96,6 +98,7 @@ const syncMedia = () => {
     if (visible) return
     // The call does not carry on unseen.
     caw.value?.pause()
+    clearTimeout(callTimer)
     calling.value = false
   }
   const video = idle.value
@@ -130,7 +133,15 @@ const finish = () => {
   try {
     sessionStorage.setItem('fw-launched', '1')
   } catch { /* private mode: the launch simply runs again next page */ }
-  clip.value?.pause()
+  const video = clip.value
+  if (video) {
+    video.pause()
+    // A launch that was given up has no use for the rest of its clip.
+    if (!flightStarted) {
+      for (const source of [...video.querySelectorAll('source')]) source.remove()
+      video.load()
+    }
+  }
   if (!unmounted) nextTick(syncMedia)
 }
 
@@ -290,10 +301,20 @@ const call = () => {
   video.currentTime = 0
   video.muted = false
   idle.value?.pause()
-  video.play().catch(() => { calling.value = false; syncMedia() })
+  // If the clip has not begun in time (it cannot load, say), give the stage
+  // back to the idle loop.
+  clearTimeout(callTimer)
+  callTimer = setTimeout(() => {
+    if (calling.value && video.currentTime === 0) {
+      video.pause()
+      callEnded()
+    }
+  }, callStartMs)
+  video.play().catch(callEnded)
 }
 
 const callEnded = () => {
+  clearTimeout(callTimer)
   calling.value = false
   syncMedia()
 }
@@ -347,6 +368,9 @@ onMounted(() => {
   reduced.addEventListener('change', onMotionPreference)
 
   launching.value = document.documentElement.classList.contains('launch')
+  // The script ran so late that the stylesheet has already lifted the cover:
+  // the stage is showing, so it stays shown.
+  if (launching.value && cover.value && getComputedStyle(cover.value).opacity !== '1') finish()
 
   if ('IntersectionObserver' in window && stage.value) {
     // From here the script answers for the cover, not the stylesheet.
@@ -354,12 +378,16 @@ onMounted(() => {
     visibility = new IntersectionObserver(entries => {
       const entry = entries[entries.length - 1]!
       offScreen.value = !entry.isIntersecting
-      if (launching.value && !finished && entry.intersectionRatio >= 0.35) {
+      // Enough of the stage is seen: 35 % of it, or, in a window too short to
+      // ever show that much, most of the window's height.
+      const view = entry.rootBounds?.height || window.innerHeight
+      const seen = entry.intersectionRatio >= 0.35 || entry.intersectionRect.height >= view * 0.8
+      if (launching.value && !finished && seen) {
         measure()
         startClip()
       }
       syncMedia()
-    }, { threshold: [0, 0.35] })
+    }, { threshold: [0, 0.1, 0.2, 0.3, 0.35] })
     visibility.observe(stage.value)
   } else if (launching.value) {
     finish()
@@ -378,6 +406,7 @@ onBeforeUnmount(() => {
   cancelAnimationFrame(tiltFrame)
   clearTimeout(startTimer)
   clearTimeout(fadeTimer)
+  clearTimeout(callTimer)
   idle.value?.pause()
   caw.value?.pause()
   clip.value?.pause()
@@ -441,14 +470,13 @@ const rows = [
     </div>
 
     <div :ref="setTier(tiers, 2)" class="part" style="--part: 2">
-      <button class="call press text-xxs" type="button" aria-label="Play the crow's call" :disabled="calling"
-        @click.stop="call">
+      <button class="call press text-xxs" type="button" :disabled="calling || launching" @click.stop="call">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M4 9.5h3.2L12 5.6v12.8l-4.8-3.9H4z" fill="currentColor" />
           <path class="wave" d="M15.2 9.2a4 4 0 0 1 0 5.6M17.9 6.6a7.6 7.6 0 0 1 0 10.8" stroke="currentColor"
             stroke-width="1.7" stroke-linecap="round" />
         </svg>
-        Hear the call
+        Hear the crow's call
       </button>
     </div>
 

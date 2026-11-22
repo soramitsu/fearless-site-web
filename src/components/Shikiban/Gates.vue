@@ -23,7 +23,8 @@ let watching = false
 
 const update = () => {
   frame = 0
-  if (!el.value) return
+  // The `motion` class follows the visitor's setting while the page is open.
+  if (!el.value || !document.documentElement.classList.contains('motion')) return
   const box = el.value.getBoundingClientRect()
   const view = window.innerHeight || 1
   // 0 as the figure enters at the bottom, 1 as it leaves at the top.

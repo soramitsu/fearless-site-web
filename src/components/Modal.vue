@@ -65,10 +65,13 @@ onMounted(sync)
   backdrop-filter: blur(0.6rem);
 }
 
+/* Sized by the height too, so a 16:9 slot and the Close button above it
+   always fit, on a short laptop or a phone held sideways. */
 .content {
   position: relative;
   width: 100%;
-  max-width: 128rem;
+  max-width: min(128rem, calc((100vh - 2 * var(--space-xl) - 2 * var(--space-3xs)) * 16 / 9));
+  max-width: min(128rem, calc((100dvh - 2 * var(--space-xl) - 2 * var(--space-3xs)) * 16 / 9));
   margin: 0 auto;
 }
 

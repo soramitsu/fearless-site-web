@@ -122,6 +122,7 @@ const handleCLick = (step: number) => {
 
 .step {
   width: 343px;
+  max-width: calc(100vw - 2 * var(--space-xs));
 }
 
 .step-content {

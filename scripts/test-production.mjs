@@ -122,7 +122,7 @@ try {
   const home = await html('/')
   assert.match(home, /<img[^>]*src="\/logo\.svg"[^>]*alt="Fearless Wallet"/, 'Header lockup')
   assert.match(await (await fetch(`${base}/logo.svg`)).text(), /aria-label="Fearless"/, 'Lockup is the brand master')
-  for (const marker of ['/brand/crow-idle.webm', '/brand/crow-poster.webp', '/hero/card.svg', '/hero/row-xor.svg', "Play the crow's call", 'Your keys. Every chain.']) {
+  for (const marker of ['/brand/crow-idle.webm', '/brand/crow-poster.webp', '/hero/card.svg', '/hero/row-xor.svg', "Hear the crow's call", 'Your keys. Every chain.']) {
     assert.ok(home.includes(marker.replaceAll("'", '&#39;')) || home.includes(marker), `Home hero: ${marker}`)
   }
   assert.doesNotMatch(home, /<html[^>]*class=/, 'The server never sets the motion or launch class')

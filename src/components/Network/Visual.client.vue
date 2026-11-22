@@ -46,8 +46,10 @@ onMounted(async () => {
   await nextTick()
   if (!canvas.value || !parent.value) return
 
-  // Visitors who ask for reduced motion get the coins already at rest.
-  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  // Visitors who ask for reduced motion get the coins at rest: no falling,
+  // no dragging. The setting is followed while the page is open.
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+  let still = reduced.matches
 
   // create an engine
 
@@ -115,29 +117,59 @@ onMounted(async () => {
     })
   })
 
-  // add mouse control
+  Composite.add(world, [top, floor, leftWall, rightWall, ...chains])
 
-  const mouse = Mouse.create(render.canvas)
-  const mouseConstraint = MouseConstraint.create(engine, {
-    mouse: mouse,
-    constraint: {
-      stiffness: 0.2,
-      render: {
-        visible: false
+  // add mouse control: only while the coins move. On a still picture the
+  // handlers would swallow touch scrolling for nothing.
+
+  let mouse: Mouse | undefined
+  let mouseConstraint: MouseConstraint | undefined
+
+  const attachMouse = () => {
+    if (mouse) return
+    mouse = Mouse.create(render.canvas)
+    mouseConstraint = MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: {
+          visible: false
+        }
       }
+    })
+
+    // keep scroll of the page
+
+    // @ts-ignore
+    mouse.element.removeEventListener('wheel', mouse.mousewheel)
+
+    Composite.add(world, mouseConstraint)
+
+    // keep the mouse in sync with rendering
+
+    render.mouse = mouse
+  }
+
+  const detachMouse = () => {
+    if (!mouse) return
+    // matter-js keeps its pointer handlers on the Mouse object, untyped.
+    const handlers = mouse as unknown as Record<'mousemove' | 'mousedown' | 'mouseup', EventListener>
+    for (const [name, handler] of [
+      ['mousemove', handlers.mousemove],
+      ['mousedown', handlers.mousedown],
+      ['mouseup', handlers.mouseup],
+      ['touchmove', handlers.mousemove],
+      ['touchstart', handlers.mousedown],
+      ['touchend', handlers.mouseup],
+    ] as const) {
+      mouse.element.removeEventListener(name, handler)
     }
-  })
+    if (mouseConstraint) Composite.remove(world, mouseConstraint)
+    mouse = undefined
+    mouseConstraint = undefined
+  }
 
-  // keep scroll of the page
-
-  // @ts-ignore
-  mouse.element.removeEventListener('wheel', mouse.mousewheel)
-
-  Composite.add(world, [top, floor, leftWall, rightWall, ...chains, mouseConstraint])
-
-  // keep the mouse in sync with rendering
-
-  render.mouse = mouse
+  if (!still) attachMouse()
 
   // fit the render viewport to the scene
 
@@ -146,50 +178,102 @@ onMounted(async () => {
     max: { x: width, y: height }
   })
 
+  // The still picture: let the coins fall and settle unseen, a slice of the
+  // work per frame so the page stays responsive, then draw them once their
+  // pictures have loaded.
+
+  let settleFrame = 0
+  let stillTimer: ReturnType<typeof setTimeout> | undefined
+  let settled = false
+  let disposed = false
+  const pictures = () => Promise.all(networks.map(src => new Promise<void>(resolve => {
+    const image = new Image()
+    image.onload = image.onerror = () => resolve()
+    image.src = src
+  })))
+
+  const drawStill = () => {
+    if (disposed) return
+    Render.world(render)
+    clearTimeout(stillTimer)
+    stillTimer = setTimeout(() => { if (!disposed && still) Render.world(render) }, 400)
+  }
+
+  const settle = () => {
+    if (settled || settleFrame) return
+    let steps = 0
+    const slice = () => {
+      settleFrame = 0
+      if (disposed || !still) return
+      for (let step = 0; step < 45; step++) Engine.update(engine, 1000 / 60)
+      steps += 45
+      if (steps < 900) {
+        settleFrame = requestAnimationFrame(slice)
+        return
+      }
+      settled = true
+      pictures().then(drawStill)
+    }
+    settleFrame = requestAnimationFrame(slice)
+  }
+
   // create intersection observer
 
-  let observer: IntersectionObserver | undefined
-  let stillTimer: ReturnType<typeof setTimeout> | undefined
+  let inView = false
 
-  if (still) {
-    // Let the coins fall and settle unseen, then draw them once their
-    // pictures have loaded.
-    for (let step = 0; step < 900; step++) Engine.update(engine, 1000 / 60)
-    const loaded = networks.map(src => new Promise<void>(resolve => {
-      const image = new Image()
-      image.onload = image.onerror = () => resolve()
-      image.src = src
-    }))
-    Promise.all(loaded).then(() => {
-      Render.world(render)
-      requestAnimationFrame(() => Render.world(render))
-      stillTimer = setTimeout(() => Render.world(render), 400)
-    })
-  } else {
-    observer = new IntersectionObserver(function (entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          Runner.run(runner, engine)
-          Render.run(render)
+  const run = () => {
+    Runner.run(runner, engine)
+    Render.run(render)
 
-          // pull the coins up
-          chains.forEach(body => {
-            const forceMagnitude = 0.02 * body.mass
+    // pull the coins up
+    chains.forEach(body => {
+      const forceMagnitude = 0.02 * body.mass
 
-            Body.applyForce(body, body.position, {
-              x: 0,
-              y: -forceMagnitude - Math.random() * forceMagnitude
-            })
-          })
-        } else {
-          Runner.stop(runner)
-          Render.stop(render)
-        }
+      Body.applyForce(body, body.position, {
+        x: 0,
+        y: -forceMagnitude - Math.random() * forceMagnitude
       })
     })
-
-    observer.observe(canvas.value)
   }
+
+  const stop = () => {
+    Runner.stop(runner)
+    Render.stop(render)
+  }
+
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(entry => {
+      inView = entry.isIntersecting
+      if (still) {
+        if (inView) settle()
+      } else if (inView) {
+        run()
+      } else {
+        stop()
+      }
+    })
+  }, { rootMargin: '200px 0px' })
+
+  observer.observe(canvas.value)
+
+  // The visitor changed the setting while the page was open.
+
+  const onPreference = () => {
+    still = reduced.matches
+    if (still) {
+      stop()
+      detachMouse()
+      settled = false
+      if (inView) settle()
+    } else {
+      cancelAnimationFrame(settleFrame)
+      settleFrame = 0
+      attachMouse()
+      if (inView) run()
+    }
+  }
+
+  reduced.addEventListener('change', onPreference)
 
   // resize canvas
 
@@ -212,29 +296,20 @@ onMounted(async () => {
       max: { x: width, y: height }
     })
 
-    if (still) Render.world(render)
+    if (still && settled) drawStill()
   }
 
   window.addEventListener('resize', resizeHandler)
 
   dispose = () => {
+    disposed = true
     window.removeEventListener('resize', resizeHandler)
-    observer?.disconnect()
+    reduced.removeEventListener('change', onPreference)
+    observer.disconnect()
+    cancelAnimationFrame(settleFrame)
     clearTimeout(stillTimer)
-    Runner.stop(runner)
-    Render.stop(render)
-    // matter-js keeps its pointer handlers on the Mouse object, untyped.
-    const handlers = mouse as unknown as Record<'mousemove' | 'mousedown' | 'mouseup', EventListener>
-    for (const [name, handler] of [
-      ['mousemove', handlers.mousemove],
-      ['mousedown', handlers.mousedown],
-      ['mouseup', handlers.mouseup],
-      ['touchmove', handlers.mousemove],
-      ['touchstart', handlers.mousedown],
-      ['touchend', handlers.mouseup],
-    ] as const) {
-      mouse.element.removeEventListener(name, handler)
-    }
+    stop()
+    detachMouse()
     Composite.clear(world, false)
     Engine.clear(engine)
   }

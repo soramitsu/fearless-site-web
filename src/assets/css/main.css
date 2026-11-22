@@ -12,10 +12,11 @@ html {
   background-color: var(--fw-ink);
 }
 
+/* No background here: the ink is on <html>, and the aurora's canvas (behind
+   the page at z-index -2) would be hidden by an opaque body. */
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--fw-ink);
   color: var(--color-text-primary);
   overflow-x: clip;
 }

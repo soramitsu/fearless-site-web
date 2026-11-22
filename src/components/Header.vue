@@ -274,6 +274,16 @@ onBeforeUnmount(() => {
 /* Without script the menu cannot be opened, so on small screens its links
    sit in the page instead (the head script sets `js`). */
 @media (max-width: 799px) {
+  html:not(.js) .header-anchor {
+    position: static;
+    height: auto;
+  }
+
+  html:not(.js) .header {
+    position: static;
+    padding-bottom: 0;
+  }
+
   html:not(.js) .inner {
     flex-wrap: wrap;
   }
