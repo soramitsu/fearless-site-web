@@ -111,10 +111,12 @@ const onClipProgress = () => {
 let reduced: MediaQueryList | undefined
 let callTimer: ReturnType<typeof setTimeout> | undefined
 let callCapTimer: ReturnType<typeof setTimeout> | undefined
-// The call must have begun within 4 s and be over within 8 s (it is 3 s long);
-// otherwise it has stalled, and the stage goes back to the idle loop.
-const callStartMs = 4000
-const callCapMs = 8000
+// The call must begin within 6 s of the tap and, once playing, end within 2 s
+// of its length (3 s); otherwise it has stalled, and the stage goes back to
+// the idle loop. Its clip starts loading as soon as the pointer or focus
+// reaches the button, so on a slow link the tap waits less.
+const callStartMs = 6000
+const callSlackMs = 2000
 // The share of the stage that must be seen before the launch plays.
 let need = 0.35
 
@@ -321,8 +323,8 @@ const loadClip = () => {
   video.preload = 'auto'
 }
 
-// Until the clip plays: give up if its first byte has not come in 5 s, if
-// its bytes stop for 1.5 s, or after 8 s in any case.
+// Until the clip plays: give up if its first byte has not come in 6 s, if
+// its bytes stop for 1.5 s, or after 9 s in any case (checked every 250 ms).
 const checkStart = () => {
   if (finished || clipPlaying.value || aborting) return
   const now = performance.now()
@@ -382,9 +384,24 @@ const call = () => {
   callTimer = setTimeout(() => {
     if (calling.value && video.currentTime === 0) stopCall()
   }, callStartMs)
-  // A call that starts and then stalls must not keep the stage either.
-  callCapTimer = setTimeout(() => { if (calling.value) stopCall() }, callCapMs)
   video.play().catch(callEnded)
+}
+
+// The call has started: it must be over within its length and a little.
+const callPlaying = () => {
+  const video = caw.value
+  if (!video || !calling.value) return
+  clearTimeout(callCapTimer)
+  const remaining = Number.isFinite(video.duration) ? Math.max(0, video.duration - video.currentTime) : 3
+  // A call that starts and then stalls must not keep the stage either.
+  callCapTimer = setTimeout(() => { if (calling.value) stopCall() }, remaining * 1000 + callSlackMs)
+}
+
+// The pointer or focus is on the button: fetch the call so a tap plays it
+// sooner.
+const prepareCall = () => {
+  const video = caw.value
+  if (video && video.preload === 'none' && !launching.value) video.preload = 'auto'
 }
 
 const callEnded = () => {
@@ -534,7 +551,7 @@ const rows = [
         <source src="/brand/crow-idle.mp4" type="video/mp4">
       </video>
       <video ref="caw" class="crow caw" playsinline preload="none" width="842" height="900" tabindex="-1"
-        @ended="callEnded">
+        @playing="callPlaying" @ended="callEnded">
         <source src="/brand/crow-caw.webm" type="video/webm">
         <source src="/brand/crow-caw.mp4" type="video/mp4">
       </video>
@@ -569,7 +586,7 @@ const rows = [
 
     <div :ref="setTier(tiers, 2)" class="part" style="--part: 2">
       <button ref="callButton" class="call press text-xxs" type="button" :disabled="calling || launching"
-        @click.stop="call">
+        @pointerenter="prepareCall" @focus="prepareCall" @click.stop="call">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M4 9.5h3.2L12 5.6v12.8l-4.8-3.9H4z" fill="currentColor" />
           <path class="wave" d="M15.2 9.2a4 4 0 0 1 0 5.6M17.9 6.6a7.6 7.6 0 0 1 0 10.8" stroke="currentColor"
