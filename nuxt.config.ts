@@ -8,7 +8,7 @@ const title = 'Fearless Wallet The DeFi Crypto Wallet for Multi-Chain Future',
     'crypto wallet apps, wallet app, wallet web, krypto wallet, browser wallet, crypto wallet, blockchain wallet app',
   ogImage = `${process.env.NUXT_PUBLIC_BASE_URL || ''}/og.jpg`
 
-const motionScript = `(function(){var d=document.documentElement;d.classList.add('js');try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion');var c=navigator.connection;if(location.pathname==='/'&&!sessionStorage.getItem('fw-launched')&&!(c&&c.saveData))d.classList.add('launch')}}catch(e){}})()`
+const motionScript = `(function(){var d=document.documentElement;d.classList.add('js');document.addEventListener('click',function(e){if(d.classList.contains('nav-ready'))return;var b=e.target&&e.target.closest&&e.target.closest('.burger'),n=document.getElementById('site-menu');if(!b||!n)return;var o=!n.classList.contains('open');n.classList.toggle('open',o);b.classList.toggle('open',o);b.setAttribute('aria-expanded',o?'true':'false')});try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion');var c=navigator.connection;if(location.pathname==='/'&&!sessionStorage.getItem('fw-launched')&&!(c&&c.saveData))d.classList.add('launch')}}catch(e){}})()`
 
 export default defineNuxtConfig({
   // Content 2 snapshots its cache with an fs driver that ignores node_modules.
@@ -97,7 +97,9 @@ export default defineNuxtConfig({
       title: title,
       script: [
         {
-          // Runs before the first paint. `js` marks a page whose script runs;
+          // Runs before the first paint. `js` marks a page whose script runs,
+          // and until the app takes over (`nav-ready`) a tap on Menu opens the
+          // phone menu here, so it works even if the app's script fails;
           // `motion` lets the styles animate and is never set for visitors who
           // ask for reduced motion; `launch` opens the home page's stage with
           // the apps' launch, once a session.

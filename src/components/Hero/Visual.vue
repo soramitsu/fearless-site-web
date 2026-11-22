@@ -44,6 +44,12 @@ const caw = ref<HTMLVideoElement>()
 const launching = ref(false)
 // The script has taken the launch over from the stylesheet's own timeout.
 const armed = ref(false)
+// The idle sky behind the stage is shown: not while the launch screen and
+// the clip are up (the kit's launch screen is the white crest on plain ink),
+// only once the mirror opens or the cover fades.
+const revealed = ref(false)
+const skipButton = ref<HTMLButtonElement>()
+const callButton = ref<HTMLButtonElement>()
 const clipPlaying = ref(false)
 const calling = ref(false)
 const offScreen = ref(false)
@@ -87,7 +93,14 @@ let lastProgressAt = 0
 let visibility: IntersectionObserver | undefined
 let reduced: MediaQueryList | undefined
 let callTimer: ReturnType<typeof setTimeout> | undefined
+let callCapTimer: ReturnType<typeof setTimeout> | undefined
+// The call must have begun within 4 s and be over within 8 s (it is 3 s long);
+// otherwise it has stalled, and the stage goes back to the idle loop.
 const callStartMs = 4000
+const callCapMs = 8000
+// The share of the stage that must be seen before the launch plays.
+let need = 0.35
+let skippedByKeyboard = false
 
 const motionAllowed = () => document.documentElement.classList.contains('motion') && !reduced?.matches
 
@@ -99,6 +112,7 @@ const syncMedia = () => {
     // The call does not carry on unseen.
     caw.value?.pause()
     clearTimeout(callTimer)
+    clearTimeout(callCapTimer)
     calling.value = false
   }
   const video = idle.value
@@ -142,7 +156,13 @@ const finish = () => {
       video.load()
     }
   }
-  if (!unmounted) nextTick(syncMedia)
+  if (!unmounted) {
+    nextTick(() => {
+      syncMedia()
+      // Skipped from the keyboard: keep focus in the stage, not on the page.
+      if (skippedByKeyboard) callButton.value?.focus({ preventScroll: true })
+    })
+  }
 }
 
 // The clip cannot play, has stalled, or was never seen in time: drop the
@@ -155,6 +175,7 @@ const abort = () => {
   const el = cover.value
   if (!el || unmounted) return finish()
   clearFlightStyles()
+  revealed.value = true
   el.style.transition = 'opacity 360ms linear'
   el.style.opacity = '0'
   for (const { el: tier } of tiers.value) {
@@ -204,6 +225,7 @@ const runFlight = () => {
     // The mirror opens: a round opening about the focus, then the corona.
     const sinceIris = elapsed - flight.irisAtMs
     if (sinceIris >= 0 && cover.value && !cleared) {
+      if (!revealed.value) revealed.value = true
       const iris = mirrorRadius * mirror.cusp * flight.irisInset * clamp01(sinceIris / flight.irisOpenMs)
       if (iris >= far) {
         // The opening has cleared the view: nothing of the cover is left.
@@ -283,6 +305,7 @@ const startClip = () => {
 // A tap during the launch plays the rest 2.5 times faster.
 const skip = () => {
   if (!launching.value || finished || aborting) return
+  skippedByKeyboard = skippedByKeyboard || (skipButton.value !== undefined && document.activeElement === skipButton.value)
   speed = 2.5
   if (clip.value) clip.value.playbackRate = 2.5
   if (!flightStarted) {
@@ -304,19 +327,25 @@ const call = () => {
   // If the clip has not begun in time (it cannot load, say), give the stage
   // back to the idle loop.
   clearTimeout(callTimer)
+  clearTimeout(callCapTimer)
   callTimer = setTimeout(() => {
-    if (calling.value && video.currentTime === 0) {
-      video.pause()
-      callEnded()
-    }
+    if (calling.value && video.currentTime === 0) stopCall()
   }, callStartMs)
+  // A call that starts and then stalls must not keep the stage either.
+  callCapTimer = setTimeout(() => { if (calling.value) stopCall() }, callCapMs)
   video.play().catch(callEnded)
 }
 
 const callEnded = () => {
   clearTimeout(callTimer)
+  clearTimeout(callCapTimer)
   calling.value = false
   syncMedia()
+}
+
+const stopCall = () => {
+  caw.value?.pause()
+  callEnded()
 }
 
 // With a mouse, the phone leans a little toward the pointer.
@@ -351,6 +380,34 @@ const measure = () => {
   if (box.width && box.height) stageSize.value = { width: box.width, height: box.height }
 }
 
+// Enough of the stage is seen when 35 % of it is on screen, or, in a window
+// too short to ever show that much, 80 % of the window's height. The
+// observer watches exactly that share, so the moment is never missed.
+const onIntersect = (entries: IntersectionObserverEntry[]) => {
+  const entry = entries[entries.length - 1]!
+  offScreen.value = !entry.isIntersecting
+  if (launching.value && !finished && entry.isIntersecting && entry.intersectionRatio >= need - 0.002) {
+    measure()
+    startClip()
+  }
+  syncMedia()
+}
+
+const observe = () => {
+  visibility?.disconnect()
+  if (!stage.value) return
+  const height = stage.value.getBoundingClientRect().height || 1
+  need = Math.min(0.35, (0.8 * window.innerHeight) / height)
+  visibility = new IntersectionObserver(onIntersect, { threshold: [0, need] })
+  visibility.observe(stage.value)
+}
+
+const onResize = () => {
+  measure()
+  // The share that can be seen depends on the window: watch the new one.
+  if (launching.value && !clipRequested && !finished && 'IntersectionObserver' in window) observe()
+}
+
 // The visitor turned reduced motion on while the page was open.
 const onMotionPreference = () => {
   if (reduced?.matches && launching.value) {
@@ -362,7 +419,7 @@ const onMotionPreference = () => {
 
 onMounted(() => {
   measure()
-  window.addEventListener('resize', measure, { passive: true })
+  window.addEventListener('resize', onResize, { passive: true })
   document.addEventListener('visibilitychange', syncMedia)
   reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
   reduced.addEventListener('change', onMotionPreference)
@@ -375,20 +432,7 @@ onMounted(() => {
   if ('IntersectionObserver' in window && stage.value) {
     // From here the script answers for the cover, not the stylesheet.
     armed.value = launching.value
-    visibility = new IntersectionObserver(entries => {
-      const entry = entries[entries.length - 1]!
-      offScreen.value = !entry.isIntersecting
-      // Enough of the stage is seen: 35 % of it, or, in a window too short to
-      // ever show that much, most of the window's height.
-      const view = entry.rootBounds?.height || window.innerHeight
-      const seen = entry.intersectionRatio >= 0.35 || entry.intersectionRect.height >= view * 0.8
-      if (launching.value && !finished && seen) {
-        measure()
-        startClip()
-      }
-      syncMedia()
-    }, { threshold: [0, 0.1, 0.2, 0.3, 0.35] })
-    visibility.observe(stage.value)
+    observe()
   } else if (launching.value) {
     finish()
   } else {
@@ -398,7 +442,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   unmounted = true
-  window.removeEventListener('resize', measure)
+  window.removeEventListener('resize', onResize)
   document.removeEventListener('visibilitychange', syncMedia)
   reduced?.removeEventListener('change', onMotionPreference)
   visibility?.disconnect()
@@ -407,6 +451,7 @@ onBeforeUnmount(() => {
   clearTimeout(startTimer)
   clearTimeout(fadeTimer)
   clearTimeout(callTimer)
+  clearTimeout(callCapTimer)
   idle.value?.pause()
   caw.value?.pause()
   clip.value?.pause()
@@ -422,7 +467,7 @@ const rows = [
 </script>
 
 <template>
-  <figure ref="stage" class="stage" :class="{ launching, armed, playing: clipPlaying, calling, off: offScreen }"
+  <figure ref="stage" class="stage" :class="{ launching, armed, revealed, playing: clipPlaying, calling, off: offScreen }"
     @click="skip" @pointermove="onPointerMove" @pointerleave="onPointerLeave">
     <figcaption class="visually-hidden">
       The Yatagarasu, the three-legged crow on the Fearless crest, with the Fearless Wallet home screen.
@@ -470,7 +515,8 @@ const rows = [
     </div>
 
     <div :ref="setTier(tiers, 2)" class="part" style="--part: 2">
-      <button class="call press text-xxs" type="button" :disabled="calling || launching" @click.stop="call">
+      <button ref="callButton" class="call press text-xxs" type="button" :disabled="calling || launching"
+        @click.stop="call">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M4 9.5h3.2L12 5.6v12.8l-4.8-3.9H4z" fill="currentColor" />
           <path class="wave" d="M15.2 9.2a4 4 0 0 1 0 5.6M17.9 6.6a7.6 7.6 0 0 1 0 10.8" stroke="currentColor"
@@ -507,6 +553,13 @@ const rows = [
         </g>
       </svg>
     </div>
+
+    <!-- The tap that speeds the launch up, for the keyboard too. Outside the
+         cover, which is hidden from assistive technology. -->
+    <button v-if="launching && armed" ref="skipButton" class="skip press text-xxs" type="button"
+      @click.stop="skip">
+      Skip intro
+    </button>
   </figure>
 </template>
 
@@ -526,6 +579,10 @@ const rows = [
   inset: 0;
   -webkit-mask-image: radial-gradient(ellipse closest-side at 50% 47%, #000 46%, rgba(0, 0, 0, 0.5) 76%, transparent 100%);
   mask-image: radial-gradient(ellipse closest-side at 50% 47%, #000 46%, rgba(0, 0, 0, 0.5) 76%, transparent 100%);
+}
+
+.sky {
+  transition: opacity 360ms linear;
 }
 
 .crow {
@@ -613,7 +670,7 @@ const rows = [
 }
 
 .mid {
-  transform: translateZ(7vw);
+  transform: translateZ(4vw);
   filter: drop-shadow(0 1.2rem 1.6rem rgba(8, 3, 26, 0.55));
 }
 
@@ -622,15 +679,17 @@ const rows = [
   filter: drop-shadow(0 2rem 2.4rem rgba(8, 3, 26, 0.65));
 }
 
+/* The layers that float nearest sit beside the phone, never over the
+   labels of the screen they illustrate. */
 .xor {
-  top: 55.91%;
-  left: -15.47%;
+  top: 61%;
+  left: -100%;
   aspect-ratio: 343 / 64;
 }
 
 .toast {
-  top: 12.07%;
-  left: 59.73%;
+  top: -4%;
+  left: 43%;
   width: 62.93%;
   aspect-ratio: 236 / 56;
 }
@@ -671,6 +730,19 @@ const rows = [
 
 .call:disabled {
   cursor: default;
+}
+
+.skip {
+  position: absolute;
+  right: 4%;
+  bottom: 4%;
+  z-index: 4;
+  padding: 0.7em 1.1em;
+  border-radius: 10rem;
+  color: var(--fw-text);
+  background-color: rgba(18, 10, 46, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(255, 194, 74, 0.45);
+  cursor: pointer;
 }
 
 .calling .wave {
@@ -773,7 +845,7 @@ const rows = [
   }
 
   .mid {
-    transform: translateZ(5.6rem);
+    transform: translateZ(2.5rem);
   }
 
   .near {
@@ -813,11 +885,32 @@ const rows = [
   animation: fw-launch-part-show 0.5s linear 8s forwards;
 }
 
+/* The launch screen is the white crest on plain ink: the idle sky stays
+   hidden until the mirror opens or the cover fades. */
+.launch .stage:not(.revealed) .sky {
+  opacity: 0;
+  animation: fw-launch-part-show 0.5s linear 8s forwards;
+}
+
+/* Before the script runs, the call button sits under the cover: keep it out
+   of the tab order until the stylesheet lifts the cover by itself. */
+.launch .stage:not(.armed) .call {
+  visibility: hidden;
+  animation: fw-launch-call-show 0s linear 8.5s forwards;
+}
+
+@keyframes fw-launch-call-show {
+  to {
+    visibility: visible;
+  }
+}
+
 /* Once the script is running it takes the cover over from the stylesheet's
    own timeout: it waits until the stage is seen and then keeps deadlines of
    its own. */
 .launch .stage.armed .cover,
-.launch .stage.armed .part {
+.launch .stage.armed .part,
+.launch .stage.armed .sky {
   animation: none;
 }
 

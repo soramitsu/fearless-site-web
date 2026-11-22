@@ -25,6 +25,9 @@ const isTrailerOpen = ref(false)
         </p>
         <div class="tier buttons mb-l" style="--tier: 3">
           <GetAppButtons accent />
+          <button class="trailer-button press px-s py-xs text-s" type="button" @click="isTrailerOpen = true">
+            Watch the trailer
+          </button>
         </div>
         <div class="tier benefits" style="--tier: 4">
           <div v-for="(benefit, index) in benefits" :key="benefit.icon"
@@ -42,7 +45,6 @@ const isTrailerOpen = ref(false)
       <div class="image">
         <HeroVisual class="inner" />
       </div>
-      <button class="trailer-button press px-s py-xs text-s" type="button" @click="isTrailerOpen = true">Trailer</button>
     </div>
     <Modal :open="isTrailerOpen" label="Fearless Wallet trailer" @close="isTrailerOpen = false">
       <div class="video">
@@ -141,10 +143,10 @@ const isTrailerOpen = ref(false)
   padding: 0;
 }
 
+/* In the row with the store buttons, so it never lies over the wallet. */
 .trailer-button {
-  position: absolute;
-  bottom: var(--space-m);
-  right: var(--space-xs);
+  position: relative;
+  color: var(--fw-text);
   background-color: rgba(26, 14, 62, 0.86);
   box-shadow: inset 0 0 0 1px var(--color-line), inset 0 1px 0 rgba(255, 194, 74, 0.3);
   -webkit-backdrop-filter: blur(1.2rem);
@@ -153,7 +155,6 @@ const isTrailerOpen = ref(false)
   gap: var(--space-xs);
   border-radius: var(--space-xl);
   align-items: center;
-  z-index: 4;
 }
 
 .trailer-button::before {

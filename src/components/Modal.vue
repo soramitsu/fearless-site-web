@@ -29,6 +29,7 @@ onMounted(sync)
   <dialog ref="dialog" class="modal p-3xs" :aria-label="label || 'Dialog'" :style="`--opacity: ${opacity || '0.75'}`"
     @close="emit('close')" @click.self="emit('close')">
     <div class="content">
+      <p class="hint text-xs color-secondary">Esc closes. From inside a player, Shift+Tab back to Close.</p>
       <button class="close press" type="button" aria-label="Close" @click="emit('close')">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
@@ -94,6 +95,24 @@ onMounted(sync)
 .close svg {
   width: 45%;
   height: 45%;
+}
+
+/* Keys pressed inside an embedded player never reach the page, so say how
+   to get out. Beside the Close button, so it takes no extra height. */
+.hint {
+  position: absolute;
+  top: calc(-1 * var(--space-xl));
+  left: 0;
+  right: 5.6rem;
+  height: 4.4rem;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 639px) {
+  .hint {
+    display: none;
+  }
 }
 
 @keyframes modal-arrive {

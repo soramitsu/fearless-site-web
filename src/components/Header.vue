@@ -46,6 +46,9 @@ const menu = [
 const onScroll = () => { scrolled.value = window.scrollY > 12 }
 
 onMounted(() => {
+  // The head script opens the menu until the app runs; take its state over.
+  open.value = nav.value?.classList.contains('open') ?? false
+  document.documentElement.classList.add('nav-ready')
   onScroll()
   window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('keydown', onKeydown)

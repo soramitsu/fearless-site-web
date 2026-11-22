@@ -31,6 +31,9 @@ const starPath = (x: number, y: number, size: number) => {
 
 const el = ref<SVGSVGElement>()
 const drawn = ref(false)
+// On screen: the tick ring turns only then (an SVG transform animation is
+// repainted on the main thread, so it must not run unseen).
+const live = ref(false)
 let observer: IntersectionObserver | undefined
 
 onMounted(() => {
@@ -39,10 +42,10 @@ onMounted(() => {
     return
   }
   observer = new IntersectionObserver(entries => {
-    if (!entries.some(entry => entry.isIntersecting)) return
-    drawn.value = true
-    observer?.disconnect()
-  }, { threshold: 0.2 })
+    const entry = entries[entries.length - 1]!
+    live.value = entry.isIntersecting
+    if (entry.isIntersecting && entry.intersectionRatio >= 0.2) drawn.value = true
+  }, { threshold: [0, 0.2] })
   observer.observe(el.value)
 })
 
@@ -50,7 +53,7 @@ onBeforeUnmount(() => observer?.disconnect())
 </script>
 
 <template>
-  <svg ref="el" class="solar" :class="{ drawn }" :style="{ '--ms': `${ms}ms` }" viewBox="-1.12 -1.12 2.24 2.24"
+  <svg ref="el" class="solar" :class="{ drawn, live }" :style="{ '--ms': `${ms}ms` }" viewBox="-1.12 -1.12 2.24 2.24"
     fill="none" stroke-linecap="round" aria-hidden="true">
     <g class="glow" :stroke="geometry.colors.glow">
       <path v-for="(stroke, index) in strokes" :key="`g${index}`" :d="stroke.d" pathLength="1" class="stroke"
@@ -101,6 +104,11 @@ onBeforeUnmount(() => observer?.disconnect())
   opacity: clamp(0, (var(--draw) - 0.2) * 5, 0.8);
   transform-origin: 0 0;
   animation: fw-turn 349s linear infinite;
+  animation-play-state: paused;
+}
+
+.live .ticks {
+  animation-play-state: running;
 }
 
 .star {
