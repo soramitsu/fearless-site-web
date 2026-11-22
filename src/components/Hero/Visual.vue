@@ -12,16 +12,18 @@ import { geometry } from '~/lib/brand/geometry'
 // (tokens/shikiban.json and hero/launch-timeline.json). The server renders
 // the settled stage; the `launch` class on <html> (set by the head script,
 // only when motion is allowed) covers it until the flight has run. Reduced
-// motion never launches, and the launch can never keep the stage covered:
-// every wait has a deadline that drops the cover with a plain fade.
+// motion never launches. The launch waits, as the apps' launch screen (the
+// crest on ink), until the stage is actually on screen; from then on every
+// step has a deadline that drops the cover with a plain fade, so it can
+// never keep the stage covered.
 
 const { flight, gates, perspective, mirror } = geometry
 // Where the dive is centred in the clip's frame (kit: focus.popup).
 const focus = { x: 0.5, y: 0.4625 }
 const zoomStartSeconds = 2
-// The clip must start within this long of the page running (the stylesheet
-// lifts the cover by itself at 8 s if the script never runs at all).
-const startDeadlineMs = 7000
+// Once the stage is seen, the clip must be playing within this long. (If the
+// script never runs at all, the stylesheet lifts the cover by itself at 8 s.)
+const playDeadlineMs = 2000
 // Once playing, the clip must keep moving and reach the dive in time.
 const noProgressMs = 1000
 const diveDeadlineMs = 4500
@@ -40,6 +42,8 @@ const idle = ref<HTMLVideoElement>()
 const caw = ref<HTMLVideoElement>()
 
 const launching = ref(false)
+// The script has taken the launch over from the stylesheet's own timeout.
+const armed = ref(false)
 const clipPlaying = ref(false)
 const calling = ref(false)
 const offScreen = ref(false)
@@ -69,7 +73,10 @@ const setTier = (list: { el: HTMLElement, tier: number }[], tier: number) => (el
 
 let frame = 0
 let speed = 1
+let clipRequested = false
 let flightStarted = false
+// The cover is fading out after a failed start; nothing else may begin.
+let aborting = false
 let finished = false
 let unmounted = false
 let startTimer: ReturnType<typeof setTimeout> | undefined
@@ -130,7 +137,8 @@ const finish = () => {
 // The clip cannot play, has stalled, or was never seen in time: drop the
 // cover with a plain fade.
 const abort = () => {
-  if (finished || flightStarted) return
+  if (finished || flightStarted || aborting) return
+  aborting = true
   cancelAnimationFrame(frame)
   clearTimeout(startTimer)
   const el = cover.value
@@ -147,7 +155,7 @@ const abort = () => {
 }
 
 const runFlight = () => {
-  if (flightStarted || finished) return
+  if (flightStarted || finished || aborting) return
   flightStarted = true
   clearTimeout(startTimer)
   const { width, height } = stageSize.value
@@ -241,13 +249,20 @@ const watchClip = (now: number) => {
   frame = requestAnimationFrame(watchClip)
 }
 
+// The stage has come on screen: play the clip, or give up if it has not
+// started in time.
 const startClip = () => {
   const video = clip.value
-  if (!video || finished || clipPlaying.value) return
+  if (finished || clipRequested) return
+  if (!video) return abort()
+  clipRequested = true
+  startTimer = setTimeout(abort, playDeadlineMs)
   video.play().then(() => {
-    if (finished || unmounted || clipPlaying.value) return
+    if (finished || unmounted || aborting || clipPlaying.value) return
     clearTimeout(startTimer)
     clipPlaying.value = true
+    // A tap may already have started the flight; the clip just plays on.
+    if (flightStarted) return
     clipStartedAt = lastProgressAt = performance.now()
     lastClipTime = -1
     frame = requestAnimationFrame(watchClip)
@@ -256,11 +271,12 @@ const startClip = () => {
 
 // A tap during the launch plays the rest 2.5 times faster.
 const skip = () => {
-  if (!launching.value || finished) return
+  if (!launching.value || finished || aborting) return
   speed = 2.5
   if (clip.value) clip.value.playbackRate = 2.5
   if (!flightStarted) {
     cancelAnimationFrame(frame)
+    measure()
     runFlight()
   }
 }
@@ -331,9 +347,10 @@ onMounted(() => {
   reduced.addEventListener('change', onMotionPreference)
 
   launching.value = document.documentElement.classList.contains('launch')
-  if (launching.value) startTimer = setTimeout(abort, startDeadlineMs)
 
   if ('IntersectionObserver' in window && stage.value) {
+    // From here the script answers for the cover, not the stylesheet.
+    armed.value = launching.value
     visibility = new IntersectionObserver(entries => {
       const entry = entries[entries.length - 1]!
       offScreen.value = !entry.isIntersecting
@@ -376,7 +393,7 @@ const rows = [
 </script>
 
 <template>
-  <figure ref="stage" class="stage" :class="{ launching, playing: clipPlaying, calling, off: offScreen }"
+  <figure ref="stage" class="stage" :class="{ launching, armed, playing: clipPlaying, calling, off: offScreen }"
     @click="skip" @pointermove="onPointerMove" @pointerleave="onPointerLeave">
     <figcaption class="visually-hidden">
       The Yatagarasu, the three-legged crow on the Fearless crest, with the Fearless Wallet home screen.
@@ -768,10 +785,11 @@ const rows = [
   animation: fw-launch-part-show 0.5s linear 8s forwards;
 }
 
-/* Only a clip that is actually playing takes the cover over from the
-   stylesheet's own timeout; the script then keeps its own deadlines. */
-.launch .stage.playing .cover,
-.launch .stage.playing .part {
+/* Once the script is running it takes the cover over from the stylesheet's
+   own timeout: it waits until the stage is seen and then keeps deadlines of
+   its own. */
+.launch .stage.armed .cover,
+.launch .stage.armed .part {
   animation: none;
 }
 
