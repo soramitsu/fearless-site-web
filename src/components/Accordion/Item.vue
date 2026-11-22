@@ -6,7 +6,7 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="item bg-block rounded-s px-m" :class="{ open }">
+  <div class="item bg-block lit rounded-s px-m" :class="{ open }">
     <h3 @click="$emit('toggle', id)" class="text-m py-m hover-trigger">
       {{ title }}
       <div class="icon">
@@ -26,11 +26,15 @@ defineEmits<{
 
 <style scoped>
 .item {
-  transition: background-color 0.3s ease;
+  transition: background-color var(--d-255) var(--ease-glide);
 }
 
 .item.open {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--color-bg-raised);
+}
+
+.item.open>h3 {
+  color: var(--fw-gold);
 }
 
 .item>h3 {
@@ -56,7 +60,7 @@ defineEmits<{
   height: 0.16em;
   width: 100%;
   margin: -0.08em 0;
-  transition: transform .3s ease;
+  transition: transform var(--d-360) var(--ease-settle);
   border-radius: 1rem;
   background-color: currentColor;
 }
@@ -72,7 +76,7 @@ defineEmits<{
 .content {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows .3s ease;
+  transition: grid-template-rows var(--d-360) var(--ease-settle);
   overflow: hidden;
   min-height: 0;
 }
@@ -88,7 +92,7 @@ defineEmits<{
 .inner {
   transform: translateY(var(--space-s));
   opacity: 0;
-  transition: transform .3s ease, opacity .3s ease;
+  transition: transform var(--d-360) var(--ease-settle), opacity var(--d-255) linear;
 }
 
 .item.open .inner {
@@ -98,7 +102,7 @@ defineEmits<{
 
 @media (hover:hover) {
   .item:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--color-bg-raised);
   }
 }
 </style>

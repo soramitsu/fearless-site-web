@@ -1,8 +1,26 @@
 <script setup lang="ts">
 const open = ref(false)
+const scrolled = ref(false)
+const burger = ref<HTMLButtonElement>()
+const nav = ref<HTMLElement>()
 
 const router = useRouter()
 router.afterEach(() => open.value = false)
+
+// Opening the menu from the keyboard moves into it; Escape closes it and
+// hands focus back to the button.
+const toggle = async () => {
+  open.value = !open.value
+  if (!open.value) return
+  await nextTick()
+  nav.value?.querySelector<HTMLElement>('a')?.focus({ preventScroll: true })
+}
+
+const onKeydown = (event: KeyboardEvent) => {
+  if (event.key !== 'Escape' || !open.value) return
+  open.value = false
+  burger.value?.focus()
+}
 
 const menu = [
   {
@@ -23,17 +41,32 @@ const menu = [
     external: true
   }
 ];
+
+// The bar turns to glass once the page has moved under it.
+const onScroll = () => { scrolled.value = window.scrollY > 12 }
+
+onMounted(() => {
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+  window.addEventListener('keydown', onKeydown)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', onScroll)
+  window.removeEventListener('keydown', onKeydown)
+})
 </script>
 
 <template>
   <div class="header-anchor">
-    <header class="header pt-xs pb-l" v-on-click-outside="() => { open = false }">
+    <header class="header pt-xs pb-l" :class="{ scrolled }" v-on-click-outside="() => { open = false }">
       <div class="w px-xs inner text-xxs">
-        <NuxtLink to="/" class="home text-xxs" active-class="active">
-          <img src="/logo.svg" alt="Fearless Wallet logo" width="74" height="32">
-          <span class="nav-item">Fearless wallet</span>
+        <NuxtLink to="/" class="home" aria-label="Fearless Wallet home">
+          <img src="/logo.svg" alt="Fearless Wallet" width="148" height="32">
         </NuxtLink>
-        <nav class="nav" :class="{ open }">
+        <button ref="burger" class="burger press" :class="{ open }" type="button" :aria-expanded="open"
+          aria-controls="site-menu" aria-label="Menu" @click="toggle">Menu</button>
+        <nav id="site-menu" ref="nav" class="nav" :class="{ open }" aria-label="Site">
           <div class="main-nav">
             <NuxtLink v-for="(item, index) in menu" :key="index" :to="item.href" :target="item.external ? '_blank' : undefined" class="nav-item"
               active-class="active">
@@ -49,7 +82,6 @@ const menu = [
           <NuxtLink to="/community" class="nav-item" active-class="active">Community</NuxtLink>
           <Button href="/download" title="Download" icon="download" small accent class="download" />
         </nav>
-        <button class="burger" :class="{ open }" @click="open = !open">Menu</button>
       </div>
     </header>
   </div>
@@ -69,7 +101,7 @@ const menu = [
   position: absolute;
   top: 0;
   width: 100%;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.58) 22.5%, rgba(0, 0, 0, 0.40) 43.5%, rgba(0, 0, 0, 0.25) 62%, rgba(0, 0, 0, 0.12) 77%, rgba(0, 0, 0, 0.06) 87.5%, rgba(0, 0, 0, 0.00) 100%);
+  background: linear-gradient(180deg, rgba(18, 10, 46, 0.92) 0%, rgba(18, 10, 46, 0.6) 34%, rgba(18, 10, 46, 0.28) 66%, rgba(18, 10, 46, 0) 100%);
   pointer-events: none;
 }
 
@@ -78,25 +110,44 @@ const menu = [
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  border-radius: 2.2rem;
+  padding-top: var(--space-3xs);
+  padding-bottom: var(--space-3xs);
+  transition: background-color var(--d-360) var(--ease-glide), box-shadow var(--d-360) var(--ease-glide);
+}
+
+/* Glass with the lit rim, like the apps' tab bar. */
+.header.scrolled>.inner {
+  background-color: rgba(26, 14, 62, 0.78);
+  -webkit-backdrop-filter: blur(1.8rem) saturate(1.3);
+  backdrop-filter: blur(1.8rem) saturate(1.3);
+  box-shadow:
+    inset 0 0 0 1px rgba(118, 97, 142, 0.38),
+    inset 0 1px 0 rgba(255, 194, 74, 0.35),
+    0 1.2rem 3.6rem rgba(8, 3, 26, 0.55);
 }
 
 .home {
   display: flex;
-  gap: var(--space-xxs);
   align-items: center;
+  padding: var(--space-4xs) var(--space-3xs);
 }
 
 .home img {
-  width: 7.4rem;
   height: 3.2rem;
+  width: auto;
+  aspect-ratio: 694.31 / 150;
+  transition: filter var(--d-255) var(--ease-glide);
 }
 
 .burger {
-  width: 6.2rem;
+  order: 2;
+  width: 4.6rem;
   height: 4rem;
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgNjIgNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik01IDQwSDQ3LjU3MjVDNDguNzg0NCA0MCA0OS45NTUgMzkuNTU5NiA1MC44NjY3IDM4Ljc2MTdMNjAuMjk0MiAzMC41MDQ5QzYxLjM3ODMgMjkuNTU1NyA2MiAyOC4xODQ2IDYyIDI2Ljc0MzJWNUM2MiAyLjIzODI4IDU5Ljc2MTQgMCA1NyAwSDE0LjQyNzVDMTMuMjE1NiAwIDEyLjA0NSAwLjQ0MDQzIDExLjEzMzMgMS4yMzgyOEwxLjcwNTc4IDkuNDk1MTJDMC42MjE3MzUgMTAuNDQ0MyAwIDExLjgxNTQgMCAxMy4yNTY4VjM1QzAgMzcuNzYxNyAyLjIzODU5IDQwIDUgNDBaIiBmaWxsPSIjMjgyODI4IiBmaWxsLW9wYWNpdHk9IjAuOTYiLz4KPC9zdmc+');
-  background-repeat: no-repeat;
-  background-size: contain;
+  border-radius: 1.4rem;
+  background-color: rgba(31, 17, 72, 0.82);
+  box-shadow: inset 0 0 0 1px var(--color-line), inset 0 1px 0 rgba(255, 194, 74, 0.3);
   color: transparent;
   position: relative;
 }
@@ -110,8 +161,9 @@ const menu = [
   margin: -.1rem -.8rem;
   width: 1.6rem;
   height: .2rem;
-  background-color: #fff;
-  transition: transform 0.3s ease;
+  border-radius: .2rem;
+  background-color: var(--fw-text);
+  transition: transform var(--d-255) var(--ease-settle);
 }
 
 .burger::before {
@@ -123,11 +175,11 @@ const menu = [
 }
 
 .burger.open::before {
-  transform: rotate(216deg);
+  transform: rotate(225deg);
 }
 
 .burger.open::after {
-  transform: rotate(-36deg);
+  transform: rotate(-45deg);
 }
 
 .nav,
@@ -138,10 +190,11 @@ const menu = [
 .nav-item {
   padding: var(--space-xxs) var(--space-xs);
   background-color: transparent;
-  border-radius: var(--space-3xs);
-  transition: opacity 0.3s ease, background-color 0.3s ease;
+  border-radius: 1.2rem;
+  transition: color var(--d-255) var(--ease-glide), background-color var(--d-255) var(--ease-glide);
   display: flex;
   gap: var(--space-3xs);
+  position: relative;
 }
 
 .nav-item svg {
@@ -149,27 +202,53 @@ const menu = [
   height: 1.25em;
 }
 
+/* The active page glows pink with a small gold dot, as the active tab does. */
+.nav-item.active {
+  color: var(--fw-pink-text);
+}
+
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0.2rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: -0.25rem;
+  border-radius: 50%;
+  background-color: var(--fw-gold);
+  box-shadow: 0 0 0.8rem var(--fw-gold);
+}
+
 @media (max-width: 799px) {
   .nav {
-    background-color: #fff;
-    border-radius: var(--space-xxs);
-    color: #000;
+    background-color: rgba(26, 14, 62, 0.96);
+    -webkit-backdrop-filter: blur(1.8rem);
+    backdrop-filter: blur(1.8rem);
+    box-shadow:
+      inset 0 0 0 1px rgba(118, 97, 142, 0.45),
+      inset 0 1px 0 rgba(255, 194, 74, 0.4),
+      0 2rem 5rem rgba(8, 3, 26, 0.7);
+    border-radius: var(--space-xs);
     position: absolute;
     right: var(--space-xs);
-    top: 7.2rem;
+    top: 6.4rem;
     flex-direction: column;
     padding: var(--space-xxs);
-    width: 20rem;
-    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    width: 22rem;
+    transition: opacity var(--d-255) linear, visibility var(--d-255) linear, transform var(--d-255) var(--ease-settle);
+    transform-origin: 100% 0;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-1rem);
+    transform: scale(0.88);
   }
 
+  /* Visible at once when it opens, so focus can move into it. */
   .nav.open {
     visibility: visible;
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
+    transition-property: opacity, transform;
   }
 
   .main-nav {
@@ -177,7 +256,14 @@ const menu = [
   }
 
   .nav-item.active {
-    background-color: #f1f1f1;
+    background-color: rgba(58, 16, 96, 0.7);
+  }
+
+  .nav-item.active::after {
+    left: auto;
+    right: 1.2rem;
+    bottom: 50%;
+    margin: 0 0 -0.25rem;
   }
 
   .download {
@@ -185,9 +271,42 @@ const menu = [
   }
 }
 
+/* Without script the menu cannot be opened, so on small screens its links
+   sit in the page instead (the head script sets `js`). */
+@media (max-width: 799px) {
+  html:not(.js) .inner {
+    flex-wrap: wrap;
+  }
+
+  html:not(.js) .nav,
+  html:not(.js) .main-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  html:not(.js) .burger {
+    display: none;
+  }
+
+  html:not(.js) .nav {
+    position: static;
+    width: 100%;
+    margin-top: var(--space-xxs);
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+}
+
 @media (min-width: 800px) {
+  .header>.inner {
+    padding-left: var(--space-xs);
+    padding-right: var(--space-3xs);
+  }
+
   .home {
-    gap: var(--space-m);
+    margin-right: var(--space-m);
   }
 
   .nav {
@@ -206,21 +325,20 @@ const menu = [
     justify-content: center;
   }
 
-  .home.active .nav-item,
-  .nav-item.active {
-    background-color: #191919;
-  }
-
   .burger {
     display: none;
   }
 }
 
-@media (hover: hover) and (min-width: 800px) {
+@media (hover: hover) {
+  .home:hover img {
+    filter: drop-shadow(0 0 1rem rgba(255, 194, 74, 0.55));
+  }
+}
 
-  .home:not(.active):hover>.nav-item,
-  *:not(.active)>.nav-item:not(.active):hover {
-    opacity: 0.7;
+@media (hover: hover) and (min-width: 800px) {
+  .nav-item:not(.active):hover {
+    color: var(--fw-gold);
   }
 }
 </style>

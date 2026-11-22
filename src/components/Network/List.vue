@@ -14,7 +14,7 @@ defineProps<{
     <h2 class="mb-l">{{ title }}</h2>
     <div class="list">
       <NuxtLink v-for="(network, slug) in networks" :href="`/${slug.toString()}-wallet`" :key="network.shortName"
-        class="bg-block rounded-s py-xs pl-xs pr-s link">
+        class="bg-block lit rounded-s py-xs pl-xs pr-s link">
         <img :src="network.icon" :alt="`${network.fullName} icon`" />
         <div>
           <h3 class="text-s">{{ network.fullName }}</h3>
@@ -46,11 +46,11 @@ defineProps<{
 
 @media (hover:hover) {
   .link {
-    transition: background-color .3s ease;
+    transition: background-color var(--d-255) var(--ease-glide);
   }
 
   .link:hover {
-    background-color: rgba(255, 255, 255, .1);
+    background-color: var(--color-bg-raised);
   }
 }
 

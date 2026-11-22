@@ -8,6 +8,8 @@ const title = 'Fearless Wallet The DeFi Crypto Wallet for Multi-Chain Future',
     'crypto wallet apps, wallet app, wallet web, krypto wallet, browser wallet, crypto wallet, blockchain wallet app',
   ogImage = `${process.env.NUXT_PUBLIC_BASE_URL || ''}/og.jpg`
 
+const motionScript = `(function(){var d=document.documentElement;d.classList.add('js');try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion');var c=navigator.connection;if(location.pathname==='/'&&!sessionStorage.getItem('fw-launched')&&!(c&&c.saveData))d.classList.add('launch')}}catch(e){}})()`
+
 export default defineNuxtConfig({
   // Content 2 snapshots its cache with an fs driver that ignores node_modules.
   // Keep the build cache outside Nuxt 4's relocated node_modules cache.
@@ -40,7 +42,7 @@ export default defineNuxtConfig({
       type: 'Organization',
       name: 'Fearless Wallet',
       url: 'https://fearlesswallet.io',
-      logo: 'https://fearlesswallet.io/logo.svg',
+      logo: 'https://fearlesswallet.io/icon-512.png',
       sameAs: [
         'https://x.com/FearlessWallet',
         'https://t.me/fearlesswallet',
@@ -93,7 +95,32 @@ export default defineNuxtConfig({
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
       title: title,
+      script: [
+        {
+          // Runs before the first paint. `js` marks a page whose script runs;
+          // `motion` lets the styles animate and is never set for visitors who
+          // ask for reduced motion; `launch` opens the home page's stage with
+          // the apps' launch, once a session.
+          key: 'fw-motion',
+          tagPosition: 'head',
+          innerHTML: motionScript,
+        },
+      ],
       link: [
+        {
+          rel: 'preload',
+          href: '/fonts/sora.woff2',
+          as: 'font',
+          type: 'font/woff2',
+          crossorigin: 'anonymous',
+        },
+        {
+          rel: 'preload',
+          href: '/fonts/figtree-400.woff2',
+          as: 'font',
+          type: 'font/woff2',
+          crossorigin: 'anonymous',
+        },
         {
           rel: 'icon',
           href: '/favicon.ico',
@@ -112,6 +139,10 @@ export default defineNuxtConfig({
       // Wallet connection links can contain session/request parameters.
       // Global analytics can disclose those payloads through page views.
       meta: [
+        {
+          name: 'theme-color',
+          content: '#120A2E',
+        },
         {
           name: 'description',
           content: description,

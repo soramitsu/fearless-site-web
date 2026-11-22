@@ -39,11 +39,15 @@ const networks = [
 const parent = shallowRef()
 const canvas = shallowRef()
 
-let resizeHandler: () => void
+// Everything the simulation holds, released when the section goes away.
+let dispose: (() => void) | undefined
 
 onMounted(async () => {
   await nextTick()
   if (!canvas.value || !parent.value) return
+
+  // Visitors who ask for reduced motion get the coins already at rest.
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   // create an engine
 
@@ -144,33 +148,52 @@ onMounted(async () => {
 
   // create intersection observer
 
-  const observer = new IntersectionObserver(function (entries) {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        Runner.run(runner, engine)
-        Render.run(render)
+  let observer: IntersectionObserver | undefined
+  let stillTimer: ReturnType<typeof setTimeout> | undefined
 
-        // pull the coins up
-        chains.forEach(body => {
-          const forceMagnitude = 0.02 * body.mass
-
-          Body.applyForce(body, body.position, {
-            x: 0,
-            y: -forceMagnitude - Math.random() * forceMagnitude
-          })
-        })
-      } else {
-        Runner.stop(runner)
-        Render.stop(render)
-      }
+  if (still) {
+    // Let the coins fall and settle unseen, then draw them once their
+    // pictures have loaded.
+    for (let step = 0; step < 900; step++) Engine.update(engine, 1000 / 60)
+    const loaded = networks.map(src => new Promise<void>(resolve => {
+      const image = new Image()
+      image.onload = image.onerror = () => resolve()
+      image.src = src
+    }))
+    Promise.all(loaded).then(() => {
+      Render.world(render)
+      requestAnimationFrame(() => Render.world(render))
+      stillTimer = setTimeout(() => Render.world(render), 400)
     })
-  })
+  } else {
+    observer = new IntersectionObserver(function (entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          Runner.run(runner, engine)
+          Render.run(render)
 
-  observer.observe(canvas.value)
+          // pull the coins up
+          chains.forEach(body => {
+            const forceMagnitude = 0.02 * body.mass
+
+            Body.applyForce(body, body.position, {
+              x: 0,
+              y: -forceMagnitude - Math.random() * forceMagnitude
+            })
+          })
+        } else {
+          Runner.stop(runner)
+          Render.stop(render)
+        }
+      })
+    })
+
+    observer.observe(canvas.value)
+  }
 
   // resize canvas
 
-  resizeHandler = () => {
+  const resizeHandler = () => {
     const multiplayer = Math.sqrt(ethalonArea / (parent.value.clientWidth * parent.value.clientHeight))
     const width = parent.value.clientWidth * multiplayer
     const height = parent.value.clientHeight * multiplayer
@@ -188,14 +211,36 @@ onMounted(async () => {
       min: { x: 0, y: 0 },
       max: { x: width, y: height }
     })
+
+    if (still) Render.world(render)
   }
 
   window.addEventListener('resize', resizeHandler)
+
+  dispose = () => {
+    window.removeEventListener('resize', resizeHandler)
+    observer?.disconnect()
+    clearTimeout(stillTimer)
+    Runner.stop(runner)
+    Render.stop(render)
+    // matter-js keeps its pointer handlers on the Mouse object, untyped.
+    const handlers = mouse as unknown as Record<'mousemove' | 'mousedown' | 'mouseup', EventListener>
+    for (const [name, handler] of [
+      ['mousemove', handlers.mousemove],
+      ['mousedown', handlers.mousedown],
+      ['mouseup', handlers.mouseup],
+      ['touchmove', handlers.mousemove],
+      ['touchstart', handlers.mousedown],
+      ['touchend', handlers.mouseup],
+    ] as const) {
+      mouse.element.removeEventListener(name, handler)
+    }
+    Composite.clear(world, false)
+    Engine.clear(engine)
+  }
 })
 
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', resizeHandler)
-})
+onBeforeUnmount(() => dispose?.())
 </script>
 
 <template>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const benefits = [
-  { icon: 'networks', accent: '80+', subline: ' networks' },
-  { icon: 'user', accent: '250k+', subline: ' users' },
-  { icon: 'star', accent: '4+', subline: 'rating' },
+  { icon: 'networks', to: 80, suffix: '+', subline: 'networks' },
+  { icon: 'users', to: 250, suffix: 'k+', subline: 'users' },
+  { icon: 'rating', to: 4, suffix: '+', subline: 'rating' },
 ]
 
 const isTrailerOpen = ref(false)
@@ -12,20 +12,29 @@ const isTrailerOpen = ref(false)
   <section class="o-hidden">
     <div class="w hero">
       <div class="text">
-        <h1 class="mb-s">
-          Open-Source Universal Wallet
+        <p class="eyebrow tier text-xxs mb-xs" style="--tier: 0">
+          <img src="/brand/crest-badge-small.svg" alt="" width="28" height="28">
+          Your keys. Every chain.
+        </p>
+        <h1 class="tier mb-s" style="--tier: 1">
+          Open-Source <span class="sun">Universal</span> Wallet
         </h1>
-        <p class="color-secondary text-s mb-m">
+        <p class="tier color-secondary text-s mb-m" style="--tier: 2">
           One self-custody wallet for browser, iOS, and Android, with one phrase for Bitcoin, Solana, TON, EVM,
           Polkadot, and SORA accounts.
         </p>
-        <div class="buttons mb-l">
+        <div class="tier buttons mb-l" style="--tier: 3">
           <GetAppButtons accent />
         </div>
-        <div class="benefits">
-          <div v-for="benefit in benefits" class="text-s px-xs py-xs outline-block rounded-xs">
-            <img :src="`/icons/${benefit.icon}.svg`" :alt="`${benefit.icon} icon`" class="icon mb-xxs" />
-            <span class="bold color-accent">{{ benefit.accent }}</span><br>
+        <div class="tier benefits" style="--tier: 4">
+          <div v-for="(benefit, index) in benefits" :key="benefit.icon"
+            class="benefit text-s px-xs py-xs bg-block lit rounded-xs">
+            <img :src="`/icons/animated/${benefit.icon}.svg`" alt="" class="icon mb-xxs" width="64" height="64" />
+            <span class="bold color-gold tabular">
+              <span class="visually-hidden">{{ benefit.to }}{{ benefit.suffix }}</span>
+              <span class="count" aria-hidden="true" :data-suffix="benefit.suffix"
+                :style="{ '--to': benefit.to, '--order': index }" />
+            </span><br>
             {{ benefit.subline }}
           </div>
         </div>
@@ -33,10 +42,10 @@ const isTrailerOpen = ref(false)
       <div class="image">
         <HeroVisual class="inner" />
       </div>
-      <button class="trailer-button px-s py-xs text-s" @click="isTrailerOpen = true">Trailer</button>
+      <button class="trailer-button press px-s py-xs text-s" type="button" @click="isTrailerOpen = true">Trailer</button>
     </div>
-    <Modal :open="isTrailerOpen" @close="isTrailerOpen = false">
-      <div class="w video">
+    <Modal :open="isTrailerOpen" label="Fearless Wallet trailer" @close="isTrailerOpen = false">
+      <div class="video">
         <iframe v-if="isTrailerOpen" width="560" height="315"
           src="https://www.youtube-nocookie.com/embed/J0rAxcni6cs?autoplay=1" title="YouTube video player"
           frameborder="0"
@@ -55,6 +64,26 @@ const isTrailerOpen = ref(false)
   position: relative;
 }
 
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  color: var(--fw-gold);
+}
+
+.eyebrow img {
+  width: 2.8rem;
+  height: 2.8rem;
+}
+
+/* The word the wallet is named for carries the sunset. */
+.sun {
+  background: linear-gradient(100deg, var(--fw-gold) 0%, var(--fw-ember) 38%, var(--fw-pink-text) 78%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .buttons {
   display: flex;
   flex-wrap: wrap;
@@ -65,31 +94,40 @@ const isTrailerOpen = ref(false)
 .benefits {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-4xs);
+  gap: var(--space-3xs);
 }
 
 .icon {
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 3.6rem;
+  height: 3.6rem;
+}
+
+/* The numbers count to their value in 0.6 s, as the wallet's balance does.
+   The real text is beside them for readers and for browsers that cannot
+   animate a registered number. */
+.count {
+  --n: var(--to);
+  counter-reset: n var(--n);
+}
+
+.count::after {
+  content: counter(n) attr(data-suffix);
 }
 
 .image {
   display: flex;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 1 / 1;
-  pointer-events: none;
-  margin: 0 -10% 0 0;
+  margin: 0 -4%;
   position: relative;
 }
 
 .image .inner {
-  height: 110vw;
+  width: 100%;
 }
 
 .text {
   padding: 0 0 var(--space-l) 0;
-  min-height: 56rem;
 }
 
 .text>* {
@@ -97,15 +135,25 @@ const isTrailerOpen = ref(false)
   padding-right: var(--space-l);
 }
 
+.text>.benefits {
+  margin-left: var(--space-l);
+  margin-right: var(--space-l);
+  padding: 0;
+}
+
 .trailer-button {
   position: absolute;
   bottom: var(--space-m);
   right: var(--space-xs);
-  background-color: rgba(40, 40, 40, .96);
+  background-color: rgba(26, 14, 62, 0.86);
+  box-shadow: inset 0 0 0 1px var(--color-line), inset 0 1px 0 rgba(255, 194, 74, 0.3);
+  -webkit-backdrop-filter: blur(1.2rem);
+  backdrop-filter: blur(1.2rem);
   display: flex;
   gap: var(--space-xs);
   border-radius: var(--space-xl);
   align-items: center;
+  z-index: 4;
 }
 
 .trailer-button::before {
@@ -115,14 +163,6 @@ const isTrailerOpen = ref(false)
   background-repeat: no-repeat;
   width: 1em;
   height: 1em;
-}
-
-.trailer-button {
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.trailer-button:active {
-  transform: scale(0.95);
 }
 
 .video {
@@ -136,15 +176,20 @@ const isTrailerOpen = ref(false)
 }
 
 @media (hover:hover) {
+  .trailer-button {
+    transition: box-shadow var(--d-255) var(--ease-glide), transform var(--d-180) var(--ease-settle);
+  }
+
   .trailer-button:hover {
-    background-color: rgba(50, 50, 50, 1);
+    box-shadow: inset 0 0 0 1px rgba(255, 194, 74, 0.6), inset 0 1px 0 rgba(255, 194, 74, 0.3);
   }
 }
 
 @media (min-width: 800px) {
   .hero {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    align-items: center;
     padding-top: var(--space-xxl);
   }
 
@@ -157,19 +202,56 @@ const isTrailerOpen = ref(false)
     padding-right: unset;
   }
 
-  .benefits {
+  .text>.benefits {
+    margin-left: 0;
+    margin-right: 0;
     max-width: 49rem;
   }
 
   .image {
     align-self: center;
-    aspect-ratio: unset;
-    margin: 0;
+    margin: 0 -2% 0 0;
+  }
+}
+</style>
+
+<!-- Not scoped: the hero lands in tiers from the first paint, which depends
+     on the `motion` class on <html>. Tier k starts k × 45 ms later. -->
+<style>
+@property --n {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 0;
+}
+
+.motion .hero .tier {
+  animation: fw-hero-land var(--d-510) var(--ease-settle) calc(120ms + var(--tier, 0) * 45ms) both;
+  transform-origin: 30% 40%;
+}
+
+.motion .hero .count {
+  animation: fw-count-up 600ms var(--ease-glide) calc(420ms + var(--order, 0) * 90ms) both;
+}
+
+@keyframes fw-hero-land {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 1.8rem, 0) scale(0.92);
   }
 
-  .image .inner {
-    height: 100%;
-    min-height: 80rem;
+  45% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fw-count-up {
+  from {
+    --n: 0;
   }
 }
 </style>

@@ -18,7 +18,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bumper bg-block p-m text-s rounded-xs" :class="{ visible: isVisible }">
+  <div class="bumper bg-block lit p-m text-s rounded-xs" :class="{ visible: isVisible }">
     <p class="text-xs text-center">
       We use only necessary cookies to give you the most relevant experience.
     </p>
@@ -32,11 +32,13 @@ onMounted(() => {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-m) var(--space-3xs);
+  -webkit-backdrop-filter: blur(4rem);
   backdrop-filter: blur(4rem);
+  background-color: rgba(26, 14, 62, 0.9);
   position: fixed;
   bottom: var(--space-3xs);
   right: var(--space-3xs);
-  transition: transform 0.6s ease, opacity 0.6s ease, visibility 0.6s ease;
+  transition: transform var(--d-510) var(--ease-settle), opacity var(--d-255) linear, visibility var(--d-510) linear;
   transform: translateY(var(--space-m));
   opacity: 0;
   visibility: hidden;

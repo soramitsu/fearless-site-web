@@ -22,7 +22,8 @@ const { title, href, icon, external } = defineProps<{
   align-items: center;
   justify-content: space-between;
   gap: var(--space-m);
-  transition: border .3s ease;
+  background-color: var(--color-bg-block);
+  transition: border-color var(--d-255) var(--ease-glide), background-color var(--d-255) var(--ease-glide);
 }
 
 .banner>.title {
@@ -33,7 +34,6 @@ const { title, href, icon, external } = defineProps<{
   width: 1em;
   height: 1em;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, .6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,7 +42,8 @@ const { title, href, icon, external } = defineProps<{
 
 @media (hover: hover) {
   .banner:hover {
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 194, 74, 0.6);
+    background-color: var(--color-bg-raised);
   }
 }
 </style>

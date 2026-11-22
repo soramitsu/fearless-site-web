@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { Renderer, Program, Color, Mesh, Triangle, Vec2 } from 'ogl'
 
+// The aurora behind every page: ink with a slow plum weather and two very
+// soft drifting glows, pink and ember, each under 18 % and one cycle a
+// minute, as behind the wallet home in the apps. It is drawn at half
+// resolution, 20 times a second, and only while the tab is visible. With
+// reduced motion it is a still picture.
 const el = ref<HTMLCanvasElement>()
 
 const vertex = /* glsl */ `
@@ -18,11 +23,13 @@ const vertex = /* glsl */ `
 const fragment = /* glsl */ `
     precision highp float;
 
-    uniform vec3 uColor1;
-    uniform vec3 uColor2;
-    uniform vec3 uColor3;
+    uniform vec3 uInk;
+    uniform vec3 uPlum;
+    uniform vec3 uPink;
+    uniform vec3 uEmber;
     uniform float uTime;
     uniform float uScroll;
+    uniform vec2 uResolution;
 
     varying vec2 vUv;
 
@@ -81,29 +88,56 @@ const fragment = /* glsl */ `
       return 3.0 * n_xy;
     }
 
-    void main() {
-      float n1 = cnoise(vUv * 1.7 + uScroll * -0.001 + sin(uTime / 2000.));
-      float n2 = cnoise(vUv * 1.7 + uScroll * -0.0003 + sin(uTime / 3100.));
-      vec3 c1 = mix(uColor1, uColor2, n1);
-      vec3 c2 = mix(uColor3, c1, n2);
+    float hash(vec2 p) {
+      return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+    }
 
-      gl_FragColor.rgb = c2;
-      gl_FragColor.a = 0.;
+    void main() {
+      float aspect = uResolution.x / max(uResolution.y, 1.0);
+      vec2 p = vec2(vUv.x * aspect, vUv.y);
+      // One cycle a minute.
+      float t = uTime * 6.2831853 / 60000.0;
+      float drift = uScroll * 0.0004;
+
+      float n = cnoise(p * 1.25 + vec2(0.3 * sin(t), drift + 0.22 * cos(t)));
+      vec3 color = mix(uInk, uPlum, clamp(n * 0.5 + 0.3, 0.0, 1.0) * 0.5);
+
+      vec2 pinkAt = vec2(aspect * (0.2 + 0.14 * sin(t)), 0.74 + 0.12 * cos(t) + drift * 0.6);
+      vec2 emberAt = vec2(aspect * (0.82 + 0.12 * cos(t + 1.3)), 0.26 + 0.14 * sin(t + 0.6) + drift * 0.3);
+      float pink = smoothstep(0.85, 0.0, distance(p, pinkAt));
+      float ember = smoothstep(0.75, 0.0, distance(p, emberAt));
+      color = mix(color, uPink, pink * 0.17);
+      color = mix(color, uEmber, ember * 0.11);
+
+      // A little noise hides the banding of such slow gradients.
+      color += (hash(gl_FragCoord.xy) - 0.5) / 180.0;
+
+      gl_FragColor = vec4(color, 1.0);
     }
   `
 
+let stop: (() => void) | undefined
+
 onMounted(async () => {
   await nextTick()
+  if (!el.value) return
 
-  const renderer = new Renderer({
-    dpr: Math.min(window.devicePixelRatio, 2),
-    canvas: el.value,
-    width: window.innerWidth,
-    height: window.innerHeight,
-  })
+  let renderer: Renderer
+  try {
+    renderer = new Renderer({
+      dpr: 0.5,
+      canvas: el.value,
+      width: window.innerWidth,
+      height: window.innerHeight,
+      alpha: false,
+      antialias: false,
+      powerPreference: 'low-power',
+    })
+  } catch {
+    // No WebGL: the page keeps its plain ink background.
+    return
+  }
   const gl = renderer.gl
-
-  gl.clearColor(1, 1, 1, 0)
 
   // Rather than using a plane (two triangles) to cover the viewport here is a
   // triangle that includes -1 to 1 range for 'position', and 0 to 1 range for 'uv'.
@@ -124,41 +158,70 @@ onMounted(async () => {
     uniforms: {
       uTime: { value: 0 },
       uScroll: { value: 0 },
-      uColor1: { value: new Color("#2C1D50") },
-      uColor2: { value: new Color("#612A55") },
-      uColor3: { value: new Color("#000000") },
-      uResolution: { value: new Vec2(gl.canvas.offsetWidth, gl.canvas.offsetHeight) },
+      uInk: { value: new Color('#120A2E') },
+      uPlum: { value: new Color('#3A1060') },
+      uPink: { value: new Color('#E6006F') },
+      uEmber: { value: new Color('#FF7A1A') },
+      uResolution: { value: new Vec2(window.innerWidth, window.innerHeight) },
     },
   })
 
   const mesh = new Mesh(gl, { geometry, program })
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)')
+  const frameMs = 50
+  let frame = 0
+  let last = 0
 
-  function update() {
-    renderer.render({ scene: mesh })
+  const draw = () => renderer.render({ scene: mesh })
+
+  const tick = (now: number) => {
+    frame = requestAnimationFrame(tick)
+    if (now - last < frameMs) return
+    last = now
+    program.uniforms.uTime.value = now
+    draw()
+  }
+
+  const run = () => {
+    cancelAnimationFrame(frame)
+    frame = 0
+    if (still.matches || document.hidden) draw()
+    else frame = requestAnimationFrame(tick)
   }
 
   const resize = () => {
-    const w = window.innerWidth
-    const h = window.innerHeight
-    renderer.setSize(w, h)
-    program.uniforms.uResolution.value = new Vec2(w, h)
-    requestAnimationFrame(update)
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    program.uniforms.uResolution.value = new Vec2(window.innerWidth, window.innerHeight)
+    if (!frame) requestAnimationFrame(draw)
   }
 
-  resize()
-
   const scroll = () => {
+    // A still picture for visitors who ask for reduced motion.
+    if (still.matches) return
     program.uniforms.uScroll.value = window.scrollY
-    requestAnimationFrame(update)
+    if (!frame) requestAnimationFrame(draw)
   }
 
   window.addEventListener('resize', resize)
-  window.addEventListener('scroll', scroll)
+  window.addEventListener('scroll', scroll, { passive: true })
+  document.addEventListener('visibilitychange', run)
+  still.addEventListener('change', run)
+  run()
+
+  stop = () => {
+    cancelAnimationFrame(frame)
+    window.removeEventListener('resize', resize)
+    window.removeEventListener('scroll', scroll)
+    document.removeEventListener('visibilitychange', run)
+    still.removeEventListener('change', run)
+  }
 })
+
+onBeforeUnmount(() => stop?.())
 </script>
 
 <template>
-  <canvas ref="el" class='background' />
+  <canvas ref="el" class='background' aria-hidden="true" />
 </template>
 
 <style scoped>

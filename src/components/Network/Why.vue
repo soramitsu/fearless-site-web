@@ -24,12 +24,12 @@ const data = [{
 
 <template>
   <section class="w px-3xs">
-    <div class="rounded-s grid">
+    <div v-reveal class="rounded-s grid lit">
       <h2 class="p-xl text-center bg-block">
         <span class="color-accent">Why Fearless Wallet</span> is the Best Wallet for {{ fullName }}
       </h2>
       <div v-for="item in data" class="p-l bg-block">
-        <div class="icon mb-m">
+        <div class="icon icon-well mb-m">
           <img :src="`/icons/${item.icon}.svg`" :alt="`${item.icon} icon`">
         </div>
         <h3 class="text-m mb-xxs">{{ item.title }}</h3>
@@ -55,11 +55,6 @@ const data = [{
 .icon {
   width: var(--space-xl);
   height: var(--space-xl);
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, .6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .icon img {
