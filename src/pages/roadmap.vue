@@ -1,32 +1,38 @@
 <script setup lang="ts">
+// Available items must be in the current store versions, with their platforms
+// named; keep the versions in the note under the cards in step with the
+// release notes.
 const roadmap = [{
-  title: 'Universal Wallet',
+  title: 'Available as of November 2026',
   items: [
-    'Align the browser extension, iOS app, and Android app around one Universal Wallet phrase',
-    'Keep legacy wallets available for export and recovery while new versions use Universal Wallet by default',
-    'Keep wallet core, registry defaults, and indexer clients open source',
+    'The Yatagarasu redesign in the iOS app, the Android app and the Chrome extension',
+    'Bitcoin and Solana in all three apps, including sending',
+    'DOT and KSM staking on Asset Hub in the iOS and Android apps',
+    'Taira testnet in the Chrome extension: balance, history and sending testnet XOR',
+    'One searchable asset list',
+    'WalletConnect on our own open-source client',
   ]
 }, {
-  title: 'New Ecosystems',
+  title: 'In progress',
   items: [
-    'Add Bitcoin native SegWit wallet support',
-    'Add Solana accounts, token visibility, and browser-extension dApp connection support',
-    'Standardize TON wallet reads on ti.soramitsu.io and Solana wallet reads on si.soramitsu.io',
+    'TON Connect in the Chrome extension',
+    'Iroha Connect: connect to apps on SORA Nexus, starting with Taira',
+    'Find more ERC-20 tokens on supported Ethereum-compatible networks in Chrome',
   ]
 }, {
-  title: 'SORA Nexus and Taira',
+  title: 'Next',
   items: [
-    'Enable Taira testnet account support for Iroha-based wallet validation',
-    'Gate SORA Nexus mainnet until a production Torii TLS endpoint is confirmed',
-    'Add Nexus transfer, offline cash, SCCP, and governance entry points as they become release-ready',
+    'Make Universal Wallet recovery more consistent across iOS, Android and the Chrome extension',
+    'Verify transfer support on SORA Nexus mainnet',
+    'Keep the wallet core, network lists and data clients open source',
   ]
 }]
 
-const title = 'Fearless Wallet Universal Wallet Roadmap',
+const title = 'Fearless Wallet Roadmap',
   description =
-    'The Fearless Wallet roadmap summarizes Universal Wallet, Bitcoin, Solana, TON, and SORA Nexus work across the maintained browser, iOS, and Android apps.',
+    'See what’s available in Fearless Wallet as of November 2026 and follow work on TON Connect, Taira app connections and token discovery.',
   keywords =
-    'Fearless Wallet roadmap, crypto wallet apps, wallet app, wallet web, krypto wallet, browser wallet, crypto wallet, blockchain wallet app'
+    'Fearless Wallet roadmap, Chrome extension, iOS, Android, Asset Hub staking, TON Connect, SORA Nexus, Universal Wallet'
 
 useSeoMeta({
   title,
@@ -46,83 +52,19 @@ useSchemaOrg([
     "@type": "WebPage",
     inLanguage: "en-US",
     name: 'Fearless Wallet Roadmap',
-    description: 'Roadmap for Universal Wallet, Bitcoin, Solana, TON, and SORA Nexus work in Fearless Wallet.',
+    description,
     mainEntity: {
       "@type": "ItemList",
-      itemListElement: [
-        {
+      itemListElement: roadmap.flatMap(stage => stage.items.map(name => ({ stage: stage.title, name })))
+        .map(({ stage, name }, index) => ({
           "@type": "ListItem",
-          position: 1,
+          position: index + 1,
           item: {
             "@type": "Thing",
-            name: "Universal Wallet",
-            description: "One recovery phrase across the maintained Fearless Wallet browser, iOS, and Android apps."
+            name,
+            description: stage,
           }
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          item: {
-            "@type": "Thing",
-            name: "Bitcoin",
-            description: "Native SegWit Bitcoin account support."
-          }
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          item: {
-            "@type": "Thing",
-            name: "Solana",
-            description: "Solana account, token, history, and browser dApp support."
-          }
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          item: {
-            "@type": "Thing",
-            name: "SORA Nexus and Taira",
-            description: "Iroha-based account support with Taira enabled and Nexus mainnet gated until production endpoint confirmation."
-          }
-        },
-        {
-          "@type": "ListItem",
-          position: 5,
-          item: {
-            "@type": "Thing",
-            name: "Open-source wallet core",
-            description: "Public wallet code, registry defaults, and indexer clients."
-          }
-        },
-        {
-          "@type": "ListItem",
-          position: 6,
-          item: {
-            "@type": "Thing",
-            name: "Indexer standardization",
-            description: "TON reads through ti.soramitsu.io and Solana reads through si.soramitsu.io."
-          }
-        },
-        {
-          "@type": "ListItem",
-          position: 7,
-          item: {
-            "@type": "Thing",
-            name: "Migration and recovery",
-            description: "Hard-cutoff migration to Universal Wallet while preserving legacy export and fund recovery paths."
-          }
-        },
-        {
-          "@type": "ListItem",
-          position: 8,
-          item: {
-            "@type": "Thing",
-            name: "Production readiness",
-            description: "Cross-platform CI, negative tests, adversarial checks, and release hardening."
-          }
-        }
-      ]
+        }))
     },
   }
 ])
@@ -130,7 +72,7 @@ useSchemaOrg([
 
 <template>
   <h1 class="w-narrow px-l pt-3xl text-center">
-    Roadmap for <span class="color-accent">Universal Wallet</span>
+    Fearless Wallet <span class="color-accent">roadmap</span>
   </h1>
 
   <div class="w grid px-3xs py-xxl">
@@ -142,17 +84,10 @@ useSchemaOrg([
     </div>
   </div>
 
-  <p class="w-narrow px-l mb-m">
-    Welcome to the Fearless Wallet Roadmap
-  </p>
-  <p class="w-narrow px-l mb-m">
-    This roadmap highlights the current production-readiness work for the maintained wallet apps: the browser
-    extension, iOS app, and Android app. The focus is one Universal Wallet, open-source wallet core code, and support
-    for Bitcoin, Solana, TON, EVM, Polkadot/Substrate, Taira, and SORA Nexus.
-  </p>
   <p class="w-narrow px-l mb-xxl">
-    Nexus mainnet remains gated until the production Torii endpoint is confirmed. Taira testnet support is used to
-    validate Iroha-based wallet behavior before Nexus mainnet release.
+    Versions covered are iOS 4.2.4, Android 4.3.7 and Chrome extension 4.2.10. Read more in
+    <NuxtLink to="/blog/november-2026-update">What’s New in Fearless Wallet: November 2026</NuxtLink> and the
+    <NuxtLink to="/release-notes">release notes</NuxtLink>.
   </p>
 </template>
 

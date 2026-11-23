@@ -136,6 +136,22 @@
       "how": "copied byte for byte"
     },
     {
+      "path": "src/public/icon.svg",
+      "sha256": "20458821ba5c3f15b44ed6691eaf52145742a3f75e93be934ed1bb6718f71853",
+      "bytes": 10327,
+      "from": "masters/fearless-app-icon-small.svg",
+      "kitSha256": "20458821ba5c3f15b44ed6691eaf52145742a3f75e93be934ed1bb6718f71853",
+      "how": "copied byte for byte"
+    },
+    {
+      "path": "src/public/icon-192.png",
+      "sha256": "04bc908beeee8d653ebd2845f844e94e855569c1e53b40ea28cf05b62a022676",
+      "bytes": 23732,
+      "from": "png/app-icon/app-icon-192.png",
+      "kitSha256": "04bc908beeee8d653ebd2845f844e94e855569c1e53b40ea28cf05b62a022676",
+      "how": "copied byte for byte"
+    },
+    {
       "path": "src/public/brand/crow-idle.webm",
       "sha256": "385b5fb589ab68b5e35fb86c95b3258fcc1400677e71c956ce7dd6331fa15b5a",
       "bytes": 811444,

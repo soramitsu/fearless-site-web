@@ -94,6 +94,10 @@ copy('web/logo-256.png', 'src/public/icon.png')
 copy('png/app-icon/app-icon-180.png', 'src/public/apple-touch-icon.png')
 copy('png/app-icon/app-icon-180.png', 'src/public/apple-touch-icon-precomposed.png')
 copy('png/app-icon/app-icon-512.png', 'src/public/icon-512.png')
+// The browser tab icon as a vector: the app icon with the small crest, which
+// the kit uses below 64 px, so it stays legible at 16 px.
+copy('masters/fearless-app-icon-small.svg', 'src/public/icon.svg')
+copy('png/app-icon/app-icon-192.png', 'src/public/icon-192.png')
 
 // The crow: the extension popup's framing fits a web hero.
 copy('hero/popup-idle.webm', 'src/public/brand/crow-idle.webm')
