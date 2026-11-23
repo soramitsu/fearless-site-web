@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const isVisible = ref(false)
+let showTimer: number
 
 const handleCLick = () => {
   try {
@@ -12,46 +13,46 @@ const handleCLick = () => {
 
 onMounted(() => {
   if (!window?.localStorage?.cookieMessageAccepted) {
-    setTimeout(() => isVisible.value = true, 1000)
+    showTimer = window.setTimeout(() => isVisible.value = true, 1000)
   }
 })
+
+onBeforeUnmount(() => window.clearTimeout(showTimer))
 </script>
 
 <template>
-  <div class="bumper bg-block p-m text-s rounded-xs" :class="{ visible: isVisible }">
+  <aside class="bumper bg-block lit p-m text-s rounded-xs" :class="{ visible: isVisible }" aria-label="Cookie notice">
     <p class="text-xs text-center">
       We use only necessary cookies to give you the most relevant experience.
     </p>
     <Button href="/privacy" title="Learn more" small />
     <Button @click="handleCLick" title="Accept" small accent />
-  </div>
+  </aside>
 </template>
 
 <style scoped>
 .bumper {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: none;
+  flex-wrap: wrap;
   gap: var(--space-m) var(--space-3xs);
+  -webkit-backdrop-filter: blur(4rem);
   backdrop-filter: blur(4rem);
-  position: fixed;
-  bottom: var(--space-3xs);
-  right: var(--space-3xs);
-  transition: transform 0.6s ease, opacity 0.6s ease, visibility 0.6s ease;
-  transform: translateY(var(--space-m));
-  opacity: 0;
-  visibility: hidden;
-  z-index: 666;
-  width: calc(100% - var(--space-3xs) * 2);
+  background-color: rgba(26, 14, 62, 0.9);
+  /* Leave the fixed dial its own column when the notice scrolls into view. */
+  width: calc(100% - var(--scroll-dial-size) - 2 * var(--space-xs) - var(--space-3xs));
   max-width: 46rem;
-}
-
-.bumper p {
-  grid-column: 1 / -1;
+  margin: var(--space-xs) var(--space-3xs) var(--space-3xs) auto;
 }
 
 .bumper.visible {
-  transform: translateY(0);
-  opacity: 1;
-  visibility: visible;
+  display: flex;
+}
+
+.bumper p {
+  flex-basis: 100%;
+}
+
+.bumper .button {
+  flex: 1 1 12rem;
 }
 </style>

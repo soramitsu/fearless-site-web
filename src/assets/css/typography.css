@@ -1,10 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400..600&family=Unbounded:wght@700&display=swap');
+/* Sora is the brand's display face and Figtree its interface face. Both are
+   served from this site, so reading a page asks no font service for anything. */
+@font-face {
+  font-family: 'Sora';
+  src: url('/fonts/sora.woff2') format('woff2');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/figtree-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/figtree-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/figtree-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 body {
-  font-family: 'Sora', sans-serif;
+  font-family: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
   font-size: var(--text-m);
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 b,
@@ -19,58 +48,73 @@ h6,
 
 h1,
 h2,
+h3,
 .text-xxl,
 .text-xl {
-  font-family: 'Unbounded', Verdana, sans-serif;
+  font-family: 'Sora', 'Figtree', system-ui, sans-serif;
+}
+
+h1,
+h2,
+.text-xxl,
+.text-xl {
   font-weight: 700;
 }
 
 h1,
 .text-xxl {
   font-size: var(--text-xxl);
-  letter-spacing: -0.01em;
-  line-height: 1.1;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
 }
 h2,
 .text-xl {
   font-size: var(--text-xl);
-  letter-spacing: -0.01em;
-  line-height: 1.2;
+  letter-spacing: -0.02em;
+  line-height: 1.16;
 }
 h3,
 .text-l {
   font-size: var(--text-l);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   line-height: 1.2;
 }
 h4,
 .text-m {
   font-size: var(--text-m);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 h5,
 .text-s {
   font-size: var(--text-s);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 h6,
 .text-xs {
   font-size: var(--text-xs);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 .text-xxs {
   font-size: var(--text-xxs);
   line-height: 1.4;
   font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.text-l,
 .text-m,
 .text-s,
 .text-xs,
 .text-xxs {
-  font-family: 'Sora', sans-serif;
+  font-family: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.text-l {
+  font-family: 'Sora', 'Figtree', system-ui, sans-serif;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
 }
 
 .text-center {

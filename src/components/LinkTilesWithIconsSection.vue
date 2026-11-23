@@ -12,10 +12,11 @@ defineProps<{ links: Link[], columns?: 2 | 3 }>()
 
 <template>
   <section class="w px-3xs grid" :style="`--cols: ${columns || 2}`">
-    <NuxtLink v-for="link in links" :key="link.title" class="bg-block rounded-s p-l link" :href="link.href"
+    <NuxtLink v-for="(link, index) in links" :key="link.title" v-reveal="index" class="bg-block lit rounded-s p-l link"
+      :href="link.href"
       :target="link.internal ? undefined : '_blank'">
       <div class="head">
-        <div class="icon">
+        <div class="icon icon-well">
           <img :src="`/icons/${link.icon}.svg`" :alt="`${link.icon} icon`">
         </div>
         <h2 class="text-m">
@@ -54,11 +55,7 @@ defineProps<{ links: Link[], columns?: 2 | 3 }>()
 .icon {
   width: var(--space-xl);
   height: var(--space-xl);
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, .6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  flex: 0 0 auto;
 }
 
 .icon img {
@@ -75,11 +72,12 @@ defineProps<{ links: Link[], columns?: 2 | 3 }>()
 
 @media (hover:hover) {
   .link {
-    transition: background-color .3s ease;
+    transition: background-color var(--d-255) var(--ease-glide), transform var(--d-360) var(--ease-settle);
   }
 
   .link:hover {
-    background-color: rgba(255, 255, 255, .1);
+    background-color: var(--color-bg-raised);
+    transform: translateY(-0.4rem);
   }
 }
 </style>

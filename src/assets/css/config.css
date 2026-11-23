@@ -19,11 +19,51 @@
   --text-xs: 1.3rem;
   --text-xxs: 1.2rem;
 
-  --color-accent: #ee0077;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: rgba(255, 255, 255, 0.7);
-  --color-bg-block: rgba(255, 255, 255, 0.07);
-  --color-link: #b7f;
+  /* Fearless x Yatagarasu brand kit (tokens/colors.json). Ink, night and plum
+     are the brand surfaces; gold marks the solar motif and what is settled;
+     pink is for primary actions and accents. */
+  --fw-ink: #120a2e;
+  --fw-night: #1a0e3e;
+  --fw-plum: #3a1060;
+  --fw-pink: #e6006f;
+  --fw-pink-fill: #d6006a;
+  --fw-pink-deep: #a8005a;
+  --fw-pink-text: #ff4fa3;
+  --fw-ember: #ff7a1a;
+  --fw-gold: #ffc24a;
+  --fw-gold-core: #ffd58a;
+  --fw-flight: #38e8e0;
+  --fw-failure: #ff5a4d;
+  --fw-text: #faf6ff;
+  --fw-text-soft: #e9e2f5;
+  --fw-text-muted: #cfc4e6;
+  --fw-line: #76618e;
+
+  --color-accent: var(--fw-pink-text);
+  --color-text-primary: var(--fw-text);
+  --color-text-secondary: var(--fw-text-muted);
+  --color-bg-block: rgba(31, 17, 72, 0.62);
+  --color-bg-raised: rgba(46, 25, 104, 0.72);
+  --color-line: rgba(118, 97, 142, 0.45);
+  --color-link: var(--fw-flight);
+
+  /* Shikiban motion (tokens/shikiban.json): durations step by 1/√2 and
+     nothing else is used; settle lands, depart leaves, glide travels. */
+  --d-90: 90ms;
+  --d-128: 128ms;
+  --d-180: 180ms;
+  --d-255: 255ms;
+  --d-360: 360ms;
+  --d-510: 510ms;
+  --d-720: 720ms;
+  --d-1020: 1020ms;
+  --ease-settle: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ease-depart: cubic-bezier(0.3, 0, 1, 1);
+  --ease-glide: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --rim-gold: rgba(255, 194, 74, 0.55);
+  --rim-pink: rgba(255, 79, 163, 0.3);
+  --shadow-plum: 0 2.4rem 6rem rgba(8, 3, 26, 0.55);
 }
 
 @media (min-width: 640px) {

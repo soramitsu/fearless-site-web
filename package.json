@@ -20,7 +20,8 @@
     "audit:dependencies:production": "yarn test:dependency-patches && node scripts/audit-dependencies.mjs --production",
     "test:dependency-patches": "node --test scripts/test-dependency-patches.mjs",
     "test:production": "node scripts/test-production.mjs",
-    "verify:networks": "tsx ./parseNetworks.ts --check"
+    "verify:networks": "tsx ./parseNetworks.ts --check",
+    "verify:brand": "node scripts/brand/sync-brand-assets.mjs --check"
   },
   "dependencies": {
     "@nuxt/content": "^2.13.2",

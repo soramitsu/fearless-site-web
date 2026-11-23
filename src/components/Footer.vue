@@ -94,15 +94,15 @@ const resourcesLinks: Link[] = [{
   external: true
 },
 {
-  title: "Brand Assets",
-  href: 'https://github.com/sora-xor/sora-branding/tree/master/Fearless-Wallet-brand',
+  title: "GitHub Browser Extension",
+  href: 'https://github.com/soramitsu/fearless-wallet-web',
   external: true
 },]
 </script>
 
 <template>
   <footer class="w px-3xs pt-xxl">
-    <div class="community outline-block rounded-s p-s text-xs">
+    <div v-reveal class="community bg-block lit rounded-s p-s text-xs">
       Join our community
       <div class="buttons">
         <Button v-for="item in community" :key="item.title" :href="item.href" :icon="item.icon" small />
@@ -120,7 +120,7 @@ const resourcesLinks: Link[] = [{
         <NuxtLink v-for="item in aboutLinks" :key="item.title" :href="item.href"
           :target="item.external ? '_blank' : undefined" class="link text-xs">
           {{ item.title }}
-          <img v-if="item.external" :src="`/icons/arrow.svg`" :alt="`arrow icon`" class="s" />
+          <img v-if="item.external" src="/icons/arrow.svg" alt="" class="s" />
         </NuxtLink>
       </div>
 
@@ -129,7 +129,7 @@ const resourcesLinks: Link[] = [{
         <NuxtLink v-for="item in resourcesLinks" :key="item.title" :href="item.href"
           :target="item.external ? '_blank' : undefined" class="link text-xs">
           {{ item.title }}
-          <img v-if="item.external" :src="`/icons/arrow.svg`" :alt="`arrow icon`" class="s" />
+          <img v-if="item.external" src="/icons/arrow.svg" alt="" class="s" />
         </NuxtLink>
       </div>
 
@@ -143,13 +143,16 @@ const resourcesLinks: Link[] = [{
       <div class="downloads">
         <h3 class="py-xs text-xs color-secondary">Get our Apps</h3>
         <a v-for="item in downloadLinks" :key="item.title" :href="item.href" target="_blank" class="link text-xs">
-          <img :src="`/icons/${item.icon}.svg`" :alt="`${item.icon} icon`" />
+          <img :src="`/icons/${item.icon}.svg`" alt="" />
           {{ item.title }}
         </a>
       </div>
     </div>
     <div class="logo py-m px-xl">
-      <img src="/elements/fearless-logo.svg" alt="Fearless Wallet logo" loading="lazy" />
+      <div class="ornament">
+        <ShikibanSolar :ms="1020" />
+      </div>
+      <img src="/brand/lockup-stacked.svg" alt="Fearless" loading="lazy" width="640" height="505" />
     </div>
     <div class="legal p-m text-xs">
       © 2020-{{ new Date().getFullYear() }} Soramitsu
@@ -189,7 +192,7 @@ const resourcesLinks: Link[] = [{
   display: flex;
   align-items: center;
   gap: var(--space-xxs);
-  transition: opacity 0.3s ease;
+  transition: color var(--d-255) var(--ease-glide);
   height: 2.6em;
 }
 
@@ -223,16 +226,32 @@ const resourcesLinks: Link[] = [{
 }
 
 .logo {
-  opacity: 0.1;
   display: flex;
   justify-content: center;
+  align-items: center;
   pointer-events: none;
+  position: relative;
+  min-height: 34rem;
+}
+
+/* The lockup rests inside the solar geometry, which draws itself when the
+   footer comes into view. */
+.logo .ornament {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(40rem, 86%);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  opacity: 0.22;
 }
 
 .logo>img {
-  max-width: 34rem;
+  position: relative;
+  max-width: 17rem;
   width: 100%;
-  aspect-ratio: 34/17;
+  height: auto;
+  opacity: 0.5;
 }
 
 .legal {
@@ -245,7 +264,7 @@ const resourcesLinks: Link[] = [{
 
 @media (hover: hover) {
   .link:hover {
-    opacity: 0.7;
+    color: var(--fw-gold);
   }
 }
 
@@ -279,7 +298,7 @@ const resourcesLinks: Link[] = [{
   }
 
   .logo {
-    margin-top: -18rem;
+    margin-top: -14rem;
   }
 }
 </style>

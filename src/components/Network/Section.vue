@@ -1,7 +1,9 @@
 <template>
   <section class="w px-3xs">
-    <div class="rounded-s bg-block px-l pt-xxl text-center networks">
+    <div v-reveal class="rounded-s bg-block lit px-l pt-xxl text-center networks">
+      <ShikibanLattice />
       <NetworkVisual class="bg rounded-s" />
+      <ShikibanMarks />
       <h2 class="w-narrow mb-s">
         <span class="color-accent">80+ Networks</span> including Bitcoin, Solana, TON, EVM, and Polkadot
       </h2>
@@ -21,7 +23,7 @@
   z-index: 0;
 }
 
-.networks>* {
+.networks>*:not(.lattice):not(.marks):not(.bg) {
   position: relative;
 }
 
