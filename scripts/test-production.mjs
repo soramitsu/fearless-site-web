@@ -108,7 +108,8 @@ try {
     assert.ok(support.includes(`href="${href}"`), `Support link: ${href}`)
   }
   assert.match(support, /Never share your recovery phrase/)
-  assert.ok((await html('/')).includes('href="/support/"'), 'Footer links to Help & Support')
+  // The footer uses the canonical address (the sitemap's); the apps' /support/ links serve the same page.
+  assert.ok((await html('/')).includes('href="/support"'), 'Footer links to Help & Support')
   // App buttons go to the stores directly: the short links they used expired.
   const chromeExtensionUrl = 'https://chromewebstore.google.com/detail/fearless-wallet/nhlnehondigmgckngjomcpcefcdplmgc'
   const linkHrefs = (body, text) => [...body.matchAll(/<a\b[^>]*\bhref="([^"]*)"[^>]*>((?:(?!<\/a>)[\s\S])*)<\/a>/g)]

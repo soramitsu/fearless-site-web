@@ -43,7 +43,7 @@ In the Chrome extension:
 - A token without a reliable price shows “Price unavailable” instead of $0.00.
 - The wallet can open in Chrome’s side panel.
 
-On iPad, you can see balances and transaction history side by side.
+On a wide iPad window, your balance and asset list can appear side by side.
 
 ## Staking on Asset Hub
 

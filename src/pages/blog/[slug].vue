@@ -33,6 +33,11 @@ const meta = {
     ogImage: ogImageUrl,
     ogImageSecureUrl: ogImageUrl,
     twitterImage: ogImageUrl,
+    // The site's default card is 1200×630; a post's own image may differ.
+    ...(data.value.ogWidth && data.value.ogHeight ? {
+      ogImageWidth: data.value.ogWidth,
+      ogImageHeight: data.value.ogHeight,
+    } : {}),
   } : {}),
   ...(description ? {
     description: description,

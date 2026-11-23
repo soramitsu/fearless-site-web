@@ -87,7 +87,8 @@ useSchemaOrg([
     <p>
       Welcome to the official download page for Fearless Wallet. The maintained wallet apps are the browser extension,
       the iOS app, and the Android app. Each app is being aligned around Universal Wallet support so one recovery phrase
-      can restore your supported accounts across Bitcoin, Solana, TON, EVM, Polkadot/Substrate, and SORA ecosystems.
+      gives you accounts across Bitcoin, Solana, TON, EVM, Polkadot/Substrate, and SORA ecosystems. If you set a
+      password for those addresses, keep it with your phrase: you need both to restore them.
     </p>
 
     <hr>

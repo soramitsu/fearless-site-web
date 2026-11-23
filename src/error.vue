@@ -7,7 +7,12 @@ const heading = computed(() => missing.value ? 'Page not found' : 'Something wen
 // site's header and footer so a visitor can go on from here.
 useHead({
   title: () => `${heading.value} | Fearless Wallet`,
-  meta: [{ name: 'robots', content: 'noindex' }],
+  meta: [
+    { name: 'robots', content: 'noindex' },
+    { key: 'description', name: 'description', content: () => missing.value ? 'This page does not exist on fearlesswallet.io.' : 'This page could not be shown.' },
+    { key: 'og:title', property: 'og:title', content: () => `${heading.value} | Fearless Wallet` },
+    { key: 'og:description', property: 'og:description', content: () => missing.value ? 'This page does not exist on fearlesswallet.io.' : 'This page could not be shown.' },
+  ],
 })
 </script>
 

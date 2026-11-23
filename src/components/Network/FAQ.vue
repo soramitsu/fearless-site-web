@@ -23,7 +23,7 @@ const data = computed(() => [
   },
   {
     question: "What should I do if I lost access to my wallet?",
-    answer: "If you lose access to your Fearless Wallet, don’t worry—your recovery phrase is your key to regaining access. Simply use the backup seed phrase you saved when setting up your wallet to restore your account. It's essential to keep this phrase secure and offline, as only you have control over it. Fearless Wallet cannot recover your wallet for you, so safeguarding your recovery phrase is critical for ensuring access to your assets.",
+    answer: "Restore your wallet in Fearless Wallet with the recovery phrase you saved when you set it up. If your wallet uses a password to create its Bitcoin, Solana, TON or Taira addresses, you need that password as well as the phrase to restore those addresses. Keep both safe and offline: Fearless Wallet cannot recover them for you.",
   },
 ])
 </script>

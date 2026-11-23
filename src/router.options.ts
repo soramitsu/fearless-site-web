@@ -43,6 +43,11 @@ const scrollBehavior: RouterScrollBehavior = (to, from, savedPosition) => {
 
   if (from === START_LOCATION) return position()
 
+  // A new page starts at its top: jump there now, before it paints, so it is
+  // never seen at the old page's offset. Only Back/Forward and hash links
+  // wait for the page to render, since their target lies further down.
+  if (!savedPosition && !to.hash) return position()
+
   // Once the new page has rendered, so a saved place further down exists.
   return new Promise<Position>((resolve) => {
     nuxtApp.hooks.hookOnce('page:loading:end', () => {

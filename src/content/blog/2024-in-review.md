@@ -5,9 +5,11 @@ description: 'Expanded networks, Nomis Multi-Chain score integration, Reef staki
 keywords: 'Fearless Wallet, TON, The Open Network, Decentralized Finance (DeFi), Multi-chain Wallet, Crypto Wallet, Web3, Blockchain, Polkadot, Ethereum, Security, Staking, DEX, Polkaswap, Google Account, Crypto Assets, Digital Assets'
 cover: https://miro.medium.com/v2/resize:fit:1280/format:webp/1*S6otWffefvaGOqk7NtHHhA.jpeg
 og: https://miro.medium.com/v2/resize:fit:1280/format:webp/1*S6otWffefvaGOqk7NtHHhA.jpeg
+ogWidth: 1280
+ogHeight: 720
 ---
 
-### Expanded networks, Nomis Multi-Chain score integration, Reef staking, TON support, asset management upgrades, and more.
+**Expanded networks, Nomis Multi-Chain score integration, Reef staking, TON support, asset management upgrades, and more.**
 
 ---
 

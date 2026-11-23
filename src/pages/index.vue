@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const title = 'Fearless Wallet The DeFi Crypto Wallet for Multi-Chain Future',
   description =
-    'Fearless Wallet is an open-source self-custody wallet for browser, iOS, and Android. One Universal Wallet phrase restores Bitcoin, Solana, TON, EVM, Polkadot, and SORA accounts.',
+    'Fearless Wallet is an open-source self-custody wallet for browser, iOS, and Android. One Universal Wallet phrase gives you Bitcoin, Solana, TON, EVM, Polkadot, and SORA accounts.',
   keywords =
     'crypto wallet apps, wallet app, wallet web, browser wallet, crypto wallet, blockchain wallet app, bitcoin wallet, solana wallet, ton wallet, SORA Nexus wallet'
 

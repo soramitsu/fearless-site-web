@@ -8,8 +8,7 @@ useSeoMeta({
   twitterTitle: title,
   description,
   ogDescription: description,
-  twitterDescription: description,
-  ogUrl: 'https://fearlesswallet.io/support/'
+  twitterDescription: description
 })
 </script>
 
