@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const benefits = [
-  { icon: 'networks', to: 80, suffix: '+', subline: 'networks' },
+  { icon: 'networks', to: 50, suffix: '+', subline: 'networks' },
   { icon: 'users', to: 250, suffix: 'k+', subline: 'users' },
-  { icon: 'rating', to: 4, suffix: '+', subline: 'rating' },
+  { icon: 'wallets', to: 3, suffix: '', subline: 'platforms' },
 ]
 
 const isTrailerOpen = ref(false)

@@ -2,8 +2,8 @@
 import { detectDeviceType, detectMobileAppUrl } from "../helpers/common";
 import { chromeExtensionUrl, downloadPagePath } from "~/lib/appLinks";
 
-const title = "TON Connect";
-const description = "TON Connect desctiption";
+const title = "TON Connect with Fearless Wallet";
+const description = "Connect Fearless Wallet to TON apps with TON Connect: install the wallet, open the app, and approve the connection in Fearless Wallet.";
 const keywords = "TON Connect, TON";
 let deviceType = "desktop";
 
@@ -85,7 +85,7 @@ const handleCLick = (step: number) => {
         </div>
 
         <div class="step-description py-s pr-xs">
-          <div v-if="step.title" class="text-s mt-xs step-title">{{ step.title }}</div>
+          <h2 v-if="step.title" class="text-s mt-xs step-title">{{ step.title }}</h2>
           <div v-if="step.subtitle" class="text-xs mb-s">{{ step.subtitle }}</div>
 
           <Button v-if="step.textBtn"
@@ -148,7 +148,10 @@ const handleCLick = (step: number) => {
   max-width: 100%;
 }
 
+/* A heading in the page's outline that keeps the step's plain label look. */
 .step-title {
   color: var(--fw-gold);
+  font-weight: 400;
+  letter-spacing: 0;
 }
 </style>

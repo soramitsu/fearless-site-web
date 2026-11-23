@@ -15,7 +15,9 @@ useSeoMeta({
 })
 
 useHead({
-  meta: [{ name: 'keywords', content: keywords }]
+  meta: [{ name: 'keywords', content: keywords }],
+  // The crow's poster is the hero's largest picture: fetch it first.
+  link: [{ rel: 'preload', as: 'image', href: '/brand/crow-poster.webp', type: 'image/webp', fetchpriority: 'high' }]
 })
 
 useSchemaOrg([
@@ -26,15 +28,13 @@ useSchemaOrg([
   }),
   {
     "@type": "SoftwareApplication",
-    applicationCategory: "http://schema.org/FinanceApplication",
     name: "Fearless Wallet",
-    operatingSystem: "WINDOWS, OSX, IOS, ANDROID",
-    downloadUrl: "https://fearlesswallet.io/",
-    aggregateRating: {
-      ratingValue: "4.6",
-      ratingCount: "6459"
-    },
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "iOS, Android, Chrome",
+    downloadUrl: "https://fearlesswallet.io/download",
+    isAccessibleForFree: true,
     offers: {
+      "@type": "Offer",
       price: "0",
       priceCurrency: "USD"
     }
@@ -64,8 +64,8 @@ useSchemaOrg([
       <ul class="ecosystems text-s color-secondary">
         <li>Bitcoin native SegWit accounts for BTC receive, send, balance, and history.</li>
         <li>Solana accounts, SPL Token visibility, and browser-extension dApp connection support.</li>
-        <li>TON wallet support using the public TI indexer at ti.soramitsu.io.</li>
-        <li>SORA Nexus and Taira Iroha account support with Nexus mainnet gated until production Torii is confirmed.</li>
+        <li>TON accounts, with TON Connect for TON apps.</li>
+        <li>SORA Nexus and Taira accounts: Taira testnet now, Nexus mainnet transfers once they are enabled.</li>
       </ul>
     </div>
   </section>

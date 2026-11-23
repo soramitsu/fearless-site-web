@@ -18,17 +18,21 @@ const keywords = data.value.keywords
 const date = data.value.date
 
 const { baseUrl } = useRuntimeConfig().public
+// Share cards need an absolute address; a cover may already be one.
+const absolute = (path: string) => (/^https?:\/\//.test(path) ? path : `${baseUrl}${path}`)
+const ogImageUrl = ogImage ? absolute(ogImage) : undefined
 
 const meta = {
+  ogType: 'article' as const,
   ...(title ? {
     title: title,
     ogTitle: title,
     twitterTitle: title,
   } : {}),
   ...(ogImage ? {
-    ogImage: `${baseUrl}${ogImage}`,
-    ogImageSecureUrl: `${baseUrl}${ogImage}`,
-    twitterImage: `${baseUrl}${ogImage}`
+    ogImage: ogImageUrl,
+    ogImageSecureUrl: ogImageUrl,
+    twitterImage: ogImageUrl,
   } : {}),
   ...(description ? {
     description: description,
@@ -42,7 +46,7 @@ const schema = [
     inLanguage: "en-US",
     ...(title ? { headline: title } : {}),
     ...(ogImage ? {
-      image: `${baseUrl}${ogImage}`,
+      image: ogImageUrl,
     } : {}),
     ...(date ? { datePublished: date } : {}),
     ...(description ? { description: description } : {}),
@@ -66,7 +70,7 @@ useSchemaOrg(schema)
     <article class="w py-3xl mx-auto">
       <div class="px-xs">
         <h1 class="mb-m text-center">{{ data.title }}</h1>
-        <p class="text-xs color-secondary text-center mb-l px-m">{{ (new Date(date)).toDateString() }}</p>
+        <p class="text-xs color-secondary text-center mb-l px-m">{{ formatPostDate(date) }}</p>
         <img :src="data.cover" alt="Article cover" class="w-narrow rounded-s mb-xxl cover ">
       </div>
 

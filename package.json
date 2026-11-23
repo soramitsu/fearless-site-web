@@ -30,7 +30,6 @@
     "@unhead/vue": "^2.1.15",
     "matter-js": "^0.20.0",
     "nuxt": "4.6.4",
-    "nuxt-schema-org": "5.0.6",
     "ogl": "^1.0.8",
     "remark-breaks": "^4.0.0",
     "unhead": "^2.1.15",

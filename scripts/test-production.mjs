@@ -50,7 +50,7 @@ try {
     ['/support/', 'Help & Support | Fearless Wallet', 'Contact support'],
     ['/release-notes/ios', 'Fearless Wallet Release Notes for iOS', 'Source Code (zip)'],
     ['/release-notes/android', 'Fearless Wallet Release Notes for Android', 'Source Code (zip)'],
-    ['/bitcoin-wallet', 'The Secure Bitcoin Wallet', 'Bitcoin'],
+    ['/bitcoin-wallet', 'Bitcoin Wallet | Fearless Wallet', 'Bitcoin'],
     ['/privacy', 'Privacy', 'Information Collection and Use'],
     ['/terms', 'Terms', 'Intellectual Property Rights'],
   ]) {
@@ -59,6 +59,34 @@ try {
     assert.ok(body.includes(marker), `${path}: rendered content`)
     assert.equal((body.match(/<meta\b[^>]*name="keywords"/g) || []).length, 1, `${path}: keyword metadata`)
     console.log(`Rendered page passed: ${path}`)
+  }
+  // Each page's own description, share card and address reach the server's
+  // HTML, and its structured data is a filled, parseable graph (an Unhead 2
+  // schema module under Nuxt's Unhead 3 once left both empty).
+  for (const [path, description, types] of [
+    ['/', 'One Universal Wallet phrase', ['Organization', 'WebSite', 'WebPage', 'SoftwareApplication']],
+    ['/download', 'Download the latest version of Fearless Wallet', ['Organization', 'WebSite', 'WebPage']],
+    ['/faq', 'answers to all your questions', ['Organization', 'WebSite', 'FAQPage']],
+    ['/blog/welcome', '', ['Organization', 'WebSite', 'Article']],
+    ['/nexus-wallet', 'mainnet transfers are not enabled', ['Organization', 'WebSite', 'Article']],
+  ]) {
+    const response = await fetch(base + path)
+    const page = await response.text()
+    const meta = (key, name) => page.match(new RegExp(`<meta[^>]*${key}="${name}"[^>]*content="([^"]*)"`))?.[1]
+    if (description) {
+      assert.ok(meta('name', 'description')?.includes(description), `${path}: description ${meta('name', 'description')}`)
+      assert.equal(meta('property', 'og:description'), meta('name', 'description'), `${path}: og:description`)
+    }
+    assert.match(meta('property', 'og:image') || '', /^https:\/\//, `${path}: absolute og:image`)
+    const url = `https://fearlesswallet.io${path === '/' ? '/' : path}`
+    assert.equal(meta('property', 'og:url'), url, `${path}: og:url`)
+    assert.match(page, new RegExp(`<link[^>]*rel="canonical"[^>]*href="${url}"`), `${path}: canonical`)
+    const scripts = [...page.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)]
+    assert.equal(scripts.length, 1, `${path}: one JSON-LD script`)
+    const graph = JSON.parse(scripts[0][1])['@graph']
+    assert.deepEqual(graph.map(node => node['@type']), types, `${path}: JSON-LD nodes`)
+    assert.ok(!JSON.stringify(graph).includes('aggregateRating'), `${path}: no unsourced ratings`)
+    console.log(`Head and structured data passed: ${path}`)
   }
   const privacy = await html('/privacy/')
   for (const disclosure of [
@@ -93,7 +121,6 @@ try {
   for (const [path, mobileText] of [
     ['/blog/welcome', 'Download for iOS/Android'],
     ['/blog/2024-in-review', 'Download for iOS/Android'],
-    ['/blog/zchains', 'Download mobile app'],
   ]) {
     const body = await html(path)
     assert.deepEqual(linkHrefs(body, 'Download browser extension'), [chromeExtensionUrl], `${path}: extension link`)
@@ -105,7 +132,10 @@ try {
     assert.match(body, /id="update-extension"[\s\S]*?\d+\.\d+\.\d+ or later[\s\S]*?chrome:\/\/extensions/, `${path}: extension update banner`)
   }
   const blog = await html('/blog')
-  assert.match(blog, /alt="Welcome to Fearless Wallet: Your Gateway to the Decentralized Future"/)
+  // The card's title names the link; its cover is decorative and sized to the
+  // card rather than served at full width.
+  assert.match(blog, /<h2[^>]*>Welcome to Fearless Wallet: Your Gateway to the Decentralized Future<\/h2>/)
+  assert.match(blog, /<img[^>]*srcset="[^"]*(?:w_640|s_640x360)[^"]*\/blog\/welcome\/cover\.jpg 1x, [^"]*(?:w_1280|s_1280x720)[^"]*\/blog\/welcome\/cover\.jpg 2x"[^>]*\balt\b/)
   const image = blog.match(/src="(\/_ipx\/[^"?]*welcome[^"?]*)"/)
   assert.ok(image, 'Blog image uses the local image renderer')
   const imageResponse = await fetch(base + image[1], { signal: AbortSignal.timeout(10000) })
@@ -128,8 +158,20 @@ try {
   assert.doesNotMatch(home, /<html[^>]*class=/, 'The server never sets the motion or launch class')
   assert.doesNotMatch(home, /data-reveal/, 'Nothing is hidden for a reveal in the server HTML')
   assert.match(await (await fetch(base + '/')).text(), /classList\.add\('motion'\)/, 'Head script enables motion')
+  // Tab and home-screen icons are the Yatagarasu crest. The ICO and touch
+  // icon URLs carry a version so browsers and search engines that cached the
+  // old bird fetch them again.
+  const icons = JSON.parse(await (await fetch(`${base}/site.webmanifest`)).text()).icons.map(icon => icon.src)
+  assert.deepEqual(icons, ['/icon.svg', '/icon-192.png', '/icon-512.png'], 'Manifest icons')
   for (const path of ['/', '/download', '/blog/welcome']) {
     const body = await html(path)
+    for (const link of [
+      /<link[^>]*rel="icon"[^>]*href="\/favicon\.ico\?v=yatagarasu"/,
+      /<link[^>]*rel="icon"[^>]*href="\/icon\.svg"[^>]*type="image\/svg\+xml"/,
+      /<link[^>]*rel="apple-touch-icon"[^>]*href="\/apple-touch-icon\.png\?v=yatagarasu"/,
+      /<link[^>]*rel="manifest"[^>]*href="\/site\.webmanifest"/,
+    ]) assert.match(body, link, `${path}: ${link}`)
+    assert.doesNotMatch(body, /href="\/icon\.png"/, `${path}: no 256 px PNG icon link`)
     assert.ok(!/fonts\.(googleapis|gstatic)\.com/.test(body), `${path}: no font service`)
     assert.match(body, /rel="preload"[^>]*href="\/fonts\/sora\.woff2"|href="\/fonts\/sora\.woff2"[^>]*rel="preload"/, `${path}: display font preloaded`)
   }
@@ -150,6 +192,10 @@ try {
     ['/brand/crow-launch.webm', /video\/webm/],
     ['/og.jpg', /image\/jpeg/],
     ['/favicon.ico', /image\/(x-icon|vnd\.microsoft\.icon)/],
+    ['/favicon.ico?v=yatagarasu', /image\/(x-icon|vnd\.microsoft\.icon)/],
+    ['/icon.svg', /image\/svg\+xml/],
+    ['/icon-192.png', /image\/png/],
+    ['/apple-touch-icon.png?v=yatagarasu', /image\/png/],
   ]) {
     const response = await fetch(base + path)
     assert.equal(response.status, 200, path)
