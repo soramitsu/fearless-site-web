@@ -12,6 +12,8 @@ useHead({
     { key: 'description', name: 'description', content: () => missing.value ? 'This page does not exist on fearlesswallet.io.' : 'This page could not be shown.' },
     { key: 'og:title', property: 'og:title', content: () => `${heading.value} | Fearless Wallet` },
     { key: 'og:description', property: 'og:description', content: () => missing.value ? 'This page does not exist on fearlesswallet.io.' : 'This page could not be shown.' },
+    { key: 'twitter:title', name: 'twitter:title', content: () => `${heading.value} | Fearless Wallet` },
+    { key: 'twitter:description', name: 'twitter:description', content: () => missing.value ? 'This page does not exist on fearlesswallet.io.' : 'This page could not be shown.' },
   ],
 })
 </script>

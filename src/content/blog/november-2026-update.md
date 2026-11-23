@@ -29,7 +29,7 @@ Bitcoin and Solana now sit next to Polkadot, Ethereum, TON and SORA in the iOS a
 
 The Chrome extension adds two more things:
 
-- **TON:** restore a Fearless TON wallet from its phrase to find the address it used before. TON token transfers now use the correct number of decimal places for each token.
+- **TON:** restore a Fearless TON wallet from its phrase (and its derivation path, if you used one) to find the address it used before. TON token transfers now use the correct number of decimal places for each token.
 - **SORA Nexus Taira testnet:** see your balance and history, and send testnet XOR. Transfers on SORA Nexus mainnet are not enabled yet.
 
 ## One searchable asset list

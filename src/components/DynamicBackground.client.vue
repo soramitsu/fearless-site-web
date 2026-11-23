@@ -172,7 +172,13 @@ onMounted(async () => {
   let frame = 0
   let last = 0
 
-  const draw = () => renderer.render({ scene: mesh })
+  // If the browser takes the GPU context away, the decoration stops and the
+  // plain background shows; nothing tries to draw on a lost context.
+  const draw = () => {
+    if (!gl.isContextLost()) renderer.render({ scene: mesh })
+  }
+  const lost = () => stop?.()
+  gl.canvas.addEventListener('webglcontextlost', lost)
 
   const tick = (now: number) => {
     frame = requestAnimationFrame(tick)
@@ -210,6 +216,7 @@ onMounted(async () => {
 
   stop = () => {
     cancelAnimationFrame(frame)
+    gl.canvas.removeEventListener('webglcontextlost', lost)
     window.removeEventListener('resize', resize)
     window.removeEventListener('scroll', scroll)
     document.removeEventListener('visibilitychange', run)

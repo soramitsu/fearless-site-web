@@ -23,7 +23,7 @@ const data = computed(() => [
   },
   {
     question: "What should I do if I lost access to my wallet?",
-    answer: "Restore your wallet in Fearless Wallet with the recovery phrase you saved when you set it up. If your wallet uses a password to create its Bitcoin, Solana, TON or Taira addresses, you need that password as well as the phrase to restore those addresses. Keep both safe and offline: Fearless Wallet cannot recover them for you.",
+    answer: "Restore your wallet in Fearless Wallet with the recovery phrase you saved when you set it up. If you created it with a derivation path, such as a password (the text after /// in the path), enter that exact path in the advanced settings before you continue, or the app opens different addresses. An account you imported with its own key or seed is restored with that key or seed. Keep them safe and offline: Fearless Wallet cannot recover them for you.",
   },
 ])
 </script>
