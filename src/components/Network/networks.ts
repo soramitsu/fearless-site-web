@@ -1,25 +1,28 @@
 export const networks = [
   {
+    "availability": "live",
     "fullName": "Bitcoin",
     "shortName": "BTC",
     "icon": "/networks/bitcoin.svg",
     "description": [
-      "Bitcoin is the original decentralized digital currency and the most widely recognized cryptocurrency. Fearless Wallet support focuses on native SegWit accounts for self-custody, receiving, sending, balance tracking, and transaction history.",
-      "BTC is used as peer-to-peer digital money and a long-term store of value. In Fearless Wallet, Bitcoin support is built for one recovery phrase alongside the rest of your Universal Wallet accounts."
+      "Fearless Wallet supports Bitcoin in all three apps: iOS, Android and the Chrome extension.",
+      "You can view your Bitcoin address, check your balance and transaction history, and send BTC."
     ],
     "slug": "bitcoin"
   },
   {
+    "availability": "live",
     "fullName": "Solana",
     "shortName": "SOL",
     "icon": "/networks/solana.svg",
     "description": [
-      "Solana is a high-throughput blockchain designed for low-cost applications, payments, and token activity. Fearless Wallet supports native SOL accounts, SPL Token and Token-2022 visibility, transaction history, and browser-extension dApp connection flows.",
-      "SOL is used for transaction fees, staking, and network operations. Fearless Wallet uses the public Solana indexer endpoint at si.soramitsu.io for wallet-facing reads and configured Solana RPC endpoints for simulation and broadcast."
+      "Fearless Wallet supports Solana in all three apps: iOS, Android and the Chrome extension. SOL pays transaction fees on Solana.",
+      "The extension uses public RPC nodes with automatic failover to check balances and send transactions. Open the linked block explorer to view your history."
     ],
     "slug": "solana"
   },
   {
+    "availability": "live",
     "fullName": "Ethereum",
     "shortName": "ETH",
     "icon": "/networks/Ethereum.svg",
@@ -30,6 +33,7 @@ export const networks = [
     "slug": "ethereum"
   },
   {
+    "availability": "live",
     "fullName": "The Open Network",
     "shortName": "TON",
     "icon": "/networks/ton.svg",
@@ -40,16 +44,17 @@ export const networks = [
     "slug": "ton"
   },
   {
+    "availability": "live",
     "fullName": "Polygon",
-    "shortName": "MATIC",
+    "shortName": "POL",
     "icon": "/networks/Polygon.svg",
     "description": [
-      "Polygon is a Layer 2 scaling solution designed to enhance Ethereum’s scalability and usability. It uses sidechains for off-chain computation, while ensuring asset security using the Plasma framework and a decentralized network of Proof-of-Stake validators.",
-      "Polygon’s native token, MATIC, is used for governance, staking, and transaction fees, making the platform more efficient and accessible for decentralized application (dApp) developers."
+      "Polygon PoS is an Ethereum scaling network. Its native token, POL, pays transaction fees and is used for staking."
     ],
     "slug": "polygon"
   },
   {
+    "availability": "live",
     "fullName": "Kusama",
     "shortName": "KSM",
     "icon": "/networks/Kusama.svg",
@@ -60,16 +65,18 @@ export const networks = [
     "slug": "kusama"
   },
   {
+    "availability": "live",
     "fullName": "Polkadot",
     "shortName": "DOT",
     "icon": "/networks/Polkadot.svg",
     "description": [
       "Polkadot is a scalable, interoperable blockchain platform designed to enable different blockchains to transfer messages, value, and data in a secure and trust-free environment.",
-      "DOT, Polkadot’s native token, is used for staking, bonding new parachains, and governance over the network’s upgrades, allowing the platform to evolve according to the needs of its community."
+      "DOT is used for staking, voting on network changes, and buying coretime for parachains."
     ],
     "slug": "polkadot"
   },
   {
+    "availability": "live",
     "fullName": "BNB Chain",
     "shortName": "BNB",
     "icon": "/networks/bnbchain.svg",
@@ -80,16 +87,17 @@ export const networks = [
     "slug": "bnb"
   },
   {
-    "fullName": "Arbitrum",
-    "shortName": "ARB",
+    "availability": "live",
+    "fullName": "Arbitrum One",
+    "shortName": "ETH",
     "icon": "/networks/Arbitrum.svg",
     "description": [
-      "Arbitrum is a Layer 2 scaling solution for Ethereum, designed to improve scalability and reduce transaction costs by enabling off-chain processing while preserving security.",
-      "ARB, the native token, is used for governance and transaction fees, allowing users to interact more efficiently with decentralized applications (dApps) on the Ethereum network."
+      "Arbitrum One is an Ethereum layer 2 network. You pay transaction fees in ETH. ARB holders can vote on governance proposals."
     ],
     "slug": "arbitrum"
   },
   {
+    "availability": "live",
     "fullName": "SORA",
     "shortName": "XOR",
     "icon": "/networks/SORA.svg",
@@ -100,26 +108,31 @@ export const networks = [
     "slug": "sora"
   },
   {
+    "availability": "gated",
     "fullName": "SORA Nexus",
-    "shortName": "NEXUS",
+    "shortName": "Nexus",
+    "testnetGuide": {
+      "href": "/taira-wallet",
+      "title": "Explore Taira testnet"
+    },
     "icon": "/networks/SORA.svg",
     "description": [
-      "SORA Nexus is the Iroha-based SORA network tracked for the Universal Wallet rollout. It uses I105 account addresses derived from the same wallet phrase as the rest of Fearless Wallet.",
-      "Nexus mainnet support is registry-gated until the production Torii TLS endpoint is confirmed. The public website lists the network so users can understand the roadmap without implying that mainnet writes are already enabled."
+      "SORA Nexus is a network built on Hyperledger Iroha."
     ],
     "slug": "nexus"
   },
   {
+    "availability": "testnet",
     "fullName": "Taira Testnet",
-    "shortName": "TAIRA",
+    "shortName": "testnet XOR",
     "icon": "/networks/SORA.svg",
     "description": [
-      "Taira is the SORA Iroha testnet used to validate Nexus-compatible account derivation, Torii reads, and wallet integration before mainnet release.",
-      "Fearless Wallet derives Taira I105 testnet addresses from the Universal Wallet phrase and uses Taira-specific network validation so testnet and mainnet accounts do not collide."
+      "Taira is the public testnet for SORA Nexus. The Chrome extension shows your Taira balance and transaction history."
     ],
     "slug": "taira"
   },
   {
+    "availability": "live",
     "fullName": "Avalanche",
     "shortName": "AVAX",
     "icon": "/networks/Avalanche.svg",
@@ -130,42 +143,22 @@ export const networks = [
     "slug": "avalanche"
   },
   {
-    "fullName": "Moonbeam",
-    "shortName": "GLMR",
-    "icon": "/networks/Moonbeam.svg",
-    "description": [
-      "Moonbeam is a smart contract platform on Polkadot that provides full Ethereum compatibility, allowing developers to deploy existing Ethereum dApps on Polkadot with minimal changes.",
-      "GLMR is Moonbeam’s native token, used for transaction fees, staking, and governance, bridging the gap between Ethereum and Polkadot for decentralized applications."
-    ],
-    "slug": "moonbeam"
-  },
-  {
-    "fullName": "Moonriver",
-    "shortName": "MOVR",
-    "icon": "/networks/Moonriver.svg",
-    "description": [
-      "Moonriver is a companion network to Moonbeam on Kusama, designed to support early-stage dApps and experiments before deploying on Moonbeam. It mirrors Moonbeam’s Ethereum compatibility and smart contract features.",
-      "MOVR, the native token, is used for transaction fees, staking, and governance within the Moonriver network, enhancing the interoperability between Ethereum and Kusama."
-    ],
-    "slug": "moonriver"
-  },
-  {
-    "fullName": "XLayer",
-    "shortName": "XL",
+    "availability": "live",
+    "fullName": "X Layer",
+    "shortName": "OKB",
     "icon": "/networks/xlayerchain.svg",
     "description": [
-      "XLayer is a cross-chain platform designed to enable scalable and secure interactions between various blockchains. It allows for the seamless transfer of assets and data across multiple blockchain networks.",
-      "XL, the native token, is used for staking, governance, and transaction fees, providing users with a secure and efficient way to interact with different blockchains."
+      "X Layer is a public blockchain launched by OKX. Its native token, OKB, pays transaction fees."
     ],
     "slug": "xlayer"
   },
   {
+    "availability": "live",
     "fullName": "Kaia",
-    "shortName": "KAI",
+    "shortName": "KAIA",
     "icon": "/networks/kaia.svg",
     "description": [
-      "Kaia is a blockchain network focused on sustainability and environmental impact. It enables transparent, traceable solutions for environmental projects and carbon credit trading.",
-      "KAI, the native token of Kaia, is used for governance, staking, and rewarding projects that contribute to environmental sustainability, making it a key part of the green economy on blockchain."
+      "Kaia is a smart contract network formed by the merger of Klaytn and Finschia. Its native token, KAIA, pays transaction fees."
     ],
     "slug": "kaia"
   },
@@ -198,38 +191,6 @@ export const networks = [
     "icon": "/networks/Bifrost.svg"
   },
   {
-    "fullName": "KILT Spiritnet",
-    "icon": "/networks/kilt.svg"
-  },
-  {
-    "fullName": "Calamari",
-    "icon": "/networks/Calamari.svg"
-  },
-  {
-    "fullName": "Quartz",
-    "icon": "/networks/quartz.svg"
-  },
-  {
-    "fullName": "Parallel Heiko",
-    "icon": "/networks/parallelfinance.svg"
-  },
-  {
-    "fullName": "Picasso",
-    "icon": "/networks/picasso.svg"
-  },
-  {
-    "fullName": "Altair",
-    "icon": "/networks/Altair.svg"
-  },
-  {
-    "fullName": "Pioneer Network",
-    "icon": "/networks/bitcountry.svg"
-  },
-  {
-    "fullName": "Clover",
-    "icon": "/networks/clover.svg"
-  },
-  {
     "fullName": "Astar",
     "icon": "/networks/astar.svg"
   },
@@ -238,36 +199,8 @@ export const networks = [
     "icon": "/networks/Basilisk.svg"
   },
   {
-    "fullName": "Kintsugi",
-    "icon": "/networks/kintsugi.svg"
-  },
-  {
-    "fullName": "Robonomics",
-    "icon": "/networks/robonomics.svg"
-  },
-  {
-    "fullName": "Subsocial",
-    "icon": "/networks/subsocial_new.svg"
-  },
-  {
-    "fullName": "Zeitgeist",
-    "icon": "/networks/zeitgeist.svg"
-  },
-  {
     "fullName": "Hydration",
     "icon": "/networks/hydradx.svg"
-  },
-  {
-    "fullName": "Centrifuge",
-    "icon": "/networks/centrifuge.svg"
-  },
-  {
-    "fullName": "Nodle Parachain",
-    "icon": "/networks/nodle.svg"
-  },
-  {
-    "fullName": "Interlay",
-    "icon": "/networks/interlay.svg"
   },
   {
     "fullName": "Polkadex Main Network",
@@ -290,44 +223,8 @@ export const networks = [
     "icon": "/networks/heima.svg"
   },
   {
-    "fullName": "Phala",
-    "icon": "/networks/phala.svg"
-  },
-  {
-    "fullName": "Composable Finance",
-    "icon": "/networks/composable.svg"
-  },
-  {
-    "fullName": "Bajun Kusama",
-    "icon": "/networks/Bajun.svg"
-  },
-  {
-    "fullName": "Kabocha",
-    "icon": "/networks/Kabocha.svg"
-  },
-  {
-    "fullName": "Integritee Network (Polkadot)",
-    "icon": "/networks/integritee.svg"
-  },
-  {
-    "fullName": "Turing Network",
-    "icon": "/networks/OAK.svg"
-  },
-  {
     "fullName": "Encointer on Kusama",
     "icon": "/networks/encointer.svg"
-  },
-  {
-    "fullName": "Amplitude",
-    "icon": "/networks/Amplitude.svg"
-  },
-  {
-    "fullName": "Crust Shadow Parachain",
-    "icon": "/networks/crustshadow.svg"
-  },
-  {
-    "fullName": "SORA Mainnet",
-    "icon": "/networks/SORA.svg"
   },
   {
     "fullName": "Aleph Zero",
@@ -338,20 +235,8 @@ export const networks = [
     "icon": "/networks/Bridgehub.svg"
   },
   {
-    "fullName": "Integritee Network (Kusama)",
-    "icon": "/networks/integritee.svg"
-  },
-  {
     "fullName": "Ajuna Polkadot",
     "icon": "/networks/Bajun.svg"
-  },
-  {
-    "fullName": "Bitgreen",
-    "icon": "/networks/Bitgreen.svg"
-  },
-  {
-    "fullName": "Crust",
-    "icon": "/networks/Crust.svg"
   },
   {
     "fullName": "Frequency",
@@ -366,18 +251,6 @@ export const networks = [
     "icon": "/networks/Ternoa.svg"
   },
   {
-    "fullName": "SORA Kusama parachain",
-    "icon": "/networks/SORA.svg"
-  },
-  {
-    "fullName": "SORA Polkadot parachain",
-    "icon": "/networks/SORA.svg"
-  },
-  {
-    "fullName": "BNB Smart Chain",
-    "icon": "/networks/bnbchain.svg"
-  },
-  {
     "fullName": "Enjin Matrixchain",
     "icon": "/networks/Enjin.svg"
   },
@@ -386,32 +259,12 @@ export const networks = [
     "icon": "/networks/Enjin.svg"
   },
   {
-    "fullName": "Arbitrum One",
-    "icon": "/networks/Arbitrum.svg"
-  },
-  {
     "fullName": "OP Mainnet",
     "icon": "/networks/Optimism.svg"
   },
   {
-    "fullName": "Avalanche C-Chain",
-    "icon": "/networks/Avalanche.svg"
-  },
-  {
-    "fullName": "Polygon zkEVM",
-    "icon": "/networks/Polygon.svg"
-  },
-  {
     "fullName": "ZetaChain Mainnet",
     "icon": "/networks/Zetachain.svg"
-  },
-  {
-    "fullName": "Reef Mainnet",
-    "icon": "/networks/reefchain.svg"
-  },
-  {
-    "fullName": "Manta Parachain",
-    "icon": "/networks/mantachain.svg"
   },
   {
     "fullName": "Liberland",
@@ -422,24 +275,12 @@ export const networks = [
     "icon": "/networks/oasys.svg"
   },
   {
-    "fullName": "CAGA Ankara Testnet",
-    "icon": "/networks/cagachain.svg"
-  },
-  {
-    "fullName": "CAGA Mainnet",
-    "icon": "/networks/cagachain.svg"
-  },
-  {
     "fullName": "XX network",
     "icon": "/networks/xxnetwork.svg"
   },
   {
     "fullName": "Avail Turing Testnet",
     "icon": "/networks/Avail.svg"
-  },
-  {
-    "fullName": "X Layer Mainnet",
-    "icon": "/networks/xlayerchain.svg"
   },
   {
     "fullName": "Analog Timechain",
@@ -454,10 +295,6 @@ export const networks = [
     "icon": "/networks/People.svg"
   },
   {
-    "fullName": "Kaia Mainnet",
-    "icon": "/networks/kaiachain.svg"
-  },
-  {
     "fullName": "Kaia Kairos Testnet",
     "icon": "/networks/kaiachain.svg"
   },
@@ -466,28 +303,12 @@ export const networks = [
     "icon": "/networks/viction.svg"
   },
   {
-    "fullName": "5ire",
-    "icon": "/networks/5irechain.svg"
-  },
-  {
     "fullName": "Avail DA Mainnet",
     "icon": "/networks/Avail.svg"
   },
   {
     "fullName": "Atleta Olympia",
     "icon": "/networks/Atleta.svg"
-  },
-  {
-    "fullName": "ZChains",
-    "icon": "/networks/zchain.svg"
-  },
-  {
-    "fullName": "inEVM",
-    "icon": "/networks/inevm.svg"
-  },
-  {
-    "fullName": "TON Mainnet",
-    "icon": "/networks/tonchain.svg"
   },
   {
     "fullName": "Polkadot BridgeHub",
@@ -500,13 +321,5 @@ export const networks = [
   {
     "fullName": "AvN Polkadot",
     "icon": "/networks/aventus.svg"
-  },
-  {
-    "fullName": "InvArch Network",
-    "icon": "/networks/invarch.svg"
-  },
-  {
-    "fullName": "Polimec",
-    "icon": "/networks/polimec.svg"
   }
 ]

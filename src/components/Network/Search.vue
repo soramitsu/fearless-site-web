@@ -1,31 +1,34 @@
 <script setup lang="ts">
-import { networks } from './networks'
+import type { NetworkInfo } from '~/lib/constants/types'
 
+const props = defineProps<{ networks: (NetworkInfo & { slug?: string })[] }>()
 const searchTerm = ref('')
 
 const filteredNetworks = computed(() => {
-  return networks.filter(network =>
-    network.fullName.toLowerCase().includes(searchTerm.value.toLowerCase())
+  const query = searchTerm.value.trim().toLowerCase()
+  return props.networks.filter(network =>
+    network.fullName.toLowerCase().includes(query) || network.shortName?.toLowerCase().includes(query)
   )
 })
 </script>
 
 <template>
   <div class="search">
-    <input v-model="searchTerm" placeholder="Search supported networks" class="input text-xs rounded-xs" />
+    <input v-model="searchTerm" placeholder="Search supported networks" aria-label="Search supported networks"
+      autocomplete="off" enterkeyhint="search" class="input text-xs rounded-xs" />
     <div class="list p-3xs rounded-xs text-xs">
       <ul v-if="filteredNetworks.length">
         <li v-for="network in filteredNetworks" :key="network.fullName">
           <template v-if="network.slug">
             <NuxtLink v-if="network.slug" :to="`/${network.slug}-wallet`" class="rounded-xs">
-              <span class="icon"><img :src="network.icon" alt="Network logo" loading="lazy" /></span>
+              <span class="icon"><img :src="network.icon" alt="" loading="lazy" /></span>
               <span class="name">{{ network.fullName }}</span>
               <img :src="`/icons/arrow-right.svg`" alt="" loading="lazy" class="arrow" />
             </NuxtLink>
           </template>
           <template v-else>
             <div>
-              <span class="icon"><img :src="network.icon" alt="Network logo" loading="lazy" /></span>
+              <span class="icon"><img :src="network.icon" alt="" loading="lazy" /></span>
               <span class="name">{{ network.fullName }}</span>
             </div>
           </template>
@@ -55,6 +58,11 @@ const filteredNetworks = computed(() => {
   background-size: 1.2em;
   background-repeat: no-repeat;
   background-position: 96% center;
+}
+
+.input::placeholder {
+  color: var(--fw-text-muted);
+  opacity: 1;
 }
 
 .list {
@@ -92,7 +100,7 @@ const filteredNetworks = computed(() => {
 }
 
 .list li a {
-  transition: background-color .3s ease;
+  transition: background-color var(--d-255) var(--ease-glide);
 }
 
 .list .icon {
@@ -121,7 +129,7 @@ const filteredNetworks = computed(() => {
   opacity: 0.25;
   width: 1em;
   height: 1em;
-  transition: transform .3s ease, opacity .3s ease;
+  transition: transform var(--d-255) var(--ease-settle), opacity var(--d-255) var(--ease-glide);
 }
 
 .search:focus-within .list,

@@ -4,18 +4,22 @@ const { fullName, shortName } = defineProps<{
   shortName: string
 }>()
 
+// After "my" or "your" a name loses its own article: "my Open Network
+// wallet", not "my The Open Network wallet".
+const bareName = computed(() => fullName.replace(/^The\s+/, ''))
+
 const data = computed(() => [
   {
-    question: `How do I secure my ${fullName} wallet?`,
-    answer: `With Fearless Wallet, securing your ${fullName} wallet is simple yet robust. You have full control over your private keys, and the wallet ensures your seed phrase is safely stored offline. To enhance security, we recommend enabling biometric login, setting up a strong password, and always backing up your recovery phrase. Fearless Wallet also offers regular updates to keep your assets protected from the latest threats, so you can rest easy knowing your ${fullName} assets is secure.`,
+    question: `How do I secure my ${bareName.value} wallet?`,
+    answer: `With Fearless Wallet, securing your ${bareName.value} wallet is simple yet robust. You have full control over your private keys, and the wallet ensures your seed phrase is safely stored offline. To enhance security, we recommend enabling biometric login, setting up a strong password, and always backing up your recovery phrase. Fearless Wallet also offers regular updates to keep your assets protected from the latest threats, so you can rest easy knowing your ${bareName.value} assets are secure.`,
   },
   {
     question: "Which tokens are supported in Fearless Wallet?",
-    answer: `Fearless Wallet supports a wide range of tokens across multiple blockchains. In addition to ${fullName} (${shortName}) network, you can store, send, and receive assets on 80+ blockchains. As a multi-chain wallet, Fearless continues to add new networks and tokens, giving you flexibility to manage various assets all in one place.`,
+    answer: `Select ${fullName} in your wallet to see ${shortName} and the other assets available on that network.`,
   },
   {
     question: `What are the transaction fees for ${fullName} in Fearless Wallet?`,
-    answer: `Transaction fees for ${fullName} in Fearless Wallet depend on the network’s current gas fees. Fearless Wallet ensures you're always aware of the estimated fees before confirming any transaction, so you can make informed decisions. While the wallet itself doesn’t charge fees, the ${fullName} network requires a small fee to process transactions, which varies based on network activity.`,
+    answer: `When you send ${shortName} on ${fullName}, the wallet shows the estimated network fee before you confirm the transfer.`,
   },
   {
     question: "What should I do if I lost access to my wallet?",

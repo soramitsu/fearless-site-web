@@ -30,7 +30,7 @@ const data = [{
       </h2>
       <div v-for="item in data" class="p-l bg-block">
         <div class="icon icon-well mb-m">
-          <img :src="`/icons/${item.icon}.svg`" :alt="`${item.icon} icon`">
+          <img :src="`/icons/${item.icon}.svg`" alt="">
         </div>
         <h3 class="text-m mb-xxs">{{ item.title }}</h3>
         <p class="text-xs color-secondary">{{ item.description }}</p>

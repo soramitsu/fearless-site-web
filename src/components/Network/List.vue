@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import type { NetworkInfo } from '~/lib/constants/types'
+import type { FeaturedNetwork } from '~/lib/networks'
 
-defineProps<{
+const props = defineProps<{
   title: string
-  networks: {
-    [key: string]: NetworkInfo
-  }
+  networks: Record<string, FeaturedNetwork>
 }>()
+
+const availableNetworks = computed(() => Object.entries(props.networks).filter(([, network]) => network.availability !== 'gated'))
 </script>
 
 <template>
   <section class="w mt-xxl mb-3xl px-m">
     <h2 class="mb-l">{{ title }}</h2>
     <div class="list">
-      <NuxtLink v-for="(network, slug) in networks" :href="`/${slug.toString()}-wallet`" :key="network.shortName"
+      <NuxtLink v-for="[slug, network] in availableNetworks" :href="`/${slug}-wallet`" :key="slug"
         class="bg-block lit rounded-s py-xs pl-xs pr-s link">
-        <img :src="network.icon" :alt="`${network.fullName} icon`" />
+        <img :src="network.icon" alt="" />
         <div>
           <h3 class="text-s">{{ network.fullName }}</h3>
           <p v-if="network.shortName" class="color-secondary text-xxs">{{ network.shortName }}</p>

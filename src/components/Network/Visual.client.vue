@@ -1,40 +1,7 @@
 <script setup lang="ts">
 import { Engine, Render, Runner, Bodies, Body, Composite, Events, MouseConstraint, Mouse } from 'matter-js'
 
-const networks = [
-  '/networks/ton.svg',
-  '/networks/SORA.svg',
-  '/networks/Polkadot.svg',
-  '/networks/Kusama.svg',
-  '/networks/Pendulum.svg',
-  '/networks/Moonriver.svg',
-  '/networks/Moonbeam.svg',
-  '/networks/xlayerchain.svg',
-  '/networks/homeverse.svg',
-  '/networks/Ethereum.svg',
-  '/networks/bnbchain.svg',
-  '/networks/Polygon.svg',
-  '/networks/Arbitrum.svg',
-  '/networks/Optimism.svg',
-  '/networks/Avalanche.svg',
-  '/networks/Zetachain.svg',
-  '/networks/oasys.svg',
-  '/networks/mchverse.svg',
-  '/networks/tcgverse.svg',
-  '/networks/chainverse.svg',
-  '/networks/saakuruverse.svg',
-  '/networks/yooldoverse.svg',
-  '/networks/acala.svg',
-  '/networks/Karura.svg',
-  '/networks/Bifrost.svg',
-  '/networks/Basilisk.svg',
-  '/networks/phala.svg',
-  '/networks/clover.svg',
-  '/networks/Amplitude.svg',
-  '/networks/Bitgreen.svg',
-  '/networks/Pendulum.svg',
-  '/networks/quartz.svg',
-]
+const { icons } = defineProps<{ icons: string[] }>()
 
 const parent = shallowRef()
 const canvas = shallowRef()
@@ -100,8 +67,8 @@ onMounted(async () => {
 
   const elementSize = 18
 
-  const chains = networks.map((network, i) => {
-    const size = elementSize + networks.length - i
+  const chains = icons.map((icon, i) => {
+    const size = elementSize + icons.length - i
     return Bodies.circle(Math.random() * width, Math.random() * height / 1.5, size, {
       density: 0.0006,
       frictionAir: 0.01,
@@ -109,7 +76,7 @@ onMounted(async () => {
       friction: 0.01,
       render: {
         sprite: {
-          texture: network,
+          texture: icon,
           xScale: size / 24,
           yScale: size / 24,
         }
@@ -175,7 +142,7 @@ onMounted(async () => {
   let stillTimer: ReturnType<typeof setTimeout> | undefined
   let settled = false
   let disposed = false
-  const pictures = () => Promise.all(networks.map(src => new Promise<void>(resolve => {
+  const pictures = () => Promise.all(icons.map(src => new Promise<void>(resolve => {
     const image = new Image()
     image.onload = image.onerror = () => resolve()
     image.src = src
@@ -309,7 +276,11 @@ onBeforeUnmount(() => dispose?.())
 </script>
 
 <template>
-  <div class="parent" ref="parent"><canvas ref="canvas" /></div>
+  <div class="parent" ref="parent">
+    <!-- The coins are decoration; the networks they stand for are in the
+         search list beside them. -->
+    <canvas ref="canvas" aria-hidden="true" />
+  </div>
 </template>
 
 <style scoped>
