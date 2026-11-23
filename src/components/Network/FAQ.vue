@@ -23,7 +23,7 @@ const data = computed(() => [
   },
   {
     question: "What should I do if I lost access to my wallet?",
-    answer: "Restore your wallet in Fearless Wallet with the recovery phrase you saved when you set it up. If you created it with a derivation path, such as a password (the text after /// in the path), enter that exact path in the advanced settings before you continue, or the app opens different addresses. An account you imported with its own key or seed is restored with that key or seed. Keep them safe and offline: Fearless Wallet cannot recover them for you.",
+    answer: "Restore your wallet in Fearless Wallet with the recovery phrase you saved when you set it up. If you created it with a custom derivation path, such as a password (the text after ///), enter the same path in the advanced settings before you continue, or some addresses can differ. The FAQ's import answer has the steps. An account you imported with its own key or seed is restored with that key or seed. Keep them safe and offline: Fearless Wallet cannot recover them for you.",
   },
 ])
 </script>

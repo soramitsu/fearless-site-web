@@ -86,6 +86,13 @@ try {
     const graph = JSON.parse(scripts[0][1])['@graph']
     assert.deepEqual(graph.map(node => node['@type']), types, `${path}: JSON-LD nodes`)
     assert.ok(!JSON.stringify(graph).includes('aggregateRating'), `${path}: no unsourced ratings`)
+    if (path === '/faq') {
+      // Answers come from front matter; an unquoted colon there once turned one into an object.
+      const answers = graph.find(node => node['@type'] === 'FAQPage').mainEntity.map(question => question.acceptedAnswer.text)
+      assert.ok(answers.length >= 9, '/faq: every question in the FAQ graph')
+      for (const answer of answers) assert.ok(typeof answer === 'string' && answer.length > 40, `/faq: answer is text: ${JSON.stringify(answer).slice(0, 80)}`)
+      assert.ok(answers.some(answer => answer.includes('advanced settings before you continue')), '/faq: import answer gives the recovery order')
+    }
     console.log(`Head and structured data passed: ${path}`)
   }
   const privacy = await html('/privacy/')
