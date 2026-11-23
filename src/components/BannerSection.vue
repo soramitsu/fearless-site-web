@@ -11,7 +11,12 @@ defineProps<{
 
 <template>
   <section class="w px-3xs">
-    <div class="banner bg-block rounded-s">
+    <div v-reveal class="banner bg-block lit rounded-s o-hidden">
+      <ShikibanLattice />
+      <ShikibanMarks />
+      <div class="ornament">
+        <ShikibanSolar :groups="['ring', 'hexagram']" />
+      </div>
       <div class="text">
         <h2 class="text-xxl mb-s">
           {{ title }}
@@ -21,15 +26,37 @@ defineProps<{
         </p>
       </div>
       <div class="image pt-xl px-xl">
-        <img v-bind="img" loading="lazy" />
+        <img v-bind="img" loading="lazy" width="375" height="430" />
       </div>
     </div>
   </section>
 </template>
 
 <style scoped>
+.banner {
+  position: relative;
+}
+
+.text,
+.image {
+  position: relative;
+  z-index: 1;
+}
+
 .text {
   padding: var(--space-l);
+}
+
+/* The seal's rings and triangles, drawn as the banner arrives. */
+.ornament {
+  position: absolute;
+  right: -8%;
+  top: 50%;
+  width: min(64rem, 70%);
+  aspect-ratio: 1;
+  transform: translateY(-46%);
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 .image {
@@ -42,8 +69,9 @@ defineProps<{
   aspect-ratio: 375/430;
   object-fit: cover;
   border-radius: var(--space-s) var(--space-s) 0 0;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: 0px 4rem 10rem 0px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 194, 74, 0.28);
+  box-shadow: 0px 4rem 10rem 0px rgba(8, 3, 26, 0.7);
+  height: auto;
   transform: translateY(2px);
   max-width: 40rem;
   width: 100%;

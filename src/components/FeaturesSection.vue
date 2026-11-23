@@ -17,14 +17,17 @@ const features = [{
 
 <template>
   <section class="w">
-    <h2 class="text-xxl text-center mb-xxl">
+    <h2 id="features-heading" v-reveal class="text-xxl text-center mb-xxl">
       Features
     </h2>
-    <div class="grid px-3xs">
-      <div v-for="feature in features" :key="feature.image" class="rounded-s o-hidden bg-block feature">
+    <div class="grid px-3xs" role="region" aria-labelledby="features-heading" tabindex="0">
+      <div v-for="(feature, index) in features" :key="feature.image" v-reveal="index % 2"
+        class="rounded-s o-hidden bg-block lit feature">
+        <ShikibanLattice />
+        <ShikibanMarks />
         <h3 class="text-center px-m">{{ feature.title }}</h3>
         <div class="image px-m" :class="{ 'on-top': feature.imageOnTop }">
-          <img :src="feature.image" :alt="feature.title" loading="lazy" />
+          <img :src="feature.image" :alt="feature.title" loading="lazy" width="375" height="430" />
         </div>
       </div>
     </div>
@@ -67,11 +70,25 @@ const features = [{
   aspect-ratio: 375/430;
   object-fit: cover;
   border-radius: var(--space-s) var(--space-s) 0 0;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: 0px 4rem 10rem 0px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 194, 74, 0.28);
+  box-shadow: 0px 4rem 10rem 0px rgba(8, 3, 26, 0.7);
   transform: translateY(2px);
   max-width: 36rem;
   width: 100%;
+  height: auto;
+  transition: transform var(--d-510) var(--ease-settle);
+}
+
+.feature h3,
+.feature .image {
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover: hover) {
+  .feature:hover .image:not(.on-top) img {
+    transform: translateY(-1.2rem);
+  }
 }
 
 .image.on-top {

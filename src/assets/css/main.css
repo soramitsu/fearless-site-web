@@ -4,17 +4,32 @@
 @import 'margins.css';
 @import 'typography.css';
 @import 'common.css';
+@import 'motion.css';
 @import 'rich.css';
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--fw-ink);
 }
 
+/* No background here: the ink is on <html>, and the aurora's canvas (behind
+   the page at z-index -2) would be hidden by an opaque body. */
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #000;
   color: var(--color-text-primary);
+  overflow-x: clip;
+}
+
+::selection {
+  background-color: var(--fw-pink-fill);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--fw-flight);
+  outline-offset: 3px;
+  border-radius: 0.4rem;
 }
 
 a {
@@ -26,16 +41,21 @@ a:not([class]) {
 }
 @media (hover: hover) {
   a:not([class]) {
-    transition: color 0.3s ease;
+    transition: color var(--d-255) var(--ease-glide);
   }
   a:not([class]):hover {
-    color: var(--color-accent);
+    color: var(--fw-gold);
   }
 }
 
 hr {
   border: 0;
-  background-color: #000;
   height: 1px;
-  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  background: linear-gradient(90deg, transparent, var(--color-line) 18%, var(--rim-gold) 50%, var(--color-line) 82%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

@@ -22,16 +22,6 @@ const data = computed(() => [
     answer: "If you lose access to your Fearless Wallet, don’t worry—your recovery phrase is your key to regaining access. Simply use the backup seed phrase you saved when setting up your wallet to restore your account. It's essential to keep this phrase secure and offline, as only you have control over it. Fearless Wallet cannot recover your wallet for you, so safeguarding your recovery phrase is critical for ensuring access to your assets.",
   },
 ])
-
-const activeItem = ref<number>()
-
-const toggleAccordion = (id: number) => {
-  if (activeItem.value === id) {
-    activeItem.value = undefined
-  } else {
-    activeItem.value = id
-  }
-}
 </script>
 
 <template>
@@ -39,8 +29,7 @@ const toggleAccordion = (id: number) => {
     FAQ
   </h2>
   <AccordionContainer class="w-narrow px-3xs mt-xl mb-3xl">
-    <AccordionItem v-for="(item, i) in data" :title="item.question" :key="i" :id="i" @toggle="toggleAccordion"
-      :open="i === activeItem">
+    <AccordionItem v-for="item in data" :key="item.question" :title="item.question" name="network-faq">
       {{ item.answer }}
     </AccordionItem>
   </AccordionContainer>

@@ -1,0 +1,35 @@
+import {num,seq,group,at,path,pen,circ,rect,icon,coin} from './art.mjs'
+import {dial,ticks} from './figures.mjs'
+
+export function status(ctx,width=375){return ctx.label('9:41',34,27,14,700)+at(width-81,17,seq(4,index=>rect(index*3.8,7-index*2,2.6,3+index*2,1,ctx.text))+pen('M20 2q6-5 12 0m-10 3q4-3 8 0m-6 3q2-1 4 0',ctx.text,1.7)+rect(38,0,19,10,2.5,'none',`stroke="${ctx.textMuted}"`)+rect(40,2,14,6,1.4,ctx.text)+rect(58,3,1.5,4,.75,ctx.textMuted))}
+export function ambient(ctx,w,h,r=0){const {gradient,colors}=ctx;return rect(0,0,w,h,r,colors.ink)+rect(0,0,w,h,r,gradient('dusk',[[0,colors.pink,.26],[.47,colors.plum,.36],[1,colors.ink,0]],true,'cx=".8" cy="0" r=".94"'))+rect(0,0,w,h,r,gradient('ember',[[0,colors.ember,.14],[1,colors.ink,0]],true,'cx=".03" cy=".05" r=".68"'))}
+const round=(ctx,x,y,r,mark,active=false)=>circ(x,y,r,active?ctx.pink():ctx.glass(),`stroke="${ctx.rim()}"`)+icon(mark,x,y,active?'white':ctx.textSoft||ctx.text,r*.91)
+export function home(ctx,name){const {svg,colors,text,textMuted,gold,panel,label,badge,sh,pulse,tick}=ctx
+  if(name==='back')return svg(375,812,'Wallet phone body, 9:41',ambient(ctx,375,812,48)+rect(.75,.75,373.5,810.5,47.25,'none',`stroke="${ctx.rim()}" stroke-width="1.5"`)+status(ctx)+rect(130,801,115,4,2,text))
+  if(name==='screen'){
+    const head=badge(16,56,40)+label('My main wallet',66,81,18,700)+round(ctx,292,76,19,'search')+round(ctx,341,76,19,'scan')
+    const chips=panel(16,106,143,32,16)+icon('all',33,122,gold,15)+label('All networks',47,126,13)+icon('chevron',143,122,textMuted,13)
+    const tabs=label('Assets',21,476,16,700)+label('Portfolio',101,476,16,600,textMuted)+label('NFTs',195,476,16,600,textMuted)+rect(21,485,46,2.5,1.25,'#FF4FA3')
+    const nav=panel(12,729,351,61,29)+['wallet','earn','swap','transfer','settings'].map((key,index)=>{const x=[49,113,187.5,261,326][index],color=index===0?'#FF4FA3':textMuted;return (index===2?round(ctx,x,735,22,'swap',true):icon(key,x,750,color,19))+label(['Wallet','Earn','Swap','Transfer','Settings'][index],x,774,11,700,color,'center')+(index===0?circ(x,782,2,gold):'')}).join('')
+    return svg(375,812,'My main wallet, network filter, asset tabs and wallet navigation',head+chips+tabs+nav)
+  }
+  if(name==='card'){
+    const w=343,h=196,sky=ctx.gradient('sky',[[0,'#542268'],[.34,'#D32978'],[.58,'#FF9E61'],[.7,'#E24381'],[1,'#37204D']],false,'x2=".12" y2="1"')
+    const sun=ctx.gradient('sun',[[0,'#FFF0AF'],[.15,'#FFC26E',.98],[.47,'#F88C68',.55],[1,'#E25A7B',0]],true)
+    const cloud=ctx.gradient('cloud',[[0,'#FF93C0',.88],[.28,'#EA418C',.86],[1,'#84235F',.38]],false,'x2=".1" y2="1"')
+    const clouds=path('M-20 42Q9 28 32 39Q46 31 62 42Q87 34 103 46Q125 46 143 56Q103 51 84 58Q42 59-20 54Z',cloud)+path('M147 59Q169 51 183 54Q201 43 226 49Q250 36 274 47Q307 42 331 50L356 55Q324 56 296 60Q251 63 230 58Q201 61 147 59Z',cloud)+path('M-10 112Q23 97 45 103Q71 85 102 99Q132 91 155 104Q169 101 192 108Q144 107 119 117Q84 126-10 122Z',cloud)+path('M200 107Q234 98 254 105Q272 94 289 100Q325 82 353 92V119Q324 115 307 119Q259 113 200 107Z',cloud)+path('M-20 161Q14 140 45 148Q62 127 103 140Q135 128 169 146Q195 133 216 144Q237 133 267 138Q295 121 322 133Q345 122 369 129V200H-20Z',cloud)
+    const cell=26,lattice=ctx.define('hemp',ident=>`<pattern id="${ident}" width="${cell}" height="${num(cell*sh.asanoha.height)}" patternUnits="userSpaceOnUse">${pen(sh.asanoha.lines.map(coords=>`M${coords.slice(0,2).map(v=>num(v*cell)).join(' ')}L${coords.slice(2).map(v=>num(v*cell)).join(' ')}`).join(''),gold,.7)}</pattern>`)
+    const beam=ctx.gradient('beam',[[0,'white',0],[.5,'white'],[1,'white',0]],false,'x2="1" y2="0"')
+    const mask=ctx.define('light',ident=>`<mask id="${ident}" maskUnits="userSpaceOnUse" x="0" y="0" width="343" height="196">${ctx.anim('pass',rect(-220,0,220,h,0,beam),[[0,'transform:translateX(0)'],[9000,'transform:translateX(563px)']],9000)}</mask>`)
+    const golden=at(14,97,ticks(ctx,'west',94))+at(329,97,ticks(ctx,'east',94))
+    const haze=ctx.define('haze',ident=>`<filter id="${ident}"><feGaussianBlur stdDeviation="1.4"/></filter>`)
+    const scene=rect(0,0,w,h,0,sky)+circ(280,57,84,sun)+circ(280,57,8,'#FFE3A3')+group(clouds,`filter="${haze}"`)+rect(0,0,w,h,0,ctx.gradient('scrim',[[0,colors.ink,.04],[.20,colors.ink,.66],[.30,colors.ink,.83],[.69,colors.ink,.83],[.80,colors.ink,.24],[1,colors.ink,.04]],false,'x2="1" y2="0"'))+rect(0,0,w,h,0,lattice,'opacity=".05"')+rect(0,0,w,h,0,lattice,`opacity=".32" mask="${mask}"`)+group(golden,'opacity=".38"')+rect(27,76,289,40,13,colors.ink,'opacity=".70"')+rect(77,119,189,22,11,colors.ink,'opacity=".76"')
+    const brackets=pen('M9 19V9h10m305 0h10v10M9 177v10h10m305 0h10v-10',gold,1,'opacity=".7"')+pen([1-1/sh.ratio.yamato,.5,1/sh.ratio.yamato].map(frac=>`M${num(w*frac)} 4v4m0 180v4`).join(''),gold,1,'opacity=".45"')
+    const content=badge(153.5,14,36)+label('Total balance',171.5,72,14,600,text,'center')+label('$142,000.69',171.5,110,37,'display',text,'center',true)+path('M84 133l4-7 4 7Z',sh.colors.flight)+label('+$7,503.12 · +5.3% · 24h',178,134,14,700,sh.colors.flight,'center')+panel(126,148,91,30,15,'#201333')+dial(ctx,145,163,[9,10,12,14],720,true)
+    return svg(w,h,'Illustrative wallet balance, syncing networks and live status',ctx.clip('edge',rect(0,0,w,h,17,'white'),scene)+rect(.5,.5,342,195,17,'none',`stroke="${ctx.rim()}"`)+brackets+content)
+  }
+  if(name==='actions')return svg(343,84,'Send, Receive, Buy and Swap wallet actions',['send','receive','buy','swap'].map((key,index)=>{const x=[43,129,214,300][index];let art=round(ctx,x,28,25,key,index===0);if(!index){const sheen=ctx.gradient('sheen',[[0,'white',0],[.5,'white',.26],[1,'white',0]]);art+=ctx.clip('send-disc',circ(x,28,24,'white'),ctx.anim('sheen-pass',rect(0,0,22,60,0,sheen),[[0,'transform:translateX(-12px)'],[4700,'transform:translateX(-12px)'],[5720,'transform:translateX(75px)'],[10000,'transform:translateX(75px)']]))}return art+label(key[0].toUpperCase()+key.slice(1),x,75,14,700,text,'center')}).join(''))
+  if(name==='toast')return svg(236,56,'Received, plus 250 XOR',panel(0,0,236,56,19)+circ(31,28,15,'#46323D')+icon('receive',31,28,gold,17)+pulse('arrival',31,28,10,3300)+label('Received',59,24,13,600,textMuted)+label('+250 XOR',59,44,18,700)+icon('check',211,28,gold,15))
+  const [asset,network,amount,old,fiat,percent,time]=({ 'row-eth':['ETH','Ethereum','13.0849','$44,471.09','$44,480.54','+2.22%',2900],'row-sol':['SOL','Solana','867','$92,756.90','$92,769.00','+1.08%',4300],'row-dot':['DOT','Polkadot','690','$4,286.40','$4,278.00','−0.43%',5600],'row-xor':['XOR','SORA','5,000,000','$473.05','$473.15','+1.43%',6900]})[name]
+  return svg(343,64,`Illustrative ${network} balance and fiat price update`,panel(0,0,343,64,15)+coin(asset,31,32,19)+label(asset,62,29,17,700)+label(network,62,49,13,500,textMuted)+label(amount,327,28,18,700,text,'right',true)+tick('price',old,fiat,257,49,13,time,{color:textMuted,down:asset==='DOT',width:60})+label(percent,327,49,13,700,asset==='DOT'?'#FF9F57':sh.colors.flight,'right',true))
+}

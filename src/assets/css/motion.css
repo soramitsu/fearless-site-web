@@ -1,0 +1,114 @@
+/* Shikiban motion for the site. The rules it keeps from the apps: durations
+   come from the ladder in config.css; things land with --ease-settle; gold is
+   settled, cyan is in flight; and everything here stops for visitors who ask
+   for reduced motion. The `motion` class is set on <html> by the head script
+   only when motion is allowed, so without script, or with reduced motion,
+   nothing is ever hidden waiting for an animation. */
+
+/* A number the draw-on figures tween. Browsers without @property jump
+   straight to the finished figure. */
+@property --draw {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
+/* Arrivals: tier k starts k × 45 ms later and fades in over the first 45 %. */
+.motion [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 1.6rem, 0) scale(var(--reveal-from, 0.94));
+  transform-origin: 50% 40%;
+  will-change: transform, opacity;
+}
+.motion [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    transform var(--d-510) var(--ease-settle) calc(var(--tier, 0) * 45ms),
+    opacity 230ms linear calc(var(--tier, 0) * 45ms);
+}
+/* Press: controls give under the finger and spring back. */
+.press {
+  transition: transform var(--d-180) var(--ease-settle);
+}
+.press:active {
+  transform: scale(0.94);
+  transition-duration: var(--d-90);
+}
+
+@keyframes fw-turn {
+  to {
+    transform: rotate(-1turn);
+  }
+}
+@keyframes fw-turn-cw {
+  to {
+    transform: rotate(1turn);
+  }
+}
+@keyframes fw-sheen {
+  0%,
+  84% {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(330%) skewX(-18deg);
+  }
+}
+@keyframes fw-band {
+  0% {
+    transform: translateX(-240px);
+  }
+  100% {
+    transform: translateX(var(--band-travel, 1400px));
+  }
+}
+@keyframes fw-pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+@keyframes fw-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1.2rem);
+  }
+}
+
+/* A page reached by a link lands like a later arrival in the apps. */
+.motion .page-arrive {
+  animation: fw-page-arrive var(--d-510) var(--ease-settle);
+  transform-origin: 50% 24rem;
+}
+@keyframes fw-page-arrive {
+  0% {
+    opacity: 0;
+    transform: scale(0.975);
+  }
+  45% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

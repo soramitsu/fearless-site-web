@@ -15,14 +15,49 @@
 .color-accent {
   color: var(--color-accent);
 }
+.color-gold {
+  color: var(--fw-gold);
+}
 .color-primary {
   color: var(--color-text-primary);
 }
+
+/* Night glass: the brand's card surface. */
 .bg-block {
   background-color: var(--color-bg-block);
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0) 38%);
 }
 .outline-block {
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--color-line);
+}
+
+/* Lit rim: gold on the upper left fading through pink to nothing on the
+   lower right, with a soft plum shadow. Sits on rounded glass surfaces. */
+.lit {
+  position: relative;
+  box-shadow: var(--shadow-plum), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+.lit::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid var(--color-line);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Where a mask can cut a gradient down to its edge, the plain line becomes
+   the lit rim. Elsewhere the line stays. */
+@supports (mask-composite: exclude) or (-webkit-mask-composite: xor) {
+  .lit::after {
+    border: 0;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--rim-gold) 0%, var(--rim-pink) 42%, rgba(255, 79, 163, 0) 78%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  }
 }
 
 .rounded-s {
@@ -34,4 +69,26 @@
 
 .o-hidden {
   overflow: hidden;
+}
+
+/* Round glass well that holds an icon. */
+.icon-well {
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 30%, rgba(58, 16, 96, 0.9), rgba(18, 10, 46, 0.9));
+  box-shadow: inset 0 0 0 1px rgba(255, 194, 74, 0.28), 0 0.6rem 1.8rem rgba(8, 3, 26, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }

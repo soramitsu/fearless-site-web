@@ -47,9 +47,14 @@ useSchemaOrg([
   <NetworkSection class="mb-xxl" />
   <FeaturesSection class="mb-3xl" />
   <section class="w px-3xs mb-3xl">
-    <div class="rounded-s bg-block px-l py-xxl">
+    <div v-reveal class="rounded-s bg-block lit o-hidden px-l py-xxl universal">
+      <ShikibanLattice />
+      <ShikibanMarks />
+      <div class="tunnel">
+        <ShikibanGates />
+      </div>
       <h2 class="text-xl mb-s">
-        One Universal Wallet for the supported ecosystems
+        One <span class="color-gold">Universal Wallet</span> for the supported ecosystems
       </h2>
       <p class="text-s color-secondary mb-l">
         Create or import one recovery phrase and use it across the maintained Fearless Wallet apps: iOS, Android, and
@@ -74,9 +79,60 @@ useSchemaOrg([
 </template>
 
 <style scoped>
+.universal {
+  position: relative;
+}
+
+.universal>h2,
+.universal>p,
+.universal>ul {
+  position: relative;
+  z-index: 1;
+  max-width: 82rem;
+}
+
+/* The launch's gates, seen from the side of the card: scrolling the page
+   moves the camera through them. */
+.tunnel {
+  position: absolute;
+  right: -12rem;
+  top: 50%;
+  width: 62rem;
+  aspect-ratio: 1;
+  transform: translateY(-50%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .ecosystems {
   display: grid;
   gap: var(--space-xs);
+  list-style: none;
+  padding: 0;
+}
+
+.ecosystems li {
+  position: relative;
+  padding-left: 2.4rem;
+}
+
+.ecosystems li::before {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 0.55em;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background-color: var(--fw-gold);
+  box-shadow: 0 0 1rem rgba(255, 194, 74, 0.7);
+}
+
+@media (max-width: 799px) {
+  .tunnel {
+    right: -26rem;
+    opacity: 0.28;
+  }
 }
 
 @media (min-width: 800px) {

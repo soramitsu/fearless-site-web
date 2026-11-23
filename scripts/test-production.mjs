@@ -116,6 +116,53 @@ try {
     assert.equal(response.status, 200, path)
     assert.match(response.headers.get('content-type'), /image\/svg\+xml/)
   }
+  // The Yatagarasu brand: the lockup in the header, the crow and the wallet's
+  // layers in the hero, fonts served from this site, and motion that waits
+  // for the head script instead of hiding anything in the server's HTML.
+  const home = await html('/')
+  assert.match(home, /<img[^>]*src="\/logo\.svg"[^>]*alt="Fearless Wallet"/, 'Header lockup')
+  assert.match(await (await fetch(`${base}/logo.svg`)).text(), /aria-label="Fearless"/, 'Lockup is the brand master')
+  for (const marker of ['/brand/crow-idle.webm', '/brand/crow-poster.webp', '/hero/card.svg', '/hero/row-xor.svg', "Hear the crow's call", 'Your keys. Every chain.']) {
+    assert.ok(home.includes(marker.replaceAll("'", '&#39;')) || home.includes(marker), `Home hero: ${marker}`)
+  }
+  assert.doesNotMatch(home, /<html[^>]*class=/, 'The server never sets the motion or launch class')
+  assert.doesNotMatch(home, /data-reveal/, 'Nothing is hidden for a reveal in the server HTML')
+  assert.match(await (await fetch(base + '/')).text(), /classList\.add\('motion'\)/, 'Head script enables motion')
+  for (const path of ['/', '/download', '/blog/welcome']) {
+    const body = await html(path)
+    assert.ok(!/fonts\.(googleapis|gstatic)\.com/.test(body), `${path}: no font service`)
+    assert.match(body, /rel="preload"[^>]*href="\/fonts\/sora\.woff2"|href="\/fonts\/sora\.woff2"[^>]*rel="preload"/, `${path}: display font preloaded`)
+  }
+  for (const [path, type] of [
+    ['/brand/crest.svg', /image\/svg\+xml/],
+    ['/brand/lockup-stacked.svg', /image\/svg\+xml/],
+    ['/brand/asanoha.svg', /image\/svg\+xml/],
+    ['/hero/back.svg', /image\/svg\+xml/],
+    ['/hero/screen.svg', /image\/svg\+xml/],
+    ['/features/networks.svg', /image\/svg\+xml/],
+    ['/features/send.svg', /image\/svg\+xml/],
+    ['/features/scam-warning.svg', /image\/svg\+xml/],
+    ['/features/swap.svg', /image\/svg\+xml/],
+    ['/features/stake.svg', /image\/svg\+xml/],
+    ['/fonts/sora.woff2', /font\/woff2/],
+    ['/fonts/figtree-400.woff2', /font\/woff2/],
+    ['/brand/crow-idle.mp4', /video\/mp4/],
+    ['/brand/crow-launch.webm', /video\/webm/],
+    ['/og.jpg', /image\/jpeg/],
+    ['/favicon.ico', /image\/(x-icon|vnd\.microsoft\.icon)/],
+  ]) {
+    const response = await fetch(base + path)
+    assert.equal(response.status, 200, path)
+    assert.match(response.headers.get('content-type'), type, path)
+  }
+  // Animated artwork is used as images: it must stay self-contained and must
+  // stop for visitors who ask for reduced motion.
+  for (const path of ['/hero/card.svg', '/features/send.svg', '/features/swap.svg']) {
+    const svg = await (await fetch(base + path)).text()
+    assert.match(svg, /@keyframes/, `${path}: animated`)
+    assert.match(svg, /prefers-reduced-motion:\s*reduce/, `${path}: honours reduced motion`)
+    assert.doesNotMatch(svg, /<script|<image|href="http|url\(http|@import/, `${path}: self-contained`)
+  }
   for (const path of ['/blog/missing-article', '/missing-network-wallet', '/constructor-wallet', '/release-notes/missing', '/release-notes/constructor']) {
     assert.equal((await fetch(base + path)).status, 404, path)
   }
@@ -135,7 +182,7 @@ try {
     const source = JSON.parse(await readFile(`src/public/.well-known/${name}`, 'utf8'))
     assert.deepEqual(await response.json(), source, `${name}: deployed association contract`)
   }
-  console.log('Production regression checks passed: content, metadata, assets, images, 404s, sitemaps and app associations.')
+  console.log('Production regression checks passed: content, metadata, brand, assets, images, 404s, sitemaps and app associations.')
 } catch (error) {
   console.error(logs)
   throw error

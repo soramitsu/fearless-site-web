@@ -24,29 +24,26 @@ const steps = [
   {
     number: 1,
     subtitle: "Don’t have Fearless Wallet yet?",
-    icon: "/icons/one.png",
+    icon: "/icons/animated/step-1.svg",
     textBtn: "Install Fearless Wallet",
-    classes: "img-one",
   },
   {
     number: 2,
     title: "After installation: ",
     subtitle: "Open the app and approve the dApp connection.",
-    icon: "/icons/two.png",
+    icon: "/icons/animated/step-2.svg",
     //textBtn: "Open Fearless Wallet",
   },
   {
     number: 3,
     title: "Once connected: ",
     subtitle: "Return to the dApp to continue.",
-    icon: "/icons/three.png",
+    icon: "/icons/animated/step-3.svg",
     //textBtn: "Return to dApp",
   },
 ];
 
 onMounted(() => {
-  console.log(1);
-
   deviceType = detectDeviceType();
 });
 
@@ -74,17 +71,17 @@ const handleCLick = (step: number) => {
 </script>
 
 <template>
-  <h3 class="px-l pt-3xl text-center">Connect Fearless Wallet</h3>
+  <h1 class="text-l px-l pt-3xl text-center">Connect Fearless Wallet</h1>
 
   <div class="steps-container">
     <div
       v-for="step in steps"
       :key="step.title"
-      class="bg-block rounded-s rich step"
+      class="bg-block lit rounded-s rich step"
     >
       <div class="step-content">
         <div class="step-icon">
-          <img :src="step.icon" :class="step.classes ?? 'img'" />
+          <img :src="step.icon" class="img" :alt="`Step ${step.number}`" width="96" height="96" />
         </div>
 
         <div class="step-description py-s pr-xs">
@@ -125,24 +122,22 @@ const handleCLick = (step: number) => {
 
 .step {
   width: 343px;
+  max-width: calc(100vw - 2 * var(--space-xs));
 }
 
 .step-content {
   display: flex;
 }
 
-.img-one {
-  height: 150px;
-  width: 44px;
-}
-
 .img {
-  height: 150px;
-  width: 70px;
+  height: 72px;
+  width: 72px;
 }
 
 .step-description {
   display: flex;
+  flex: 1;
+  min-width: 0;
   flex-direction: column;
   justify-content: space-evenly;
   min-height: 150px;
@@ -150,9 +145,10 @@ const handleCLick = (step: number) => {
 
 .step-btn {
   width: 200px;
+  max-width: 100%;
 }
 
 .step-title {
-  color: var(--color-link);
+  color: var(--fw-gold);
 }
 </style>

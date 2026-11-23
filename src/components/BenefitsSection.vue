@@ -3,45 +3,51 @@ const benefits = [
   {
     title: 'Self-custody',
     description: 'You and only you own your crypto. No access or control over your assets!',
-    icon: 'user'
+    icon: 'custody'
   },
   {
     title: '100% open source',
     description: 'Our website,T&Cs, GitHub repositories, are all accessible within the app—as are roadmap and dev status information on upcoming features.',
-    icon: 'github'
+    icon: 'open-source'
   },
   {
     title: 'Encryption',
     description: 'Fearless Wallet ensures top-tier security with up-to-date crypto protocols for Ethereum and Polkadot, providing robust encryption to safeguard your assets.',
-    icon: 'lock'
+    icon: 'encryption'
   },
   {
     title: 'Zero tracking',
     description: 'Fearless Wallet generates passwords and keys on your device, so only you have access to your accounts and data.',
-    icon: 'fingerprint'
+    icon: 'privacy'
   },
   {
     title: 'Wallet management',
     description: "You can select any wallet controlled by Fearless, and import or create new ones.",
-    icon: 'wallet'
+    icon: 'wallets'
   },
 ]
 </script>
 
 <template>
   <section class="w px-3xs">
-    <h2 class="text-center px-m w-narrow mb-s">
+    <h2 v-reveal class="text-center px-m w-narrow mb-s">
       <span class="color-accent">Security</span> You Can Trust, <span class="color-accent">Privacy</span> You Control
     </h2>
-    <p class="color-secondary text-s text-center px-m w-narrow mb-l">
+    <p v-reveal="1" class="color-secondary text-s text-center px-m w-narrow mb-l">
       Own you funds and data while we take care of your security - fearlessly.
     </p>
-    <div class="grid rounded-s o-hidden">
+    <div v-reveal="2" class="grid rounded-s o-hidden lit">
       <div v-for="benefit, i in benefits" :key="benefit.title" class="bg-block p-l benefit"
         :class="{ accent: i === 0 }">
+        <ShikibanLattice v-if="i === 0" />
         <div class="head">
-          <div class="icon">
-            <img :src="`/icons/${benefit.icon}.svg`" :alt="`${benefit.icon} icon`">
+          <div class="icon-wrap">
+            <div v-if="i === 0" class="seal">
+              <ShikibanSolar :groups="['ring', 'hexagram']" />
+            </div>
+            <div class="icon icon-well">
+              <img :src="`/icons/animated/${benefit.icon}.svg`" alt="" width="64" height="64" loading="lazy">
+            </div>
           </div>
           <h3 :class="{ 'text-m': i }">
             {{ benefit.title }}
@@ -78,16 +84,43 @@ const benefits = [
 .icon {
   width: var(--space-xl);
   height: var(--space-xl);
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, .6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.benefit {
+  position: relative;
+}
+
+.benefit .head,
+.benefit p {
+  position: relative;
+  z-index: 1;
+}
+
+.icon-wrap {
+  position: relative;
+}
+
+.accent .icon-wrap {
+  margin: auto;
+}
+
+/* Self-custody sits inside the seal, which is centred on its icon. */
+.seal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 142%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .icon img {
-  width: 50%;
-  height: 50%;
+  width: 64%;
+  height: 64%;
 }
 
 .accent .head {

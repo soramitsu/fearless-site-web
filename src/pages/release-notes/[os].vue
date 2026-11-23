@@ -95,7 +95,7 @@ useSchemaOrg([
 }
 
 .subnav>.router-link-exact-active {
-  background-color: #191919;
+  background-color: var(--fw-plum);
   cursor: default;
 }
 

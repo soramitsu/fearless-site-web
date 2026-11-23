@@ -20,7 +20,7 @@ const filteredNetworks = computed(() => {
             <NuxtLink v-if="network.slug" :to="`/${network.slug}-wallet`" class="rounded-xs">
               <span class="icon"><img :src="network.icon" alt="Network logo" loading="lazy" /></span>
               <span class="name">{{ network.fullName }}</span>
-              <img :src="`/icons/arrow-right-inverse.svg`" :alt="`arrow`" loading="lazy" class="arrow" />
+              <img :src="`/icons/arrow-right.svg`" alt="" loading="lazy" class="arrow" />
             </NuxtLink>
           </template>
           <template v-else>
@@ -47,7 +47,9 @@ const filteredNetworks = computed(() => {
   border: none;
   width: 100%;
   color: var(--color-text-primary);
-  background-color: rgba(0, 0, 0, .75);
+  background-color: rgba(18, 10, 46, .82);
+  box-shadow: inset 0 0 0 1px var(--color-line), inset 0 1px 0 rgba(255, 194, 74, 0.3);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   background-image: url('/icons/search.svg');
   background-size: 1.2em;
@@ -56,20 +58,20 @@ const filteredNetworks = computed(() => {
 }
 
 .list {
-  background-color: #fff;
-  color: #000;
+  background-color: var(--fw-night);
+  color: var(--fw-text);
   position: absolute;
   top: calc(100% + 2px);
   left: 0;
   right: 0;
   max-height: 24rem;
   overflow-y: auto;
-  box-shadow: 0px 1rem 3rem 0 rgba(0, 0, 0, 0.50);
+  box-shadow: 0px 1rem 3rem 0 rgba(8, 3, 26, 0.7), inset 0 0 0 1px var(--color-line);
   visibility: hidden;
   opacity: 0;
   transform: scaleY(1.02) translateY(.4rem);
   transform-origin: top center;
-  transition: opacity .3s ease, visibility .3s ease, transform .3s ease;
+  transition: opacity var(--d-180) linear, visibility var(--d-180) linear, transform var(--d-255) var(--ease-settle);
 }
 
 .list ul {
@@ -122,7 +124,7 @@ const filteredNetworks = computed(() => {
   transition: transform .3s ease, opacity .3s ease;
 }
 
-.search:has(.input:focus) .list,
+.search:focus-within .list,
 .list:hover {
   visibility: visible;
   opacity: 1;
@@ -131,7 +133,7 @@ const filteredNetworks = computed(() => {
 
 @media (hover: hover) {
   .list li a:hover {
-    background-color: #f2f2f2;
+    background-color: var(--fw-plum);
   }
 
   .list li a:hover .arrow {

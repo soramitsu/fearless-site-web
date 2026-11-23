@@ -4,7 +4,9 @@ Copyright Soramitsu Co., Ltd.
 Soramitsu-owned source code in this repository is licensed under the Apache
 License, Version 2.0 (see LICENSE).
 
-Third-party dependencies retain their own licenses and copyright notices.
+Third-party dependencies retain their own licenses and copyright notices. The
+upstream picomatch sources in vendor/picomatch-2 and vendor/picomatch-4 retain
+their MIT license.
 Third-party network and platform logos, including those in src/public/networks/
 and src/public/icons/, remain the property of their respective owners and are
 not relicensed by the root license. The Apache License does not grant trademark

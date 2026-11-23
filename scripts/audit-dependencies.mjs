@@ -1,7 +1,10 @@
 import { spawnSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import { readFileSync } from 'node:fs'
 
 const backports = JSON.parse(readFileSync(new URL('./dependency-patches.json', import.meta.url)))
+const vendored = JSON.parse(readFileSync(new URL('./vendored-dependencies.json', import.meta.url)))
+const vendoredVersions = name => Object.values(vendored[name].copies).map(copy => copy.version).sort()
 const isRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value)
 const nonemptyString = value => typeof value === 'string' && value.length > 0
 const isVersion = value => typeof value === 'string'
@@ -15,6 +18,34 @@ export function isBackportedAdvisory(entry) {
     && Array.isArray(entry.children['Tree Versions'])
     && entry.children['Tree Versions'].length === 1
     && entry.children['Tree Versions'][0] === expected.version
+}
+
+// The exemption below is only as good as the guard. Before npm is asked, every vendored copy's
+// guarded files must still match the digests reviewed with it; any change stops the audit.
+export function verifyVendoredGuards(read = path => readFileSync(new URL(`../${path}`, import.meta.url))) {
+  for (const [name, { copies }] of Object.entries(vendored)) {
+    for (const [directory, copy] of Object.entries(copies)) {
+      const packageJson = JSON.parse(read(`${directory}/package.json`))
+      if (packageJson.name !== name || packageJson.version !== copy.version) throw new Error(`${directory} is not ${name}@${copy.version}`)
+      if (!isRecord(copy.guardedFiles) || Object.keys(copy.guardedFiles).length === 0) throw new Error(`No guarded files listed for ${directory}`)
+      for (const [file, digest] of Object.entries(copy.guardedFiles)) {
+        if (createHash('sha256').update(read(`${directory}/${file}`)).digest('hex') !== digest) {
+          throw new Error(`Guarded file changed without review: ${directory}/${file}`)
+        }
+      }
+    }
+  }
+}
+
+// A vendored copy keeps its upstream version, so npm is still asked about it. Only the
+// advisory the copy guards against, reported for exactly the reviewed versions, passes.
+export function isVendoredAdvisory(entry) {
+  if (entry.source !== 'vendored-version' || !Object.hasOwn(vendored, entry.value)) return false
+  const tree = entry.children?.['Tree Versions']
+  const expected = vendoredVersions(entry.value)
+  return entry.children?.URL === vendored[entry.value].advisory
+    && Array.isArray(tree) && tree.length === expected.length
+    && [...tree].sort().every((version, index) => version === expected[index])
 }
 
 function runYarn(args) {
@@ -34,6 +65,7 @@ function patchedVersions(result) {
   if (result.status !== 0 || rows.length === 0) throw new Error('Could not enumerate installed patch locators.')
   const versions = new Map()
   const reviewedLocators = new Set()
+  const vendoredCopies = new Map()
   for (const row of rows) {
     if (!isRecord(row) || !nonemptyString(row.value) || !isRecord(row.children)
       || !(row.children.Version === null || typeof row.children.Version === 'string')) {
@@ -46,6 +78,15 @@ function patchedVersions(result) {
       const separator = reference.indexOf('#')
       if (separator === -1) throw new Error('Unexpected virtual package locator.')
       reference = reference.slice(separator + 1)
+    }
+    if (Object.hasOwn(vendored, locator[1]) && reference.startsWith('file:')) {
+      // Only the reviewed directories may supply a vendored package, at their upstream version.
+      const directory = reference.slice('file:'.length).split('#', 1)[0].replace(/^\.\//, '')
+      const copy = Object.hasOwn(vendored[locator[1]].copies, directory) ? vendored[locator[1]].copies[directory] : undefined
+      if (!copy || row.children.Version !== copy.version) throw new Error(`Unreviewed local copy: ${row.value}`)
+      if (!vendoredCopies.has(locator[1])) vendoredCopies.set(locator[1], new Set())
+      vendoredCopies.get(locator[1]).add(copy.version)
+      continue
     }
     if (!reference.startsWith('patch:')) continue
     const separator = reference.indexOf('#')
@@ -73,6 +114,11 @@ function patchedVersions(result) {
   for (const [name, patch] of Object.entries(backports)) {
     if (!versions.get(name)?.has(patch.version)) throw new Error(`Missing reviewed patch locator: ${name}@${patch.version}`)
   }
+  for (const name of Object.keys(vendored)) {
+    const found = [...(vendoredCopies.get(name) ?? [])].sort()
+    if (found.join() !== vendoredVersions(name).join()) throw new Error(`Missing reviewed vendored copy: ${name}`)
+    if (versions.has(name)) throw new Error(`A vendored package is also patched: ${name}`)
+  }
   // Yarn 4.17 can report the base version of a patched dependency. Prove that
   // every dependency edge uses the reviewed patch before classifying such a
   // finding. Merely having a patch locator alongside an unpatched one is not
@@ -90,7 +136,7 @@ function patchedVersions(result) {
     }
   }
   return {
-    requested: Object.fromEntries([...versions].map(([name, entries]) => [name, [...entries].sort()])),
+    requested: Object.fromEntries([...versions, ...vendoredCopies].map(([name, entries]) => [name, [...entries].sort()])),
     isReviewedFinding(entry) {
       const references = edges.get(entry.value) ?? []
       const dependents = entry.children.Dependents
@@ -115,7 +161,7 @@ function bulkFindings(response, requested) {
         || !(nonemptyString(advisory.id) || (Number.isSafeInteger(advisory.id) && advisory.id > 0))) {
         throw new Error('Unexpected patch registry advisory.')
       }
-      findings.push({ value: name, source: 'patched-version', children: {
+      findings.push({ value: name, source: Object.hasOwn(vendored, name) ? 'vendored-version' : 'patched-version', children: {
         URL: advisory.url,
         Issue: advisory.title,
         Severity: advisory.severity,
@@ -145,11 +191,14 @@ export async function auditDependencies(production = false, dependencies = {}) {
   if (result.status !== 0 && (result.status !== 1 || findings.length === 0)) {
     throw new Error(`Dependency audit failed (exit ${result.status}).`)
   }
-  // Yarn omits every patch: locator, including its built-in compatibility
-  // patches. Query every installed patch origin, not just our two backports.
+  // Yarn omits every patch: and file: locator, including its built-in
+  // compatibility patches. Query every installed patch origin and vendored
+  // copy, not just our two backports.
   // This intentionally includes development patch origins in production mode.
   // The package scripts run provenance and behavior tests before this audit.
   const { requested, isReviewedFinding } = patchedVersions(execute(['info', '--all', '--recursive', '--json']))
+  const verifyGuards = dependencies.verifyVendoredGuards ?? verifyVendoredGuards
+  verifyGuards()
   for (const finding of findings) {
     if (isReviewedFinding(finding)) finding.source = 'patched-version'
   }
@@ -165,12 +214,14 @@ export async function auditDependencies(production = false, dependencies = {}) {
   for (const finding of findings) {
     if (isBackportedAdvisory(finding)) {
       console.log(`Verified backport: ${finding.value} ${finding.children.URL}`)
+    } else if (isVendoredAdvisory(finding)) {
+      console.log(`Verified vendored guard: ${finding.value} ${finding.children['Tree Versions'].join(', ')} ${finding.children.URL}`)
     } else {
       failures++
       console.error(JSON.stringify(finding))
     }
   }
-  console.log(`${production ? 'Production' : 'Full'} dependency audit: ${failures} unpatched findings; ${findings.length - failures} verified backports.`)
+  console.log(`${production ? 'Production' : 'Full'} dependency audit: ${failures} unpatched findings; ${findings.length - failures} verified backports and vendored guards.`)
   return failures ? 1 : 0
 }
 
