@@ -928,6 +928,16 @@ const rows = [
     right: 15%;
     height: 70%;
   }
+
+  /* The stage bleeds 4% past the page on each side there, which put the two
+     buttons against the screen's edges; they keep the page's gutter. */
+  .call {
+    left: calc(4% + var(--space-xs));
+  }
+
+  .skip {
+    right: calc(4% + var(--space-xs));
+  }
 }
 
 @media (min-width: 800px) {

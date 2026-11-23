@@ -17,7 +17,7 @@ defineProps<{ links: Link[], columns?: 2 | 3 }>()
       :target="link.internal ? undefined : '_blank'">
       <div class="head">
         <div class="icon icon-well">
-          <img :src="`/icons/${link.icon}.svg`" :alt="`${link.icon} icon`">
+          <img :src="`/icons/${link.icon}.svg`" alt="">
         </div>
         <h2 class="text-m">
           {{ link.title }}

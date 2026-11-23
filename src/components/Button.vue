@@ -39,10 +39,12 @@ const classComponent = computed(() => {
   >
     <span class="shape"><span v-if="accent" class="sheen" /></span>
 
+    <!-- The icon is decoration: the title names the button, and a button
+         with an icon alone is named by the aria-label its user passes. -->
     <img
       v-if="icon"
       :src="`/icons/${icon}.svg`"
-      :alt="`${icon} icon`"
+      alt=""
       class="icon"
     />
 

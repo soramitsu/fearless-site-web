@@ -44,6 +44,14 @@ onBeforeUnmount(() => window.clearTimeout(showTimer))
   margin: var(--space-xs) var(--space-3xs) var(--space-3xs) auto;
 }
 
+/* On a phone the dial is on the right, so the notice keeps to the left. */
+@media (max-width: 639px) {
+  .bumper {
+    margin-left: var(--space-3xs);
+    margin-right: auto;
+  }
+}
+
 .bumper.visible {
   display: flex;
 }

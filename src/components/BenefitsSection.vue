@@ -34,7 +34,7 @@ const benefits = [
       <span class="color-accent">Security</span> You Can Trust, <span class="color-accent">Privacy</span> You Control
     </h2>
     <p v-reveal="1" class="color-secondary text-s text-center px-m w-narrow mb-l">
-      Own you funds and data while we take care of your security - fearlessly.
+      Own your funds and data while we take care of your security - fearlessly.
     </p>
     <div v-reveal="2" class="grid rounded-s o-hidden lit">
       <div v-for="benefit, i in benefits" :key="benefit.title" class="bg-block p-l benefit"
