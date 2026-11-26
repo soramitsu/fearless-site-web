@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { siteUrl } from '~/lib/siteIdentity'
+import { pageUrl } from '~/lib/siteIdentity'
 
 // A page reached by a link lands the way a later arrival does in the apps:
 // the animation restarts once the new page has rendered. The first page of a
@@ -11,10 +11,10 @@ let first = true
 // Every page names its own address, and carries the organization and the
 // website in its structured data (a page adds its own nodes).
 const route = useRoute()
-const pageUrl = computed(() => `${siteUrl}${route.path.replace(/\/+$/, '') || '/'}`)
+const url = computed(() => pageUrl(route.path))
 useHead({
-  link: [{ key: 'canonical', rel: 'canonical', href: pageUrl }],
-  meta: [{ key: 'og:url', property: 'og:url', content: pageUrl }],
+  link: [{ key: 'canonical', rel: 'canonical', href: url }],
+  meta: [{ key: 'og:url', property: 'og:url', content: url }],
 })
 useSchemaOrg()
 

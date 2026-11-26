@@ -10,6 +10,8 @@ useSeoMeta({
   ogDescription: description,
   twitterDescription: description
 })
+
+useSchemaOrg([{ '@type': 'ContactPage', inLanguage: 'en-US', name: 'Help & Support', description }])
 </script>
 
 <template>

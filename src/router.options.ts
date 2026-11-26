@@ -25,9 +25,11 @@ const scrollBehavior: RouterScrollBehavior = (to, from, savedPosition) => {
   const nuxtApp = useNuxtApp()
   const router = useRouter()
 
-  // The same page: only the hash changed.
+  // The same page: only the hash or query changed. Back and Forward return to
+  // the place the reader left, as a browser does; a followed link scrolls.
   if (to.path.replace(/\/$/, '') === from.path.replace(/\/$/, '')) {
-    if (from.hash && !to.hash) return savedPosition ?? { left: 0, top: 0 }
+    if (savedPosition) return { ...savedPosition, behavior: 'instant' }
+    if (from.hash && !to.hash) return { left: 0, top: 0 }
     if (to.hash) return { el: to.hash, top: marginTop(to.hash) }
     return false
   }

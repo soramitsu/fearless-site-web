@@ -26,7 +26,6 @@ useSchemaOrg([
     "@type": "FAQPage",
     "name": "Fearless Wallet Frequently Asked Questions",
     "description": "Answers to common questions about the safety, functionality, and features of Fearless Wallet.",
-    "url": "https://www.fearlesswallet.io/faq",
     "mainEntity": data.value?.map((item) => (
       {
         "@type": "Question",

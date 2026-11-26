@@ -5,6 +5,7 @@ description: 'Fearless Wallet is a user-friendly, multi-chain wallet that empowe
 keywords: 'Fearless Wallet, Decentralized Finance (DeFi), Multi-chain Wallet, Crypto Wallet, Web3, Blockchain, Polkadot, Ethereum, Security, Staking, DEX, Polkaswap, Google Account, Crypto Assets, Digital Assets'
 cover: /blog/welcome/cover.jpg
 og: /blog/welcome/og.jpg
+ogAlt: 'Fearless DeFi Wallet in a browser window and on a phone, with the words “Stay Fearless”'
 ---
 
 In the fast-evolving world of digital finance, Fearless Wallet stands out as a new way to take control of your assets. Imagine a wallet that lets you manage your digital wealth across different blockchains with ease and security. This is what we’re building at Fearless Wallet—a simple, powerful tool that puts you in charge of your financial future.

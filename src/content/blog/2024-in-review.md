@@ -7,6 +7,7 @@ cover: https://miro.medium.com/v2/resize:fit:1280/format:webp/1*S6otWffefvaGOqk7
 og: https://miro.medium.com/v2/resize:fit:1280/format:webp/1*S6otWffefvaGOqk7NtHHhA.jpeg
 ogWidth: 1280
 ogHeight: 720
+ogAlt: 'A winged bird above the words “Year in Review”'
 ---
 
 **Expanded networks, Nomis Multi-Chain score integration, Reef staking, TON support, asset management upgrades, and more.**

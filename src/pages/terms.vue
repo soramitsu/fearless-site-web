@@ -12,6 +12,8 @@ useSeoMeta({
   twitterDescription: description
 })
 
+useSchemaOrg([defineWebPage({ inLanguage: 'en-US', name: 'Terms of Service', description })])
+
 // The document's path is given below, not read from the route: while a link
 // is being followed the route is still the page being left, and the other
 // legal page's text would be fetched and kept. The head above is this page's

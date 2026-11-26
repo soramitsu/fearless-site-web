@@ -69,6 +69,11 @@ try {
     ['/faq', 'answers to all your questions', ['Organization', 'WebSite', 'FAQPage']],
     ['/blog/welcome', '', ['Organization', 'WebSite', 'Article']],
     ['/nexus-wallet', 'mainnet transfers are not enabled', ['Organization', 'WebSite', 'Article']],
+    ['/blog', 'Explore the Fearless Wallet blog', ['Organization', 'WebSite', 'CollectionPage']],
+    ['/privacy', 'How SORAMITSU collects', ['Organization', 'WebSite', 'WebPage']],
+    ['/terms', 'The End User License Agreement', ['Organization', 'WebSite', 'WebPage']],
+    ['/support', 'Get help with Fearless Wallet', ['Organization', 'WebSite', 'ContactPage']],
+    ['/ton-connect', 'on iOS or Android', ['Organization', 'WebSite', 'WebPage']],
   ]) {
     const response = await fetch(base + path)
     const page = await response.text()
@@ -86,6 +91,11 @@ try {
     const graph = JSON.parse(scripts[0][1])['@graph']
     assert.deepEqual(graph.map(node => node['@type']), types, `${path}: JSON-LD nodes`)
     assert.ok(!JSON.stringify(graph).includes('aggregateRating'), `${path}: no unsourced ratings`)
+    // The page's own node names the same address as the canonical link.
+    const ownNodes = graph.filter(node => ['WebPage', 'FAQPage', 'CollectionPage', 'ContactPage', 'Article'].includes(node['@type']))
+    assert.equal(ownNodes.length, 1, `${path}: one node for the page itself`)
+    assert.equal(ownNodes[0].url || ownNodes[0].mainEntityOfPage, url, `${path}: ${ownNodes[0]['@type']} address`)
+    assert.ok(!JSON.stringify(graph).includes('www.fearlesswallet.io'), `${path}: no www address in structured data`)
     if (path === '/faq') {
       // Answers come from front matter; an unquoted colon there once turned one into an object.
       const answers = graph.find(node => node['@type'] === 'FAQPage').mainEntity.map(question => question.acceptedAnswer.text)
@@ -95,6 +105,28 @@ try {
     }
     console.log(`Head and structured data passed: ${path}`)
   }
+  // The router also answers other spellings of an address; each names the
+  // sitemap's lowercase address without a trailing slash, everywhere.
+  for (const [variant, path] of [['/download/', '/download'], ['/Support', '/support'], ['/FAQ/', '/faq']]) {
+    const response = await fetch(base + variant, { headers: { accept: 'text/html' } })
+    assert.equal(response.status, 200, `${variant}: status`)
+    const page = await response.text()
+    const url = `https://fearlesswallet.io${path}`
+    assert.match(page, new RegExp(`<link[^>]*rel="canonical"[^>]*href="${url}"`), `${variant}: canonical`)
+    assert.match(page, new RegExp(`<meta[^>]*property="og:url"[^>]*content="${url}"`), `${variant}: og:url`)
+    const graph = JSON.parse(page.match(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/)[1])['@graph']
+    assert.equal(graph[2].url, url, `${variant}: structured data address`)
+    console.log(`Address variant passed: ${variant}`)
+  }
+  // A post's share image is described by its own front matter, the team that
+  // writes the posts is the organization, and an update is dated.
+  const november = await (await fetch(`${base}/blog/november-2026-update`)).text()
+  assert.match(november, /<meta[^>]*property="og:image:alt"[^>]*content="The Fearless crow beside/, 'November post: share image description')
+  assert.match(november, /<meta[^>]*name="twitter:image:alt"[^>]*content="The Fearless crow beside/, 'November post: X card image description')
+  const article = JSON.parse(november.match(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/)[1])['@graph'].find(node => node['@type'] === 'Article')
+  assert.deepEqual(article.author, { '@id': 'https://fearlesswallet.io/#organization' }, 'November post: author')
+  assert.match(String(article.dateModified), /^2026-11-26/, 'November post: dateModified')
+  assert.match(november.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, ''), /Updated Thu, Nov 26, 2026/, 'November post: visible update date')
   const privacy = await html('/privacy/')
   for (const disclosure of [
     'Browser extension privacy supplement',
@@ -134,6 +166,11 @@ try {
     assert.deepEqual(linkHrefs(body, 'Download browser extension'), [chromeExtensionUrl], `${path}: extension link`)
     assert.deepEqual(linkHrefs(body, mobileText), ['/download'], `${path}: mobile app link`)
   }
+  // TON Connect works in the phone apps; the extension's store release does
+  // not have it yet, so the guide links to the App Store and Google Play.
+  const tonConnect = await html('/ton-connect')
+  assert.deepEqual(linkHrefs(tonConnect, 'Download for iOS'), ['https://apps.apple.com/us/app/fearless-wallet/id1537251089'], '/ton-connect: iOS link')
+  assert.deepEqual(linkHrefs(tonConnect, 'Download for Android'), ['https://play.google.com/store/apps/details?id=jp.co.soramitsu.fearless'], '/ton-connect: Android link')
   for (const path of ['/', '/download', '/bitcoin-wallet', '/blog/welcome', '/blog/2024-in-review', '/blog/zchains', '/ton-connect']) {
     const body = await html(path)
     assert.ok(!body.includes('qrcodes.pro'), `${path}: no expired short links`)

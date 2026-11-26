@@ -17,6 +17,8 @@ useSeoMeta({
 useHead({
   meta: [{ name: 'keywords', content: keywords }]
 })
+
+useSchemaOrg([{ '@type': 'CollectionPage', inLanguage: 'en-US', name: 'Fearless Wallet Blog', description }])
 </script>
 
 <template>

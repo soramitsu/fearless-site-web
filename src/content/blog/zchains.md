@@ -5,6 +5,7 @@ description: 'Fearless Wallet announced support for ZChains in August 2024. The 
 keywords: 'Fearless Wallet, ZChains, multi-chain wallet, EVM, Layer 1, cryptocurrency, transactions, TaskOn, prizes, social media, participation'
 cover: /blog/zchains/cover.jpg
 og: /blog/zchains/og.jpg
+ogAlt: 'The ZChains and Fearless DeFi Wallet logos'
 ---
 
 **The 2024 TaskOn campaign has ended.**

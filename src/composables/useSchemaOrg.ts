@@ -5,12 +5,9 @@
 // writes the graph itself: the organization and the website on every page,
 // plus whatever nodes the page passes in.
 
-import { siteIdentity, siteUrl } from '~/lib/siteIdentity'
+import { organizationId, pageUrl, siteIdentity, siteUrl, websiteId } from '~/lib/siteIdentity'
 
 type SchemaNode = Record<string, unknown>
-
-const organizationId = `${siteUrl}/#organization`
-const websiteId = `${siteUrl}/#website`
 
 const organization: SchemaNode = {
   '@type': 'Organization',
@@ -38,13 +35,9 @@ const website: SchemaNode = {
 
 const pageTypes = new Set(['WebPage', 'FAQPage', 'CollectionPage', 'AboutPage', 'ContactPage'])
 
-function pageUrl(path: string) {
-  const clean = path.split(/[?#]/)[0] || '/'
-  return clean === '/' ? `${siteUrl}/` : `${siteUrl}${clean}`
-}
-
-// The page's own node gets its address and links back to the site; an
-// article gets its page and publisher. Values the page sets win.
+// The page's own node gets its address (the canonical one, see pageUrl) and
+// links back to the site; an article gets its page and publisher. Values the
+// page sets win, so a page should not set its own url.
 function complete(node: SchemaNode, url: string): SchemaNode {
   const type = node['@type']
   if (typeof type === 'string' && pageTypes.has(type)) {
@@ -81,7 +74,7 @@ export function useSchemaOrg(nodes: SchemaNode[] = []) {
       {
         key: 'schema-org-graph',
         type: 'application/ld+json',
-        innerHTML: serializeSchemaOrg(schemaOrgGraph(nodes, route.path)),
+        innerHTML: computed(() => serializeSchemaOrg(schemaOrgGraph(nodes, route.path))),
       },
     ],
   })
