@@ -1,13 +1,15 @@
 ---
 title: 'What’s New in Fearless Wallet: November 2026'
 date: 2026-11-23
+updated: 2026-11-26
 description: 'Explore the new Fearless Wallet design, Bitcoin and Solana in all three apps, and DOT and KSM staking on Asset Hub for iOS and Android.'
 keywords: 'Fearless Wallet, Yatagarasu, Bitcoin wallet, Solana wallet, Asset Hub staking, Polkadot staking, Kusama staking, WalletConnect, TON, SORA Nexus, Taira, self-custody wallet, open source wallet, Chrome extension, iOS, Android'
 cover: /blog/november-2026-update/cover.jpg
 og: /blog/november-2026-update/og.jpg
+ogAlt: 'The Fearless crow beside the words “A new look. Bitcoin and Solana in every app”'
 ---
 
-Over the past few weeks, all three Fearless Wallet apps received major updates. Here is what you get with iOS 4.2.4, Android 4.3.7 and Chrome extension 4.2.10.
+Over the past few weeks, all three Fearless Wallet apps received major updates. Here is what you get with iOS 4.2.4, Android 4.3.9 and Chrome extension 4.2.10.
 
 ## A new look: the Yatagarasu
 
@@ -47,7 +49,7 @@ On a wide iPad window, your balance and asset list can appear side by side.
 
 ## Staking on Asset Hub
 
-Polkadot and Kusama staking has moved to Asset Hub. On iOS and Android, stake DOT on Polkadot Asset Hub and KSM on Kusama Asset Hub. You can bond, nominate validators, unbond, rebond, withdraw unlocked funds, claim available payouts and join a nomination pool.
+Polkadot and Kusama staking has moved to Asset Hub. On iOS and Android, stake DOT on Polkadot Asset Hub and KSM on Kusama Asset Hub. You can bond, nominate validators, unbond, rebond, withdraw unlocked funds and claim available payouts. On Android, you can also join a nomination pool.
 
 On iOS, stake held under a separate relay-chain key and rewards from past validators may be missing from the display.
 
@@ -58,6 +60,7 @@ On iOS, stake held under a separate relay-chain key and rewards from past valida
 - The Chrome extension uses much less CPU and network while you are not using it, and downloads less when it starts.
 - On iOS, Bitcoin balances refresh sooner when the first data service is slow.
 - Android fixes crashes when opening transaction history or switching nodes from Chain accounts.
+- Android 4.3.8 fixes crashes when sending to an EVM address, on the home screen of an EVM-only wallet, and in TON Connect and NFTs. Android 4.3.9 can be installed from Google Play on more devices.
 
 ## Connecting to apps
 

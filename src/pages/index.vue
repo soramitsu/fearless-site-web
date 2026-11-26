@@ -64,13 +64,13 @@ useSchemaOrg([
       <ul class="ecosystems text-s color-secondary">
         <li>Bitcoin native SegWit accounts for BTC receive, send, balance, and history.</li>
         <li>Solana accounts, SPL Token visibility, and browser-extension dApp connection support.</li>
-        <li>TON accounts, with TON Connect for TON apps.</li>
+        <li>TON accounts in all three apps, with TON Connect for TON apps on iOS and Android.</li>
         <li>SORA Nexus and Taira accounts: Taira testnet now, Nexus mainnet transfers once they are enabled.</li>
       </ul>
     </div>
   </section>
   <BannerSection title="Earn with Staking"
-    description="Stake across 7+ networks, earn rewards, and contribute to network security." :img="{
+    description="Stake DOT on Polkadot Asset Hub and KSM on Kusama Asset Hub in the iOS and Android apps, earn rewards, and help secure the networks." :img="{
       src: '/features/stake.svg',
       alt: 'Staking'
     }" class="mb-3xl" />

@@ -85,7 +85,7 @@ useSchemaOrg([
   </div>
 
   <p class="w-narrow px-l mb-xxl">
-    Versions covered are iOS 4.2.4, Android 4.3.7 and Chrome extension 4.2.10. Read more in
+    Versions covered are iOS 4.2.4, Android 4.3.9 and Chrome extension 4.2.10. Read more in
     <NuxtLink to="/blog/november-2026-update">What’s New in Fearless Wallet: November 2026</NuxtLink> and the
     <NuxtLink to="/release-notes">release notes</NuxtLink>.
   </p>

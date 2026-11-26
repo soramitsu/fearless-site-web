@@ -13,7 +13,7 @@ const platforms = {
   },
   android: {
     name: 'Android',
-    version: '4.3.7',
+    version: '4.3.9',
     store: 'Google Play',
     storeUrl: androidAppUrl,
     title: 'Fearless Wallet Release Notes for Android - New Features & Updates',
