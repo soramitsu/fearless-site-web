@@ -44,7 +44,9 @@ main:focus {
 }
 
 /* A link in running text. NuxtLink writes an empty class attribute, so that
-   counts as no class too. */
+   counts as no class too. It is underlined as well as coloured, the way the
+   update banner and Help & Support already show links: cyan alone sits too
+   close to the body text for a reader who does not see the hue (WCAG 1.4.1). */
 a {
   color: inherit;
   text-decoration: none;
@@ -52,6 +54,9 @@ a {
 a:not([class]),
 a[class=''] {
   color: var(--color-link);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
 }
 @media (hover: hover) {
   a:not([class]),

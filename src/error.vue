@@ -3,6 +3,18 @@ const props = defineProps<{ error?: { statusCode?: number } }>()
 const missing = computed(() => props.error?.statusCode === 404)
 const heading = computed(() => missing.value ? 'Page not found' : 'Something went wrong')
 
+// A link followed inside the site that leads here replaces the whole app, so
+// the page announces its heading itself, as app.vue does for other pages.
+// Arriving here from the server (a typed or shared address) needs no
+// announcement: the browser reads the new page.
+const announcement = ref('')
+const arrivedFromServer = useNuxtApp().isHydrating
+onMounted(async () => {
+  if (arrivedFromServer) return
+  await nextTick()
+  announcement.value = heading.value
+})
+
 // The page says what it is in the tab and to a search engine, and keeps the
 // site's header and footer so a visitor can go on from here.
 useHead({
@@ -35,6 +47,7 @@ useHead({
   </main>
   <Footer />
   <DynamicBackground />
+  <p class="visually-hidden" role="status" aria-live="polite" aria-atomic="true">{{ announcement }}</p>
 </template>
 
 <style scoped>
