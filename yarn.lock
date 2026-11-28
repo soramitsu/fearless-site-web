@@ -2822,30 +2822,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unhead/schema-org@npm:^2.0.11":
-  version: 2.1.17
-  resolution: "@unhead/schema-org@npm:2.1.17"
-  dependencies:
-    ufo: "npm:^1.6.3"
-    unhead: "npm:2.1.17"
-  peerDependencies:
-    "@unhead/react": ^2.1.17
-    "@unhead/solid-js": ^2.1.17
-    "@unhead/svelte": ^2.1.17
-    "@unhead/vue": ^2.1.17
-  peerDependenciesMeta:
-    "@unhead/react":
-      optional: true
-    "@unhead/solid-js":
-      optional: true
-    "@unhead/svelte":
-      optional: true
-    "@unhead/vue":
-      optional: true
-  checksum: 10c0/05941e403d1d07f1477f2d9424f191517caa604c82f5a1c8f444c3bad3c8b31037187e5daa35c607a6b1c22112cf29086a7cd3e648762e372dd996633754d116
-  languageName: node
-  linkType: hard
-
 "@unhead/schema@npm:1.11.20, @unhead/schema@npm:^1.7.0":
   version: 1.11.20
   resolution: "@unhead/schema@npm:1.11.20"
@@ -7284,7 +7260,6 @@ __metadata:
     "@unhead/vue": "npm:^2.1.15"
     matter-js: "npm:^0.20.0"
     nuxt: "npm:4.6.4"
-    nuxt-schema-org: "npm:5.0.6"
     ogl: "npm:^1.0.8"
     remark-breaks: "npm:^4.0.0"
     rolldown: "npm:1.2.15"
@@ -7296,26 +7271,6 @@ __metadata:
     vue-tsc: "npm:^3.3.5"
   languageName: unknown
   linkType: soft
-
-"nuxt-schema-org@npm:5.0.6":
-  version: 5.0.6
-  resolution: "nuxt-schema-org@npm:5.0.6"
-  dependencies:
-    "@nuxt/kit": "npm:^3.17.5"
-    "@unhead/schema-org": "npm:^2.0.11"
-    defu: "npm:^6.1.4"
-    nuxt-site-config: "npm:^3.2.2"
-    pathe: "npm:^2.0.3"
-    pkg-types: "npm:^2.1.0"
-    sirv: "npm:^3.0.1"
-  peerDependencies:
-    "@unhead/vue": ^2.0.7
-  peerDependenciesMeta:
-    "@unhead/vue":
-      optional: true
-  checksum: 10c0/6f86d6b3940c21b30a9050f90fc85b21c75c0b103a3b95d9317728a95e0df232e5da27224319569e322ebda74b1f1b62cabf59b3271d4a5b220f747d69dfb154
-  languageName: node
-  linkType: hard
 
 "nuxt-site-config-kit@npm:3.2.21":
   version: 3.2.21

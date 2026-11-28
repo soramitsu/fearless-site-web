@@ -12,7 +12,7 @@ const { title, href, icon, external } = defineProps<{
     <div class="title">
       {{ title }}
     </div>
-    <img :src="`/icons/${icon || external ? 'arrow' : 'arrow-right'}.svg`" :alt="`${icon} icon`" class="icon">
+    <img :src="`/icons/${icon || external ? 'arrow' : 'arrow-right'}.svg`" alt="" class="icon">
   </NuxtLink>
 </template>
 

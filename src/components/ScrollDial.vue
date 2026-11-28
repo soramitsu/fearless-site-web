@@ -91,6 +91,16 @@ onBeforeUnmount(() => {
   transition: opacity var(--d-180) linear;
 }
 
+/* On a phone the left edge is where headings and text begin, and the dial
+   covered their first letters as they scrolled past. It sits on the right
+   there, where lines end; the cookie notice leaves it that column. */
+@media (max-width: 639px) {
+  .scroll-dial {
+    left: auto;
+    right: var(--space-xs);
+  }
+}
+
 /* At the end of the page the dial's centre fills instead. */
 .scroll-dial:has(.settled) .arrow {
   color: var(--fw-ink);

@@ -26,7 +26,6 @@ useSchemaOrg([
     "@type": "FAQPage",
     "name": "Fearless Wallet Frequently Asked Questions",
     "description": "Answers to common questions about the safety, functionality, and features of Fearless Wallet.",
-    "url": "https://www.fearlesswallet.io/faq",
     "mainEntity": data.value?.map((item) => (
       {
         "@type": "Question",
@@ -45,7 +44,7 @@ useSchemaOrg([
     Fearless Wallet <span class="color-accent">FAQ</span>
   </h1>
   <AccordionContainer class="w-narrow px-3xs my-xxl">
-    <AccordionItem v-for="item in data" :key="item.question" :title="item.question" name="wallet-faq">
+    <AccordionItem v-for="item in data" :key="item.question" :title="item.question" name="wallet-faq" :level="2">
       <ContentRenderer :value="item" />
     </AccordionItem>
   </AccordionContainer>

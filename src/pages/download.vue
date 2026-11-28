@@ -22,7 +22,7 @@ const links = [{
 {
   icon: "github",
   title: "Fearless Wallet APK for Android",
-  description: "Download the Fearless Wallet APK directly from GitHub for your Android device.",
+  description: "Download the APK from GitHub releases. Google Play gets new versions first; the GitHub build can be older.",
   href: androidApkUrl,
 }]
 
@@ -50,35 +50,23 @@ useSchemaOrg([
     "@type": "WebPage",
     inLanguage: "en-US",
     name: 'Download Fearless Wallet',
-    description: 'Download the Fearless Wallet app to securely manage your cryptocurrencies and digital assets.',
+    description,
     mainEntity: {
       "@type": "SoftwareApplication",
       name: "Fearless Wallet",
-      operatingSystem: "iOS, Android",
-      applicationCategory: "Wallet",
-      description: "Fearless Wallet is an open-source self-custody wallet for managing supported cryptocurrencies.",
-      downloadUrl: "https://www.fearlesswallet.io/download",
-      softwareVersion: "1.0.0",
-      releaseNotes: "Universal Wallet release track with Bitcoin, Solana, TON, EVM, Polkadot, and SORA ecosystem support.",
+      operatingSystem: "iOS, Android, Chrome",
+      applicationCategory: "FinanceApplication",
+      description: "Fearless Wallet is an open-source self-custody wallet for browser, iOS, and Android.",
+      downloadUrl: "https://fearlesswallet.io/download",
+      installUrl: [chromeExtensionUrl, iosAppUrl, androidAppUrl],
+      isAccessibleForFree: true,
       offers: {
         "@type": "Offer",
-        url: "https://www.fearlesswallet.io/download",
+        url: "https://fearlesswallet.io/download",
         priceCurrency: "USD",
-        price: "0.00",
-        itemCondition: "https://schema.org/NewCondition",
-        availability: "https://schema.org/InStock"
+        price: "0"
       },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.8",
-        ratingCount: "1200"
-      },
-      image: {
-        "@type": "ImageObject",
-        url: "https://fearlesswallet.io/og.jpg",
-        width: 1200,
-        height: 630
-      }
+      image: "https://fearlesswallet.io/icon-512.png"
     }
   }
 ])
@@ -99,7 +87,9 @@ useSchemaOrg([
     <p>
       Welcome to the official download page for Fearless Wallet. The maintained wallet apps are the browser extension,
       the iOS app, and the Android app. Each app is being aligned around Universal Wallet support so one recovery phrase
-      can restore your supported accounts across Bitcoin, Solana, TON, EVM, Polkadot/Substrate, and SORA ecosystems.
+      gives you accounts across Bitcoin, Solana, TON, EVM, Polkadot/Substrate, and SORA ecosystems. If you created
+      your wallet with a custom derivation passphrase (the text after /// in its derivation path), keep it with your
+      phrase: without it, some addresses can differ.
     </p>
 
     <hr>

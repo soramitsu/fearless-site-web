@@ -8,5 +8,6 @@ export const androidAppUrl = 'https://play.google.com/store/apps/details?id=jp.c
 export const androidApkUrl = 'https://github.com/soramitsu/fearless-Android/releases'
 export const downloadPagePath = '/download'
 
-// The browser extension version the update banner asks everyone to install.
-export const minimumExtensionVersion = '3.0.9'
+// The browser extension version the update banner asks everyone to install:
+// the Chrome Web Store's current release (4.2.10, updated 17 November 2026).
+export const minimumExtensionVersion = '4.2.10'

@@ -1,4 +1,4 @@
-`Effective Date: 2021-02-02`
+Effective Date: 2021-02-02
 
 Browser extension supplement effective 25 October 2026, for release 4.2.0.
 

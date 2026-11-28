@@ -8,9 +8,10 @@ useSeoMeta({
   twitterTitle: title,
   description,
   ogDescription: description,
-  twitterDescription: description,
-  ogUrl: 'https://fearlesswallet.io/support/'
+  twitterDescription: description
 })
+
+useSchemaOrg([{ '@type': 'ContactPage', inLanguage: 'en-US', name: 'Help & Support', description }])
 </script>
 
 <template>

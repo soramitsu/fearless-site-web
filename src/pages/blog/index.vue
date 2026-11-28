@@ -17,6 +17,8 @@ useSeoMeta({
 useHead({
   meta: [{ name: 'keywords', content: keywords }]
 })
+
+useSchemaOrg([{ '@type': 'CollectionPage', inLanguage: 'en-US', name: 'Fearless Wallet Blog', description }])
 </script>
 
 <template>
@@ -26,10 +28,11 @@ useHead({
   <section class="grid w px-3xs mb-xxl">
     <ContentList :query="{ sort: [{ 'date': -1 }] }" v-slot="{ list }" path="/blog">
       <NuxtLink v-for="(article, index) in list" :key="index" :to="article._path" class="link rounded-s bg-block p-xxs">
-        <NuxtImg :src="article.cover" :alt="article.title || 'Article cover'" class="cover rounded-xs" />
+        <NuxtImg :src="article.cover" alt="" class="cover rounded-xs" width="640" height="360" densities="x1 x2" quality="75"
+          :loading="index > 1 ? 'lazy' : undefined" />
         <div class="px-s pt-s pb-xs">
           <h2 class="text-m mb-3xs">{{ article.title }}</h2>
-          <p class="text-xs color-secondary">{{ (new Date(article.date)).toDateString() }}</p>
+          <p class="text-xs color-secondary">{{ formatPostDate(article.date) }}</p>
         </div>
       </NuxtLink>
     </ContentList>
@@ -47,6 +50,8 @@ useHead({
 }
 
 .cover {
+  width: 100%;
+  height: auto;
   aspect-ratio: 16/9;
   object-fit: cover;
 }
@@ -60,7 +65,7 @@ useHead({
 
 @media (hover:hover) {
   .link {
-    transition: background-color .3s ease;
+    transition: background-color var(--d-255) var(--ease-glide);
   }
 
   .link:hover {

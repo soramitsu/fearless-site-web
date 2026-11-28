@@ -1,14 +1,16 @@
 <script setup lang="ts">
-defineProps<{ title: string, name: string }>()
+// `level` is the question's heading level: 3 under a section heading (the
+// default), 2 where the questions come straight after the page's title.
+withDefaults(defineProps<{ title: string, name: string, level?: 2 | 3 }>(), { level: 3 })
 </script>
 
 <template>
   <details :name="name" class="item bg-block lit rounded-s px-m">
     <summary>
-      <h3 class="text-m py-m">
+      <component :is="`h${level}`" class="title text-m py-m">
         {{ title }}
         <span class="icon" aria-hidden="true"></span>
-      </h3>
+      </component>
     </summary>
     <div class="pb-m text-s color-secondary rich">
       <slot />
@@ -38,11 +40,14 @@ summary::-webkit-details-marker {
   display: none;
 }
 
-summary h3 {
+/* The same weight and tracking at either heading level. */
+summary .title {
   display: grid;
   gap: var(--space-xs);
   grid-template-columns: 1fr auto;
   align-items: center;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 .icon {

@@ -3,11 +3,14 @@ title: 'Fearless Wallet 2024 Year in Review'
 date: 2024-12-31
 description: 'Expanded networks, Nomis Multi-Chain score integration, Reef staking, TON support, asset management upgrades, and more.'
 keywords: 'Fearless Wallet, TON, The Open Network, Decentralized Finance (DeFi), Multi-chain Wallet, Crypto Wallet, Web3, Blockchain, Polkadot, Ethereum, Security, Staking, DEX, Polkaswap, Google Account, Crypto Assets, Digital Assets'
-cover: https://miro.medium.com/v2/resize:fit:4800/format:webp/1*S6otWffefvaGOqk7NtHHhA.jpeg
-og: https://miro.medium.com/v2/resize:fit:4800/format:webp/1*S6otWffefvaGOqk7NtHHhA.jpeg
+cover: https://miro.medium.com/v2/resize:fit:1280/format:webp/1*S6otWffefvaGOqk7NtHHhA.jpeg
+og: https://miro.medium.com/v2/resize:fit:1280/format:webp/1*S6otWffefvaGOqk7NtHHhA.jpeg
+ogWidth: 1280
+ogHeight: 720
+ogAlt: 'A winged bird above the words “Year in Review”'
 ---
 
-### Expanded networks, Nomis Multi-Chain score integration, Reef staking, TON support, asset management upgrades, and more.
+**Expanded networks, Nomis Multi-Chain score integration, Reef staking, TON support, asset management upgrades, and more.**
 
 ---
 
@@ -49,7 +52,7 @@ Major updates to the desktop app included:
 
 ### Polkaswap Liquidity Pools
 
-![Polkaswap Liquidity Pools](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*tnLsVM-W9O8EsHcsktDwlQ.jpeg)
+![Polkaswap Liquidity Pools](https://miro.medium.com/v2/resize:fit:1280/format:webp/1*tnLsVM-W9O8EsHcsktDwlQ.jpeg)
 
 The Fearless Wallet browser extension fully integrates with Polkaswap liquidity pools, letting users seamlessly manage their liquidity on the SORA Mainnet. This integration simplifies DeFi operations and makes interacting with decentralized liquidity platforms easier.
 
@@ -59,7 +62,7 @@ Real-time Chainlink price feeds were integrated for major assets, including $ETH
 
 ### Nomis Multi-Chain Score
 
-![Nomis Multi-Chain Score](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*yUVLPqZ2mi39DyOl2m6bTA.jpeg)
+![Nomis Multi-Chain Score](https://miro.medium.com/v2/resize:fit:1280/format:webp/1*yUVLPqZ2mi39DyOl2m6bTA.jpeg)
 
 Fearless Wallet integrated the Nomis multi-chain score system, enabling users to monitor blockchain activities across Ethereum, Polygon, and BNB Smart Chain networks. This feature helps users detect low-activity addresses and protect themselves against threats, scams, and Sybil attacks.
 
@@ -77,7 +80,7 @@ Integration with OKLink’s data provider added advanced analytics and transacti
 
 ### Dwellir Integration
 
-![Dwellir Integration](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*lU9Y51qTTLkBEZj1PbCadw.jpeg)
+![Dwellir Integration](https://miro.medium.com/v2/resize:fit:1280/format:webp/1*lU9Y51qTTLkBEZj1PbCadw.jpeg)
 
 In collaboration with Dwellir, Fearless Wallet gained access to over 40 high-speed nodes, improving blockchain infrastructure reliability and efficiency. This partnership underscores Fearless Wallet’s commitment to providing a seamless and secure user experience.
 
@@ -85,7 +88,7 @@ In collaboration with Dwellir, Fearless Wallet gained access to over 40 high-spe
 
 ### Partnership Campaigns
 
-![Gemie](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*HzwGKrfZo6fTbOKEnJDYYQ.jpeg)
+![Gemie](https://miro.medium.com/v2/resize:fit:1280/format:webp/1*HzwGKrfZo6fTbOKEnJDYYQ.jpeg)
 
 Fearless Wallet strengthened its presence through impactful partnerships and collaborative campaigns, including initiatives with theGemie Metaverse, ZChains, Analog, and others. These campaigns celebrated fearless partnerships and offered exciting rewards, engaging users across the ecosystem.
 

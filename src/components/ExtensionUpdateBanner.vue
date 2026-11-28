@@ -26,7 +26,7 @@ onMounted(() => {
             Chrome updates it from the store automatically. To check, open <code>chrome://extensions</code> and click
             Details under Fearless Wallet. If the version is older than {{ minimumExtensionVersion }}, restart Chrome.
           </li>
-          <li>In the extension, create a new wallet and move your funds to it, as it guides you.</li>
+          <li>If the extension shows an old-wallet notice, follow it to move your funds to a new wallet.</li>
           <li>
             Install only from the <a :href="chromeExtensionUrl" target="_blank" rel="noopener">Chrome Web Store</a>
             and never share your recovery phrase.
@@ -70,7 +70,7 @@ summary::after {
   border-right: 2px solid currentColor;
   border-bottom: 2px solid currentColor;
   transform: translateY(-0.15em) rotate(45deg);
-  transition: transform 0.2s ease;
+  transition: transform var(--d-180) var(--ease-glide);
 }
 
 details[open] summary::after {
